@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Akiko OS</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+  --bg: #0a0a0b;
+  --surface: #111113;
+  --surface2: #18181c;
+  --border: #222228;
+  --border2: #2e2e38;
+  --text: #e8e6e0;
+  --muted: #555560;
+  --dim: #333340;
+
+  --paces: #4a9b6f;
+  --paces-dim: #1a3328;
+  --paces-glow: rgba(74,155,111,0.12);
+
+  --jlpt: #c17f3a;
+  --jlpt-dim: #2e1e0a;
+  --jlpt-glow: rgba(193,127,58,0.12);
+
+  --writing: #6a7fc4;
+  --writing-dim: #151a30;
+  --writing-glow: rgba(106,127,196,0.12);
+
+  --research: #b55a5a;
+  --research-dim: #2a1414;
+  --research-glow: rgba(181,90,90,0.12);
+
+  --brain: #8a6ab5;
+  --brain-dim: #1e1530;
+  --brain-glow: rgba(138,106,181,0.12);
+
+  --deep: #3a8aaa;
+  --deep-dim: #0a1e28;
+  --deep-glow: rgba(58,138,170,0.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html { font-size: 16px; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  min-height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  padding-bottom: 100px;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; height: 300px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(74,155,111,0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Header ── */
+.header {
+  padding: 48px 20px 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.date-block {}
+.date-day {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+.date-full {
+  font-size: 11px;
+  color: var(--dim);
+  margin-top: 2px;
+  letter-spacing: 0.08em;
+}
+
+.focus-pill {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.focus-pill.active {
+  background: var(--deep-dim);
+  border-color: var(--deep);
+  color: var(--deep);
+}
+
+.greeting {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+.greeting em { font-style: italic; color: var(--paces); }
+
+.subtitle {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+/* ── Day type selector ── */
+.day-selector {
+  padding: 0 20px 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.day-label {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 10px;
+}
+
+.day-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.day-pill {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+}
+.day-pill.active-shift { background: var(--paces-dim); border-color: var(--paces); color: var(--paces); }
+.day-pill.active-study { background: var(--writing-dim); border-color: var(--writing); color: var(--writing); }
+.day-pill.active-research { background: var(--research-dim); border-color: var(--research); color: var(--research); }
+.day-pill.active-writing { background: var(--jlpt-dim); border-color: var(--jlpt); color: var(--jlpt); }
+
+/* ── Section ── */
+.section {
+  padding: 0 20px;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  border-radius: 12px 12px 0 0;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid var(--border);
+  border-bottom: none;
+  user-select: none;
+}
+
+.section.collapsed .section-header {
+  border-radius: 12px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+
+.section-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.section-title {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.section-meta {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.section-chevron {
+  font-size: 12px;
+  color: var(--dim);
+  transition: transform 0.3s ease;
+}
+.section.collapsed .section-chevron { transform: rotate(-90deg); }
+
+.section-body {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  padding: 12px;
+  display: grid;
+  gap: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  margin-bottom: 8px;
+}
+
+.section.collapsed .section-body {
+  display: none;
+}
+
+/* Colour themes per section */
+.section.paces .section-header { background: var(--paces-glow); border-color: var(--paces-dim); }
+.section.paces .section-title { color: var(--paces); }
+.section.paces .section-body { border-color: var(--paces-dim); background: #0d1f18; }
+
+.section.jlpt .section-header { background: var(--jlpt-glow); border-color: var(--jlpt-dim); }
+.section.jlpt .section-title { color: var(--jlpt); }
+.section.jlpt .section-body { border-color: var(--jlpt-dim); background: #1a1208; }
+
+.section.writing .section-header { background: var(--writing-glow); border-color: var(--writing-dim); }
+.section.writing .section-title { color: var(--writing); }
+.section.writing .section-body { border-color: var(--writing-dim); background: #0e1120; }
+
+.section.research .section-header { background: var(--research-glow); border-color: var(--research-dim); }
+.section.research .section-title { color: var(--research); }
+.section.research .section-body { border-color: var(--research-dim); background: #1a0e0e; }
+
+.section.brain .section-header { background: var(--brain-glow); border-color: var(--brain-dim); }
+.section.brain .section-title { color: var(--brain); }
+.section.brain .section-body { border-color: var(--brain-dim); background: #130f1e; }
+
+.section.deep .section-header { background: var(--deep-glow); border-color: var(--deep-dim); }
+.section.deep .section-title { color: var(--deep); }
+.section.deep .section-body { border-color: var(--deep-dim); background: #080f14; }
+
+/* ── Launch buttons ── */
+.launch-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.18s ease;
+  cursor: pointer;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  width: 100%;
+  text-align: left;
+}
+
+.launch-btn:active {
+  transform: scale(0.97);
+  opacity: 0.85;
+}
+
+.launch-btn:hover {
+  border-color: var(--border2);
+  background: #202028;
+}
+
+.launch-btn.placeholder {
+  opacity: 0.35;
+  border-style: dashed;
+  cursor: default;
+}
+
+.launch-btn.placeholder:active { transform: none; }
+
+.btn-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  width: 32px;
+  text-align: center;
+}
+
+.btn-content { flex: 1; min-width: 0; }
+
+.btn-title {
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-sub {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 2px;
+  letter-spacing: 0.04em;
+}
+
+.btn-arrow {
+  font-size: 14px;
+  color: var(--dim);
+  flex-shrink: 0;
+}
+
+/* 2-column grid for small buttons */
+.btn-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.btn-grid-2 .launch-btn {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 14px 14px;
+}
+
+.btn-grid-2 .btn-icon { width: auto; font-size: 18px; }
+.btn-grid-2 .btn-arrow { display: none; }
+.btn-grid-2 .btn-title { font-size: 12px; white-space: normal; line-height: 1.3; }
+
+/* ── Prompt box ── */
+.prompt-box {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.prompt-label {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.prompt-text-display {
+  font-size: 11px;
+  color: var(--text);
+  line-height: 1.7;
+  white-space: pre-wrap;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.prompt-box.open .prompt-text-display {
+  max-height: 600px;
+}
+
+.prompt-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.prompt-toggle, .prompt-copy {
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.prompt-copy {
+  background: transparent;
+  border-color: var(--paces);
+  color: var(--paces);
+}
+
+.prompt-copy:active { opacity: 0.7; }
+
+/* ── Focus mode overlay ── */
+#focus-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #050507;
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 32px;
+}
+
+#focus-overlay.active { display: flex; }
+
+.focus-timer {
+  font-family: 'Playfair Display', serif;
+  font-size: 72px;
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.focus-task {
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  max-width: 260px;
+  line-height: 1.6;
+}
+
+.focus-controls {
+  display: flex;
+  gap: 16px;
+}
+
+.focus-btn {
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 12px 28px;
+  border-radius: 24px;
+  border: 1px solid var(--border2);
+  background: var(--surface2);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.focus-btn.primary {
+  background: var(--deep-dim);
+  border-color: var(--deep);
+  color: var(--deep);
+}
+
+.focus-progress {
+  width: 200px;
+  height: 2px;
+  background: var(--border);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.focus-progress-fill {
+  height: 100%;
+  background: var(--deep);
+  border-radius: 1px;
+  width: 0%;
+  transition: width 1s linear;
+}
+
+/* ── Bottom nav ── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  background: rgba(10,10,11,0.92);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  padding: 12px 20px 24px;
+  display: flex;
+  justify-content: space-around;
+  z-index: 50;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  padding: 4px 12px;
+  border-radius: 8px;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.nav-item:active { opacity: 0.6; }
+
+.nav-icon { font-size: 20px; }
+.nav-label {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.nav-item.active .nav-label { color: var(--paces); }
+.nav-item.active .nav-icon { filter: none; }
+
+/* ── Divider ── */
+.section-divider {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dim);
+  padding: 16px 20px 8px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Today's focus banner ── */
+.focus-banner {
+  margin: 0 20px 16px;
+  padding: 14px 16px;
+  background: var(--deep-dim);
+  border: 1px solid var(--deep);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.focus-banner:active { opacity: 0.8; }
+
+.focus-banner-icon { font-size: 20px; }
+.focus-banner-text { flex: 1; }
+.focus-banner-title { font-size: 12px; color: var(--deep); font-weight: 500; letter-spacing: 0.05em; }
+.focus-banner-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.focus-banner-arrow { font-size: 14px; color: var(--deep); }
+
+/* animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section { animation: fadeUp 0.3s ease both; }
+.section:nth-child(1) { animation-delay: 0.05s; }
+.section:nth-child(2) { animation-delay: 0.1s; }
+.section:nth-child(3) { animation-delay: 0.15s; }
+.section:nth-child(4) { animation-delay: 0.2s; }
+.section:nth-child(5) { animation-delay: 0.25s; }
+.section:nth-child(6) { animation-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-top">
+    <div class="date-block">
+      <div class="date-day" id="day-name">Monday</div>
+      <div class="date-full" id="date-full">18 May 2026</div>
+    </div>
+    <div class="focus-pill" id="focus-toggle" onclick="toggleFocusMode()">⏱ Focus mode</div>
+  </div>
+  <div class="greeting">Good morning,<br><em>Akiko.</em></div>
+  <div class="subtitle" id="header-sub">Career break ends in 74 days · PACES Sept–Nov 2026</div>
+</div>
+
+<!-- Day type -->
+<div class="day-selector">
+  <div class="day-label">Today is a —</div>
+  <div class="day-pills">
+    <div class="day-pill" onclick="setDay(this,'shift')">🏥 Shift</div>
+    <div class="day-pill" onclick="setDay(this,'study')">📖 Study</div>
+    <div class="day-pill" onclick="setDay(this,'research')">🔬 Research</div>
+    <div class="day-pill" onclick="setDay(this,'writing')">✍️ Writing</div>
+  </div>
+</div>
+
+<!-- Focus banner -->
+<div class="focus-banner" onclick="toggleFocusMode()">
+  <div class="focus-banner-icon">🎯</div>
+  <div class="focus-banner-text">
+    <div class="focus-banner-title">Start a focus session</div>
+    <div class="focus-banner-sub">25 min · no distractions · one task</div>
+  </div>
+  <div class="focus-banner-arrow">→</div>
+</div>
+
+<div class="section-divider">Workspaces</div>
+
+<!-- PACES -->
+<div class="section paces" id="sec-paces">
+  <div class="section-header" onclick="toggleSection('sec-paces')">
+    <div class="section-header-left">
+      <div class="section-icon">🩺</div>
+      <div>
+        <div class="section-title">PACES</div>
+        <div class="section-meta">Stations · ECG · Clinical skills</div>
+      </div>
+    </div>
+    <div class="section-chevron">▾</div>
+  </div>
+  <div class="section-body">
+
+    <!-- Claude prompts -->
+    <div class="prompt-box" id="pb-paces-morning">
+      <div class="prompt-label">⚡ 1-tap Claude prompt · Daily vignette</div>
+      <div class="prompt-text-display">Give me one PACES-style clinical vignette. Rotate between: Cardiology, Respiratory, Neurology, Geriatrics, Palliative. Start with the scenario and examination findings. Ask me what I'd do next, then wait for my answer before teaching. Flag any management ladder errors I make.</div>
+      <div class="prompt-actions">
+        <button class="prompt-toggle" onclick="togglePromptBox('pb-paces-morning')">Show</button>
+        <button class="prompt-copy" onclick="copyPromptBox('pb-paces-morning')">Copy → Claude</button>
+      </div>
+    </div>
+
+    <div class="prompt-box" id="pb-paces-ladder">
+      <div class="prompt-label">⚡ 1-tap Claude prompt · Management ladder</div>
+      <div class="prompt-text-display">Teach me [topic] as a clinical decision tree. Format:
+1. Presenting scenario
+2. First-line assessment / investigation
+3. Management step 1 → trigger for step 2 → trigger for step 3
+4. When to escalate and to what
+
+Then give me a vignette and test me. Tell me if I get the sequence wrong, not just the answer.</div>
+      <div class="prompt-actions">
+        <button class="prompt-toggle" onclick="togglePromptBox('pb-paces-ladder')">Show</button>
+        <button class="prompt-copy" onclick="copyPromptBox('pb-paces-ladder')">Copy → Claude</button>
+      </div>
+    </div>
+
+    <div class="btn-grid-2">
+      <a class="launch-btn" href="https://www.intelligentpaces.com/paces-revision-talks" target="_blank">
+        <div class="btn-icon">📹</div>
+        <div class="btn-content">
+          <div class="btn-title">PACES Videos</div>
+          <div class="btn-sub">Intelligent PACES talks</div>
+        </div>
+      </a>
+      <a class="launch-btn" href="https://www.notion.so/PACES-videos-b0370c9ed66e4548b906f890408f69ad" target="_blank">
+        <div class="btn-icon">✅</div>
+        <div class="btn-content">
+          <div class="btn-title">Video checklist</div>
+          <div class="btn-sub">Notion · progress tracker</div>
+        </div>
+      </a>
+      <a class="launch-btn" href="https://docs.google.com/spreadsheets/d/1PLFuAKaGiPgKnGH2_BXOYdZca-jFsLsSGYkpUty6pnQ/edit?gid=167765999#gid=167765999" target="_blank">
+        <div class="btn-icon">📊</div>
+        <div class="btn-content">
+          <div class="btn-title">PACES log</div>
+          <div class="btn-sub">Google Sheets tracker</div>
+        </div>
+      </a>
+      <a class="launch-btn" href="https://www.notion.so/PACES-log-1880d62f613b807c9bded4680d07fb6a" target="_blank">
+        <div class="btn-icon">📋</div>
+        <div class="btn-content">
+          <div class="btn-title">Notion PACES log</div>
+          <div class="btn-sub">Station notes · Notion</div>
+        </div>
+      </a>
+    </div>
+
+    <a class="launch-btn" href="https://www.brainscape.com/packs/mrcp-paces-11398442" target="_blank">
+      <div class="btn-icon">🧠</div>
+      <div class="btn-content">
+        <div class="btn-title">PACES flashcards</div>
+        <div class="btn-sub">Brainscape · MRCP PACES deck</div>
+      </div>
+      <div class="btn-arrow">→</div>
+    </a>
+    <a class="launch-btn" href="https://www.brainscape.com/packs/mrcp-paces-neurology-21843640" target="_blank">
+      <div class="btn-icon">🧠</div>
+      <div class="btn-content">
+        <div class="btn-title">Neurology flashcards</div>
+        <div class="btn-sub">Brainscape · PACES Neurology deck</div>
+      </div>
+      <div class="btn-arrow">→</div>
+    </a>
+
+  </div>
+</div>
+
+<!-- JLPT / Japanese Medical -->
+<div class="section jlpt collapsed" id="sec-jlpt">
+  <div class="section-header" onclick="toggleSection('sec-jlpt')">
+    <div class="section-header-left">
+      <div class="section-icon">🇯🇵</div>
+      <div>
+        <div class="section-title">JLPT · 医師国家試験</div>
+        <div class="section-meta">語彙 · 医療日本語 · 国試</div>
+      </div>
+    </div>
+    <div class="section-chevron">▾</div>
+  </div>
+  <div class="section-body">
+
+    <div class="prompt-box" id="pb-jlpt">
+      <div class="prompt-label">⚡ 1-tap Claude prompt · 語彙ドリル</div>
+      <div class="prompt-text-display">日本語の医療語彙の練習をしたい。
+レベル：JLPT N1 ＋ 医師国家試験向け
+テーマ：[例：循環器 / 呼吸器 / 神経]
+
+クイズ形式で10問出してください。各問：
+・日本語の医療用語または文章を出す
+・英語で意味を答えさせる（または逆）
+・正解後に臨床的な使い方の例文を一つ見せる</div>
+      <div class="prompt-actions">
+        <button class="prompt-toggle" onclick="togglePromptBox('pb-jlpt')">表示</button>
+        <button class="prompt-copy" onclick="copyPromptBox('pb-jlpt')">Copy → Claude</button>
+      </div>
+    </div>
+
+    <div class="btn-grid-2">
+      <a class="launch-btn" href="https://read.amazon.co.jp/kindle-library" target="_blank">
+        <div class="btn-icon">📚</div>
+        <div class="btn-content">
+          <div class="btn-title">Kindle JP library</div>
+          <div class="btn-sub">JLPT textbooks</div>
+        </div>
+      </a>
+      <a class="launch-btn" href="https://ankiweb.net/account/login" target="_blank">
+        <div class="btn-icon">🗂️</div>
+        <div class="btn-content">
+          <div class="btn-title">Anki</div>
+          <div class="btn-sub">Flashcard decks</div>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<!-- Writing / Note -->
+<div class="section writing collapsed" id="sec-writing">
+  <div class="section-header" onclick="toggleSection('sec-writing')">
+    <div class="section-header-left">
+      <div class="section-icon">✍️</div>
+      <div>
+        <div class="section-title">Writing · Note</div>
+        <div class="section-meta">日本語記事 · Portfolio · IMT</div>
+      </div>
+    </div>
+    <div class="section-chevron">▾</div>
+  </div>
+  <div class="section-body">
+
+    <div class="prompt-box" id="pb-note">
+      <div class="prompt-label">⚡ 1-tap Claude prompt · Note記事</div>
+      <div class="prompt-text-display">テーマ：[topic]
+ラフなアイデア：[paste ideas]
+読者：30代の日本人医師・医学生
+トーン：温かく、個人的で、先輩が正直に振り返るような文体
+
+まず3つの書き出しを提案してください。選んだら全文を書いてください。800字以内でNote向けに。</div>
+      <div class="prompt-actions">
+        <button class="prompt-toggle" onclick="togglePromptBox('pb-note')">表示</button>
+        <button class="prompt-copy" onclick="copyPromptBox('pb-note')">Copy → Claude</button>
+      </div>
+    </div>
+
+    <div class="prompt-box" id="pb-portfolio">
+      <div class="prompt-label">⚡ 1-tap Claude prompt · Portfolio batch</div>
+      <div class="prompt-text-display">I need to write [N] IMT portfolio reflections. Here are the clinical encounters:
+
+1. [Brief description]
+2. [Brief description]
+3. [Brief description]
+
+For each: draft a ~100-word reflection covering what I did, what I learned, and reflection on my clinical practice. Number them clearly.</div>
+      <div class="prompt-actions">
+        <button class="prompt-toggle" onclick="togglePromptBox('pb-portfolio')">Show</button>
+        <button class="prompt-copy" onclick="copyPromptBox('pb-portfolio')">Copy → Claude</button>
+      </div>
+    </div>
+
+    <div class="btn-grid-2">
+      <a class="launch-btn" href="https://note.com/notes" target="_blank">
+        <div class="btn-icon">📰</div>
+        <div class="btn-content">
+          <div class="btn-title">Note.com</div>
+          <div class="btn-sub">記事を書く · publish</div>
+        </div>
+      </a>
+      <a class="launch-btn" href="https://www.notion.so/Writing-2760d62f613b80009dbcf4376a4144a1" target="_blank">
+        <div class="btn-icon">📋</div>
+        <div class="btn-content">
+          <div class="btn-title">Note tracker</div>
+          <div class="btn-sub">Notion · article log</div>
+        </div>
+      </a>
+    </div>
+    <a class="launch-btn" href="https://docs.google.com/spreadsheets/d/1TZ1zinaZZuxs1fmPyiZowx7Fvy7cmiF27wd1fCSHxm0/edit?gid=1592110570#gid=1592110570" target="_blank">
+      <div class="btn-icon">📊</div>
+      <div class="btn-content">
+        <div class="btn-title">IMT2 ARCP portfolio</div>
+        <div class="btn-sub">Google Sheets · portfolio tracker</div>
+      </div>
+      <div class="btn-arrow">→</div>
+    </a>
+    <a class="launch-btn" href="https://docs.google.com/spreadsheets/d/1K_BwrR4kKsyqzpqR38qYYgXwUHHw3RyX3Hx0dQJ86W0/edit?usp=drive_link" target="_blank">
+      <div class="btn-icon">🧠</div>
+      <div class="btn-content">
+        <div class="btn-title">Neurology ST4 strategy</div>
+        <div class="btn-sub">SpR application tracker · Google Sheets</div>
+      </div>
+      <div class="btn-arrow">→</div>
+    </a>
+
+  </div>
+</div>
+
+<!-- Research / Publications -->
+<div class="section research collapsed" id="sec-research">
+  <div class="section-header" onclick="toggleSection('sec-research')">
+    <div class="section-header-left">
+      <div class="section-icon">🔬</div>
+      <div>
+        <div class="section-title">Research · Publications</div>
+        <div class="section-meta">Papers · Audits · Data</div>
+      </div>
+    </div>
+    <div class="section-chevron">▾</div>
+  </div>
+  <div class="section-body">
+
+    <div class="prompt-box" id="pb-research">
+      <div class="prompt-label">⚡ 1-tap Claude prompt · Session start</div>
+      <div class="prompt-text-display">I'm working on [project name]. Last time I [completed X / got stuck on Y]. Today I have [N hours]. Define one specific deliverable I can finish today. Break it into 4 timed steps. Check in with me after each step.</div>
+      <div class="prompt-actions">
+        <button class="prompt-toggle" onclick="togglePromptBox('pb-research')">Show</button>
+        <button class="prompt-copy" onclick="copyPromptBox('pb-research')">Copy → Claude</button>
+      </div>
+    </div>
+
+    <a class="launch-btn" href="https://docs.google.com/spreadsheets/d/18Qphca4fiUP688n2vydgwuVGHyVUMzzbtV0gy2T9mUE/edit?usp=drive_link" target="_blank">
+      <div class="btn-icon">🧬</div>
+      <div class="btn-content">
+        <div class="btn-title">HIV-Neurology dataset</div>
+        <div class="btn-sub">CWH Patient Data · RJW · Google Sheets</div>
+      </div>
+      <div class="btn-arrow">→</div>
+    </a>
+    <a class="launch-btn" href="https://docs.google.com/document/d/1-ALsWhDo9Y12Z4J_2tQB-1ENN7MhvNXafJv4xFmNbk0/edit?usp=drive_link" target="_blank">
+      <div class="btn-icon">📋</div>
+      <div class="btn-content">
+        <div class="btn-title">QI Webinar — paper notes</div>
+        <div class="btn-sub">Journal plan · manuscript outline · Google Doc</div>
+      </div>
+      <div class="btn-arrow">→</div>
+    </a>
+
+  </div>
+</div>
+
+<!-- Brain dump -->
+<div class="section brain collapsed" id="sec-brain">
+  <div class="section-header" onclick="toggleSection('sec-brain')">
+    <div class="section-header-left">
+      <div class="section-icon">🧠</div>
+      <div>
+        <div class="section-title">Brain dump</div>
+        <div class="section-meta">朝のルーティン · 夜のクローズダウン</div>
+      </div>
+    </div>
+    <div class="section-chevron">▾</div>
+  </div>
+  <div class="section-body">
+
+    <div class="prompt-box" id="pb-morning">
+      <div class="prompt-label">🌅 朝のブレインダンプ</div>
+      <div class="prompt-text-display">これから私が通勤中や朝の時間に、頭の中にあることを整理せずにそのまま話します。内容はバラバラで構いません。感情、心配事、やりたいこと、気になっていること、何でも。
+
+私が話し終わったら、以下の形式で日本語でまとめてください：
+
+🌤 今日のあなたの状態
+（気分・エネルギー・頭の中のテーマを2〜3行で要約）
+
+🧭 今日のマインドセット
+（今日の状態に合った、一日の進め方のアドバイスを具体的に）
+
+✅ 今日やること・優先順位
+（話の中から拾えるタスクや行動を、優先度順に箇条書き。長期ゴール——PACES準備・IMT復帰・日本語維持——も踏まえて）
+
+⚠️ 今日気をつけること
+（エネルギー管理・感情・集中の観点から一言）
+
+では、始めてください。好きなだけ話してください。</div>
+      <div class="prompt-actions">
+        <button class="prompt-toggle" onclick="togglePromptBox('pb-morning')">表示</button>
+        <button class="prompt-copy" onclick="copyPromptBox('pb-morning')">Copy → Claude</button>
+      </div>
+    </div>
+
+    <div class="prompt-box" id="pb-evening">
+      <div class="prompt-label">🌙 夜のクローズダウン</div>
+      <div class="prompt-text-display">今日一日のことを振り返って、頭の中にあることをそのまま話します。うまくいったこと、うまくいかなかったこと、感じたこと、明日への不安や楽しみ、何でも。
+
+私が話し終わったら、以下の形式で日本語でまとめてください：
+
+🌙 今夜のあなたの状態
+（一日の終わりの気分・疲れ具合・頭の中のテーマを2〜3行で）
+
+💭 今夜ベッドに持っていくべき考え方
+（モヤモヤを手放して眠れるよう、今日を整理する一言や視点）
+
+📝 明日やること（トップ3）
+（今日の話から見えてきた、明日の優先タスクを3つだけ）
+
+🛌 夜の注意点
+（よく眠るために今夜気をつけること）
+
+では、始めてください。今日どんな一日でしたか？</div>
+      <div class="prompt-actions">
+        <button class="prompt-toggle" onclick="togglePromptBox('pb-evening')">表示</button>
+        <button class="prompt-copy" onclick="copyPromptBox('pb-evening')">Copy → Claude</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Deep work -->
+<div class="section deep collapsed" id="sec-deep">
+  <div class="section-header" onclick="toggleSection('sec-deep')">
+    <div class="section-header-left">
+      <div class="section-icon">🔵</div>
+      <div>
+        <div class="section-title">Deep work</div>
+        <div class="section-meta">Distraction-free · Timer · One task</div>
+      </div>
+    </div>
+    <div class="section-chevron">▾</div>
+  </div>
+  <div class="section-body">
+
+    <div class="btn-grid-2">
+      <div class="launch-btn" onclick="startFocus(25, 'Deep work · 25 min')">
+        <div class="btn-icon">⏱</div>
+        <div class="btn-content">
+          <div class="btn-title">25 min</div>
+          <div class="btn-sub">Pomodoro</div>
+        </div>
+      </div>
+      <div class="launch-btn" onclick="startFocus(50, 'Deep work · 50 min')">
+        <div class="btn-icon">⏱</div>
+        <div class="btn-content">
+          <div class="btn-title">50 min</div>
+          <div class="btn-sub">Extended</div>
+        </div>
+      </div>
+      <div class="launch-btn" onclick="startFocus(90, 'Deep work · 90 min')">
+        <div class="btn-icon">⏱</div>
+        <div class="btn-content">
+          <div class="btn-title">90 min</div>
+          <div class="btn-sub">Full session</div>
+        </div>
+      </div>
+      <div class="launch-btn" onclick="startFocus(15, 'Quick task · 15 min')">
+        <div class="btn-icon">⚡</div>
+        <div class="btn-content">
+          <div class="btn-title">15 min</div>
+          <div class="btn-sub">Quick task</div>
+        </div>
+      </div>
+    </div>
+
+    <a class="launch-btn" href="https://www.youtube.com/watch?v=26RT1LxsaAQ&list=PLLOA3lSSy6JGoNFRRa97pWDFjFwHud_KY" target="_blank">
+      <div class="btn-icon">🎵</div>
+      <div class="btn-content">
+        <div class="btn-title">Focus playlist</div>
+        <div class="btn-sub">YouTube · deep work music</div>
+      </div>
+      <div class="btn-arrow">→</div>
+    </a>
+    <div style="background:var(--surface2);border:1px dashed var(--border2);border-radius:10px;padding:12px 14px;font-size:10px;color:var(--muted);line-height:1.7;">
+      🖥️ <strong style="color:var(--text)">Desktop only</strong> — open these from your Mac browser:<br>
+      · Daily tracker (akiko_os_dashboard_4.html)<br>
+      · PACES Claude tracker (paces_hub_v3.html)<br>
+      These are local files and can't open on iPhone.
+    </div>
+
+  </div>
+</div>
+
+<!-- Focus mode overlay -->
+<div id="focus-overlay">
+  <div class="focus-task" id="focus-task-label">Deep work · 25 min</div>
+  <div class="focus-timer" id="focus-timer-display">25:00</div>
+  <div class="focus-progress">
+    <div class="focus-progress-fill" id="focus-fill"></div>
+  </div>
+  <div class="focus-controls">
+    <button class="focus-btn" onclick="pauseResumeFocus()" id="focus-pause-btn">Pause</button>
+    <button class="focus-btn primary" onclick="endFocusMode()">End session</button>
+  </div>
+</div>
+
+<!-- Bottom nav -->
+<div class="bottom-nav">
+  <div class="nav-item active" onclick="scrollTop()">
+    <div class="nav-icon">🏠</div>
+    <div class="nav-label">Home</div>
+  </div>
+  <div class="nav-item" onclick="openSection('sec-paces')">
+    <div class="nav-icon">🩺</div>
+    <div class="nav-label">PACES</div>
+  </div>
+  <div class="nav-item" onclick="openSection('sec-jlpt')">
+    <div class="nav-icon">🇯🇵</div>
+    <div class="nav-label">日本語</div>
+  </div>
+  <div class="nav-item" onclick="openSection('sec-brain')">
+    <div class="nav-icon">🧠</div>
+    <div class="nav-label">Brain</div>
+  </div>
+  <div class="nav-item" onclick="toggleFocusMode()">
+    <div class="nav-icon">🎯</div>
+    <div class="nav-label">Focus</div>
+  </div>
+</div>
+
+<script>
+// ── Date & greeting ──
+const now = new Date();
+const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+document.getElementById('day-name').textContent = days[now.getDay()];
+document.getElementById('date-full').textContent = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+
+const h = now.getHours();
+const greetEl = document.querySelector('.greeting');
+const greet = h < 12 ? 'Good morning,' : h < 17 ? 'Good afternoon,' : 'Good evening,';
+greetEl.innerHTML = `${greet}<br><em>Akiko.</em>`;
+
+// Days until Aug 2026
+const target = new Date('2026-08-01');
+const diff = Math.ceil((target - now) / (1000*60*60*24));
+document.getElementById('header-sub').textContent = `Career break ends in ${diff} days · PACES Sept–Nov 2026`;
+
+// ── Day type ──
+function setDay(el, type) {
+  document.querySelectorAll('.day-pill').forEach(p => p.className = 'day-pill');
+  el.classList.add(`active-${type}`);
+  localStorage.setItem('akiko_day_type', type);
+}
+
+const savedDay = localStorage.getItem('akiko_day_type');
+if (savedDay) {
+  const pills = document.querySelectorAll('.day-pill');
+  pills.forEach(p => {
+    if (p.textContent.toLowerCase().includes(savedDay)) {
+      p.classList.add(`active-${savedDay}`);
+    }
+  });
+}
+
+// ── Section toggle ──
+function toggleSection(id) {
+  document.getElementById(id).classList.toggle('collapsed');
+}
+
+function openSection(id) {
+  const sec = document.getElementById(id);
+  sec.classList.remove('collapsed');
+  sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function scrollTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── Prompt boxes ──
+function togglePromptBox(id) {
+  const box = document.getElementById(id);
+  box.classList.toggle('open');
+  const btn = box.querySelector('.prompt-toggle');
+  btn.textContent = box.classList.contains('open') ? '閉じる' : 'Show';
+  if (!btn.textContent.includes('閉') && !btn.textContent.includes('Show')) btn.textContent = 'Show';
+}
+
+function copyPromptBox(id) {
+  const box = document.getElementById(id);
+  const text = box.querySelector('.prompt-text-display').textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = box.querySelector('.prompt-copy');
+    const orig = btn.textContent;
+    btn.textContent = 'Copied ✓';
+    setTimeout(() => btn.textContent = orig, 1500);
+  });
+}
+
+// ── Focus timer ──
+let focusTimer = null;
+let focusSeconds = 0;
+let focusTotalSeconds = 0;
+let focusPaused = false;
+
+function startFocus(minutes, label) {
+  focusTotalSeconds = minutes * 60;
+  focusSeconds = focusTotalSeconds;
+  focusPaused = false;
+  document.getElementById('focus-task-label').textContent = label;
+  updateTimerDisplay();
+  document.getElementById('focus-fill').style.width = '0%';
+  document.getElementById('focus-overlay').classList.add('active');
+  document.getElementById('focus-pause-btn').textContent = 'Pause';
+  clearInterval(focusTimer);
+  focusTimer = setInterval(tickTimer, 1000);
+}
+
+function toggleFocusMode() {
+  if (document.getElementById('focus-overlay').classList.contains('active')) {
+    endFocusMode();
+  } else {
+    startFocus(25, 'Deep work · 25 min');
+  }
+}
+
+function tickTimer() {
+  if (focusPaused) return;
+  focusSeconds--;
+  if (focusSeconds <= 0) {
+    clearInterval(focusTimer);
+    focusSeconds = 0;
+    updateTimerDisplay();
+    document.getElementById('focus-fill').style.width = '100%';
+    setTimeout(() => {
+      alert('Session complete! 🎉');
+      endFocusMode();
+    }, 500);
+    return;
+  }
+  updateTimerDisplay();
+  const pct = ((focusTotalSeconds - focusSeconds) / focusTotalSeconds) * 100;
+  document.getElementById('focus-fill').style.width = pct + '%';
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(focusSeconds / 60).toString().padStart(2,'0');
+  const s = (focusSeconds % 60).toString().padStart(2,'0');
+  document.getElementById('focus-timer-display').textContent = `${m}:${s}`;
+}
+
+function pauseResumeFocus() {
+  focusPaused = !focusPaused;
+  document.getElementById('focus-pause-btn').textContent = focusPaused ? 'Resume' : 'Pause';
+}
+
+function endFocusMode() {
+  clearInterval(focusTimer);
+  document.getElementById('focus-overlay').classList.remove('active');
+  focusTimer = null;
+}
+
+// keep PACES open by default on load
+document.getElementById('sec-paces').classList.remove('collapsed');
+</script>
+</body>
+</html>

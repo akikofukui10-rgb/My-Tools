@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akiko OS — Workflow System</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+
+:root {
+  --bg: #f5f2ec;
+  --surface: #faf8f4;
+  --ink: #1a1814;
+  --muted: #8a8478;
+  --border: #ddd9d0;
+  --accent: #2d5a3d;
+  --accent2: #8b3a2a;
+  --accent3: #2a3d5a;
+  --highlight: #f0ead8;
+  --tag-bg: #e8e2d4;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'IBM Plex Mono', monospace;
+  min-height: 100vh;
+  padding: 48px 24px 100px;
+  background-image: 
+    radial-gradient(ellipse at 20% 0%, rgba(45,90,61,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 100%, rgba(42,61,90,0.04) 0%, transparent 60%);
+}
+
+.masthead {
+  max-width: 860px;
+  margin: 0 auto 56px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.masthead-left .eyebrow {
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.masthead-left h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 6vw, 58px);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.masthead-left h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.masthead-right {
+  text-align: right;
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.date-stamp {
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* Day type selector */
+.day-selector {
+  max-width: 860px;
+  margin: 0 auto 48px;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.day-btn {
+  flex: 1;
+  padding: 14px 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--muted);
+  border-right: 1px solid var(--border);
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.day-btn:last-child { border-right: none; }
+.day-btn:hover { background: var(--highlight); color: var(--ink); }
+.day-btn.active { background: var(--ink); color: var(--bg); }
+
+/* Daily template */
+.template {
+  max-width: 860px;
+  margin: 0 auto 48px;
+  display: none;
+}
+
+.template.visible { display: block; }
+
+.template-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.template-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.template-subtitle {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.blocks {
+  display: grid;
+  gap: 12px;
+}
+
+.block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 20px;
+  align-items: start;
+  transition: border-color 0.2s;
+}
+
+.block:hover { border-color: #c8c2b4; }
+
+.block-time {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.6;
+  padding-top: 2px;
+}
+
+.block-content h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.block-content p {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+
+.block-content .claude-prompt {
+  font-size: 10px;
+  background: var(--highlight);
+  border-left: 2px solid var(--accent);
+  padding: 8px 12px;
+  color: var(--ink);
+  line-height: 1.6;
+  border-radius: 0 2px 2px 0;
+  margin-top: 8px;
+}
+
+.block-content .claude-prompt strong {
+  color: var(--accent);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.block-tag {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 2px;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.tag-paces { background: #e8f0eb; color: var(--accent); border: 1px solid #c8dace; }
+.tag-research { background: #f0e8e6; color: var(--accent2); border: 1px solid #dac8c4; }
+.tag-writing { background: #e6e8f0; color: var(--accent3); border: 1px solid #c4c8da; }
+.tag-portfolio { background: var(--tag-bg); color: var(--muted); border: 1px solid var(--border); }
+.tag-rest { background: #f0f0e6; color: #5a5a2a; border: 1px solid #dada c4; }
+.tag-admin { background: #f0ece6; color: #5a4a2a; border: 1px solid #dac8b4; }
+
+/* Sections */
+.section {
+  max-width: 860px;
+  margin: 0 auto 48px;
+}
+
+.section-rule {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.section-rule h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.section-rule .rule {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.section-rule .rule-label {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* Research tracker */
+.research-tracker {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.tracker-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tracker-header h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.tracker-header .add-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: var(--bg);
+  border: none;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: opacity 0.2s;
+}
+
+.tracker-header .add-btn:hover { opacity: 0.8; }
+
+.project-form {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  background: var(--highlight);
+  display: none;
+  gap: 12px;
+  flex-direction: column;
+}
+
+.project-form.open { display: flex; }
+
+.project-form input, .project-form select {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 2px;
+  color: var(--ink);
+  outline: none;
+}
+
+.project-form input:focus, .project-form select:focus {
+  border-color: var(--accent);
+}
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.project-form .save-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 2px;
+  align-self: flex-start;
+}
+
+.project-list { padding: 0; }
+
+.project-item {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: center;
+}
+
+.project-item:last-child { border-bottom: none; }
+
+.project-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.project-meta {
+  font-size: 10px;
+  color: var(--muted);
+  display: flex;
+  gap: 16px;
+}
+
+.project-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.progress-label {
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.progress-track {
+  width: 120px;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.project-stage {
+  font-size: 9px;
+  padding: 3px 8px;
+  border-radius: 2px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.stage-planning { background: #f0f0e6; color: #5a5a2a; }
+.stage-collecting { background: #e8f0eb; color: var(--accent); }
+.stage-analysing { background: #e6e8f0; color: var(--accent3); }
+.stage-writing { background: #f0e8e6; color: var(--accent2); }
+.stage-done { background: var(--tag-bg); color: var(--muted); }
+
+/* Claude prompt cards */
+.prompt-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.prompt-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.prompt-card:hover {
+  border-color: #c8c2b4;
+  background: var(--highlight);
+}
+
+.prompt-card .card-tag {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.prompt-card h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.prompt-card p {
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.prompt-card .copy-prompt {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: none;
+  border: 1px solid var(--accent);
+  padding: 5px 10px;
+  cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.prompt-card .copy-prompt:hover {
+  background: var(--accent);
+  color: white;
+}
+
+.prompt-card .prompt-text {
+  display: none;
+  font-size: 10px;
+  background: var(--highlight);
+  border-left: 2px solid var(--accent);
+  padding: 10px 12px;
+  color: var(--ink);
+  line-height: 1.7;
+  border-radius: 0 2px 2px 0;
+  margin-top: 10px;
+  white-space: pre-wrap;
+}
+
+.prompt-card.expanded .prompt-text { display: block; }
+
+/* ACP section */
+.acp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.acp-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 16px 18px;
+}
+
+.acp-step {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.acp-card h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.acp-card p {
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.acp-card.urgent { border-color: var(--accent2); background: #fdf8f7; }
+.acp-card.urgent .acp-step { color: var(--accent2); }
+
+.footnote {
+  max-width: 860px;
+  margin: 48px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.8;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 32px;
+}
+
+.footnote h5 {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+@media (max-width: 640px) {
+  .block { grid-template-columns: 1fr; }
+  .block-time { font-size: 10px; }
+  .prompt-grid { grid-template-columns: 1fr; }
+  .acp-grid { grid-template-columns: 1fr; }
+  .masthead { grid-template-columns: 1fr; }
+  .footnote { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="masthead-left">
+    <div class="eyebrow">Akiko OS · Workflow System</div>
+    <h1>Sustainable<br><em>AI-assisted</em><br>workflow</h1>
+  </div>
+  <div class="masthead-right">
+    <div class="date-stamp" id="today-date"></div>
+    <div>PACES · Research</div>
+    <div>Writing · Portfolio</div>
+    <div style="margin-top:8px;font-size:9px">Career break ends Aug 2026</div>
+  </div>
+</div>
+
+<!-- Day selector -->
+<div class="day-selector">
+  <button class="day-btn" onclick="showTemplate('shift')">🏥 Shift day<br><span style="font-size:9px;opacity:0.6">2–3h available</span></button>
+  <button class="day-btn active" onclick="showTemplate('study')">📖 Study day<br><span style="font-size:9px;opacity:0.6">6h+ available</span></button>
+  <button class="day-btn" onclick="showTemplate('research')">🔬 Research day<br><span style="font-size:9px;opacity:0.6">Dedicated block</span></button>
+  <button class="day-btn" onclick="showTemplate('writing')">✍️ Writing day<br><span style="font-size:9px;opacity:0.6">Note + Portfolio</span></button>
+</div>
+
+<!-- Shift day template -->
+<div class="template" id="tpl-shift">
+  <div class="template-header">
+    <div class="template-title">Shift day</div>
+    <div class="template-subtitle">2–3h total · protect energy · no new topics</div>
+  </div>
+  <div class="blocks">
+    <div class="block">
+      <div class="block-time">Pre-shift<br>20 min</div>
+      <div class="block-content">
+        <h3>Daily anchor</h3>
+        <p>One clinical vignette or ECG. No Qbank. This keeps PACES warm without draining you before a shift.</p>
+        <div class="claude-prompt"><strong>Claude prompt</strong>Give me one PACES-style clinical vignette for [Cardiology / Respiratory / Neuro — rotate daily]. Start with the case, then ask me what I'd do next. Wait for my answer before revealing the teaching point.</div>
+      </div>
+      <span class="block-tag tag-paces">PACES</span>
+    </div>
+    <div class="block">
+      <div class="block-time">Post-shift<br>30–45 min</div>
+      <div class="block-content">
+        <h3>Portfolio capture</h3>
+        <p>One clinical encounter from today → drafted into a portfolio entry. Do this while it's fresh. Takes 10 min with Claude.</p>
+        <div class="claude-prompt"><strong>Claude prompt</strong>I saw a patient today with [brief description]. Help me write a concise IMT portfolio reflection covering: clinical reasoning, what I learned, and what I'd do differently. Keep it under 150 words.</div>
+      </div>
+      <span class="block-tag tag-portfolio">Portfolio</span>
+    </div>
+    <div class="block">
+      <div class="block-time">Evening<br>optional</div>
+      <div class="block-content">
+        <h3>Audio learning only</h3>
+        <p>If energy allows: podcast or NotebookLM audio on a weak topic. Passive. No screen if tired.</p>
+      </div>
+      <span class="block-tag tag-rest">Recovery</span>
+    </div>
+  </div>
+</div>
+
+<!-- Study day template -->
+<div class="template visible" id="tpl-study">
+  <div class="template-header">
+    <div class="template-title">Study day</div>
+    <div class="template-subtitle">6h structured · PACES-first · one weak topic per day</div>
+  </div>
+  <div class="blocks">
+    <div class="block">
+      <div class="block-time">09:00<br>1.5h</div>
+      <div class="block-content">
+        <h3>Clinical station drill</h3>
+        <p>One PACES station in full — examination findings, presentation, management ladder. Rotate: Cardiology → Respiratory → Neurology → Geriatrics → repeat.</p>
+        <div class="claude-prompt"><strong>Claude prompt</strong>Run a PACES Station [1/2/3/4/5] drill for [specialty]. Give me the examiner's findings, then test my presentation and management. Flag any management ladder errors. I'm weakest on escalation thresholds.</div>
+      </div>
+      <span class="block-tag tag-paces">PACES</span>
+    </div>
+    <div class="block">
+      <div class="block-time">10:30<br>1h</div>
+      <div class="block-content">
+        <h3>Weak topic — framework build</h3>
+        <p>One topic from your error log (management ladder or drug knowledge gap). Build the framework, not just the facts.</p>
+        <div class="claude-prompt"><strong>Claude prompt</strong>Teach me [topic] as a clinical decision tree. Start with the presenting scenario, then walk me through the management ladder step by step — what triggers each escalation. Then quiz me with a vignette.</div>
+      </div>
+      <span class="block-tag tag-paces">PACES</span>
+    </div>
+    <div class="block">
+      <div class="block-time">12:00<br>Break</div>
+      <div class="block-content">
+        <h3>Move + eat</h3>
+        <p>Away from screen. Minimum 45 min. Your data shows study quality drops without this.</p>
+      </div>
+      <span class="block-tag tag-rest">Recovery</span>
+    </div>
+    <div class="block">
+      <div class="block-time">13:00<br>1.5h</div>
+      <div class="block-content">
+        <h3>Research or ACP session</h3>
+        <p>Dedicated block — see Research Tracker below. One concrete deliverable per session, defined before you start.</p>
+        <div class="claude-prompt"><strong>Claude prompt</strong>My research task today is [task]. Help me break it into 3 steps I can complete in 90 minutes. After each step, check in with me before we move on.</div>
+      </div>
+      <span class="block-tag tag-research">Research</span>
+    </div>
+    <div class="block">
+      <div class="block-time">15:00<br>1h</div>
+      <div class="block-content">
+        <h3>Note article or Japanese writing</h3>
+        <p>Paste rough ideas → Claude drafts → you edit. Or free-write in Japanese first, then refine. This is maintenance, not pressure.</p>
+        <div class="claude-prompt"><strong>Claude prompt</strong>Here are my rough ideas for a Note article: [paste]. Target reader: Japanese doctors or medical students in their 30s. Tone: warm, personal, like a senior colleague reflecting honestly. Draft in Japanese.</div>
+      </div>
+      <span class="block-tag tag-writing">Writing</span>
+    </div>
+    <div class="block">
+      <div class="block-time">16:00<br>30 min</div>
+      <div class="block-content">
+        <h3>Day close + tracker update</h3>
+        <p>Update Research Tracker below. Note one thing that worked, one that didn't. Takes 10 min. Keeps momentum across weeks.</p>
+      </div>
+      <span class="block-tag tag-admin">Admin</span>
+    </div>
+  </div>
+</div>
+
+<!-- Research day template -->
+<div class="template" id="tpl-research">
+  <div class="template-header">
+    <div class="template-title">Research day</div>
+    <div class="template-subtitle">Dedicated · one paper · concrete output · no scope creep</div>
+  </div>
+  <div class="blocks">
+    <div class="block">
+      <div class="block-time">09:00<br>15 min</div>
+      <div class="block-content">
+        <h3>Session brief</h3>
+        <p>Before opening anything: write down the single deliverable for today. One sentence. If you can't name it, that IS the session — define it with Claude first.</p>
+        <div class="claude-prompt"><strong>Claude prompt</strong>I'm working on [research paper / audit / QI project]. Last session I completed [X]. Today I have 3 hours. Help me define one specific deliverable I can finish today and break it into 4 timed steps.</div>
+      </div>
+      <span class="block-tag tag-research">Research</span>
+    </div>
+    <div class="block">
+      <div class="block-time">09:15<br>90 min</div>
+      <div class="block-content">
+        <h3>Deep work block</h3>
+        <p>Phone away. One tab. Timer on. Claude on standby for specific questions only — not browsing.</p>
+        <div class="claude-prompt"><strong>Claude prompt</strong>I'm collecting data for [section]. Here's what I have so far: [paste]. What's missing? What should I record for each entry? Don't write it for me — just tell me what I need.</div>
+      </div>
+      <span class="block-tag tag-research">Research</span>
+    </div>
+    <div class="block">
+      <div class="block-time">10:45<br>Break</div>
+      <div class="block-content">
+        <h3>Hard stop — move</h3>
+        <p>15–20 min away from desk. Non-negotiable. Momentum comes back faster with a real break.</p>
+      </div>
+      <span class="block-tag tag-rest">Recovery</span>
+    </div>
+    <div class="block">
+      <div class="block-time">11:00<br>60 min</div>
+      <div class="block-content">
+        <h3>Review + write up</h3>
+        <p>Synthesise what you collected. Paste into Claude for structuring or gap-checking. Finish with a written note of where to pick up next time — one sentence.</p>
+        <div class="claude-prompt"><strong>Claude prompt</strong>Here's what I collected today for [section]: [paste]. Help me organise this into a coherent draft paragraph / table / summary. Flag anything that seems incomplete or inconsistent.</div>
+      </div>
+      <span class="block-tag tag-research">Research</span>
+    </div>
+    <div class="block">
+      <div class="block-time">12:00<br>15 min</div>
+      <div class="block-content">
+        <h3>Handoff note</h3>
+        <p>Write a 3-line note to future-you: what was done, what's next, what you were stuck on. Paste into the tracker below. This is the system that prevents losing the thread.</p>
+      </div>
+      <span class="block-tag tag-admin">Admin</span>
+    </div>
+  </div>
+</div>
+
+<!-- Writing day template -->
+<div class="template" id="tpl-writing">
+  <div class="template-header">
+    <div class="template-title">Writing day</div>
+    <div class="template-subtitle">Note articles · portfolio · Japanese maintenance</div>
+  </div>
+  <div class="blocks">
+    <div class="block">
+      <div class="block-time">Morning<br>2h</div>
+      <div class="block-content">
+        <h3>Note article — full draft</h3>
+        <p>Paste rough ideas → get 3 opening lines → choose one → full draft → edit. One article per writing day, published or not.</p>
+        <div class="claude-prompt"><strong>Claude prompt</strong>Topic: [topic]. Rough ideas: [paste]. Target reader: [describe]. Give me 3 different opening lines first. After I choose, draft the full article in Japanese, warm and personal in tone, under 800 characters for Note.</div>
+      </div>
+      <span class="block-tag tag-writing">Note</span>
+    </div>
+    <div class="block">
+      <div class="block-time">Midday<br>Break</div>
+      <div class="block-content">
+        <h3>Lunch + walk</h3>
+        <p>Writing needs distance. An hour away makes the afternoon edit faster.</p>
+      </div>
+      <span class="block-tag tag-rest">Recovery</span>
+    </div>
+    <div class="block">
+      <div class="block-time">Afternoon<br>1.5h</div>
+      <div class="block-content">
+        <h3>Portfolio batch update</h3>
+        <p>3–4 portfolio entries at once using Google Sheets + Claude. Faster than one at a time. Use a template prompt.</p>
+        <div class="claude-prompt"><strong>Claude prompt</strong>I need to write [N] IMT portfolio reflections. Here are the clinical encounters: [paste each briefly]. For each one, draft a 100-word reflection covering: what I did, what I learned, reflection on my practice. Number them clearly.</div>
+      </div>
+      <span class="block-tag tag-portfolio">Portfolio</span>
+    </div>
+    <div class="block">
+      <div class="block-time">Late PM<br>45 min</div>
+      <div class="block-content">
+        <h3>JLPT or Japanese medical vocab</h3>
+        <p>Language maintenance — one topic, one session. Keeps the skill active without pressure.</p>
+        <div class="claude-prompt"><strong>Claude prompt</strong>今日は日本語医療単語の練習をしたい。[JLPT N1 / 医師国家試験向け] の語彙を使って、クイズ形式で10問出してください。</div>
+      </div>
+      <span class="block-tag tag-writing">Japanese</span>
+    </div>
+  </div>
+</div>
+
+<!-- Research Tracker -->
+<div class="section">
+  <div class="section-rule">
+    <div class="rule-label">Tool</div>
+    <div class="rule"></div>
+    <h2>Research tracker</h2>
+    <div class="rule"></div>
+  </div>
+
+  <div class="research-tracker">
+    <div class="tracker-header">
+      <h3>Active projects</h3>
+      <button class="add-btn" onclick="toggleForm()">+ Add project</button>
+    </div>
+    <div class="project-form" id="project-form">
+      <input type="text" id="proj-name" placeholder="Project name (e.g. Audit: VTE prophylaxis in IMT)">
+      <div class="form-row">
+        <select id="proj-stage">
+          <option value="planning">Stage: Planning</option>
+          <option value="collecting">Stage: Data collection</option>
+          <option value="analysing">Stage: Analysis</option>
+          <option value="writing">Stage: Write-up</option>
+          <option value="done">Stage: Done</option>
+        </select>
+        <input type="text" id="proj-deadline" placeholder="Deadline (e.g. June 2026)">
+      </div>
+      <input type="text" id="proj-next" placeholder="Next specific action (e.g. collect 20 more data points from Jan–Mar admissions)">
+      <button class="save-btn" onclick="addProject()">Save project</button>
+    </div>
+    <div class="project-list" id="project-list">
+      <div style="padding:32px 24px;text-align:center;font-size:11px;color:var(--muted)">
+        No projects yet. Add your first research project above.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ACP Application -->
+<div class="section">
+  <div class="section-rule">
+    <div class="rule-label">Priority</div>
+    <div class="rule"></div>
+    <h2>ACP application — getting started</h2>
+    <div class="rule"></div>
+  </div>
+
+  <div class="acp-grid">
+    <div class="acp-card urgent">
+      <div class="acp-step">Step 1 · This week</div>
+      <h4>Find out what's required</h4>
+      <p>Check the PACES application portal (thefederation.uk). Confirm: eligibility, documents needed, opening/closing dates for Sept–Nov 2026 sitting.</p>
+    </div>
+    <div class="acp-card urgent">
+      <div class="acp-step">Step 2 · This week</div>
+      <h4>Gather documents</h4>
+      <p>GMC number, code number (905620), training evidence, educational supervisor contact. These take time — start now.</p>
+    </div>
+    <div class="acp-card">
+      <div class="acp-step">Step 3 · Next session</div>
+      <h4>Draft personal statement</h4>
+      <p>If required. Paste your rough notes to Claude → get a draft → edit in your voice. 30 min with Claude, not 3 hours alone.</p>
+    </div>
+    <div class="acp-card">
+      <div class="acp-step">Step 4 · Submit</div>
+      <h4>Submit application</h4>
+      <p>Set a calendar reminder 2 weeks before the closing date. Don't leave it to the last day.</p>
+    </div>
+    <div class="acp-card">
+      <div class="acp-step">Claude prompt</div>
+      <h4>Start with this</h4>
+      <p style="font-style:italic">"I need to apply for PACES for the Sept–Nov 2026 sitting. I haven't started. Walk me through what I need to do step by step, and help me draft any written sections."</p>
+    </div>
+    <div class="acp-card">
+      <div class="acp-step">Note</div>
+      <h4>Ask me to help anytime</h4>
+      <p>PACES application is something Claude can walk you through in full. Just open a chat and say you're ready to start.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Claude prompts library -->
+<div class="section">
+  <div class="section-rule">
+    <div class="rule-label">Reference</div>
+    <div class="rule"></div>
+    <h2>Quick-start prompts</h2>
+    <div class="rule"></div>
+  </div>
+
+  <div class="prompt-grid">
+    <div class="prompt-card" onclick="togglePrompt(this)">
+      <div class="card-tag" style="color:var(--accent)">PACES · Daily anchor</div>
+      <h4>One vignette, any station</h4>
+      <p>Use before a shift or as a warm-up. Keeps PACES active without a full session.</p>
+      <button class="copy-prompt" onclick="event.stopPropagation();copyPrompt(this)">Copy prompt</button>
+      <div class="prompt-text">Give me one PACES-style clinical vignette. Rotate between: Cardiology, Respiratory, Neurology, Geriatrics, Palliative. Start with the scenario and examination findings. Ask me what I'd do next, then wait for my answer before teaching. Flag any management ladder errors I make.</div>
+    </div>
+    <div class="prompt-card" onclick="togglePrompt(this)">
+      <div class="card-tag" style="color:var(--accent2)">Research · Session start</div>
+      <h4>Define today's deliverable</h4>
+      <p>Use at the start of every research session. Prevents drift and lost momentum.</p>
+      <button class="copy-prompt" onclick="event.stopPropagation();copyPrompt(this)">Copy prompt</button>
+      <div class="prompt-text">I'm working on [project name]. Last time I [completed X / got stuck on Y]. Today I have [N hours]. Define one specific deliverable I can finish today. Break it into 4 timed steps. Check in with me after each step.</div>
+    </div>
+    <div class="prompt-card" onclick="togglePrompt(this)">
+      <div class="card-tag" style="color:var(--accent3)">Writing · Note article</div>
+      <h4>Rough ideas → Japanese draft</h4>
+      <p>Paste your rough ideas and get a full Japanese draft to edit. Your biggest Claude impact area.</p>
+      <button class="copy-prompt" onclick="event.stopPropagation();copyPrompt(this)">Copy prompt</button>
+      <div class="prompt-text">テーマ：[topic]
+ラフなアイデア：[paste ideas in Japanese or English]
+読者：30代の日本人医師・医学生
+トーン：温かく、個人的で、先輩が正直に振り返るような文体
+
+まず3つの書き出しを提案してください。選んだら全文を書いてください。800字以内でNote向けに。</div>
+    </div>
+    <div class="prompt-card" onclick="togglePrompt(this)">
+      <div class="card-tag" style="color:var(--muted)">Portfolio · Batch</div>
+      <h4>Multiple reflections at once</h4>
+      <p>Write 3–4 portfolio entries in one session. Much faster than one at a time.</p>
+      <button class="copy-prompt" onclick="event.stopPropagation();copyPrompt(this)">Copy prompt</button>
+      <div class="prompt-text">I need to write [N] IMT portfolio reflections. Here are the clinical encounters:
+
+1. [Brief description of case/encounter]
+2. [Brief description]
+3. [Brief description]
+
+For each: draft a ~100-word reflection covering what I did, what I learned, and reflection on my clinical practice. Number them clearly. Use professional but natural language.</div>
+    </div>
+    <div class="prompt-card" onclick="togglePrompt(this)">
+      <div class="card-tag" style="color:var(--accent)">PACES · Management ladder</div>
+      <h4>Framework for a weak topic</h4>
+      <p>Your dominant error type. Build the ladder, not just the facts.</p>
+      <button class="copy-prompt" onclick="event.stopPropagation();copyPrompt(this)">Copy prompt</button>
+      <div class="prompt-text">Teach me [topic] as a clinical decision tree. Format:
+1. Presenting scenario
+2. First-line assessment / investigation
+3. Management step 1 → trigger for step 2 → trigger for step 3
+4. When to escalate and to what
+
+Then give me a vignette and test me. Tell me if I get the sequence wrong, not just the answer.</div>
+    </div>
+    <div class="prompt-card" onclick="togglePrompt(this)">
+      <div class="card-tag" style="color:var(--accent3)">Language · JLPT / 医師国家試験</div>
+      <h4>Japanese medical vocab drill</h4>
+      <p>Maintains your Japanese while studying medicine. Two birds.</p>
+      <button class="copy-prompt" onclick="event.stopPropagation();copyPrompt(this)">Copy prompt</button>
+      <div class="prompt-text">日本語の医療語彙の練習をしたい。
+レベル：JLPT N1 ＋ 医師国家試験向け
+テーマ：[例：循環器 / 呼吸器 / 神経]
+
+クイズ形式で10問出してください。各問：
+・日本語の医療用語または文章を出す
+・英語で意味を答えさせる（または逆）
+・正解後に臨床的な使い方の例文を一つ見せる</div>
+    </div>
+  </div>
+</div>
+
+<div class="footnote">
+  <div>
+    <h5>Golden rules</h5>
+    One deliverable per session.<br>
+    Name it before you start.<br>
+    Rest is part of the system.<br>
+    Update the tracker every time.
+  </div>
+  <div>
+    <h5>Rotation schedule</h5>
+    Mon: Cardiology<br>
+    Tue: Respiratory<br>
+    Wed: Neurology<br>
+    Thu: Geriatrics / Palliative<br>
+    Fri: Research / ACP<br>
+    Sat: Writing / Japanese<br>
+    Sun: Recovery
+  </div>
+  <div>
+    <h5>Timeline</h5>
+    Now → Aug: PACES + research<br>
+    Jul: JLPT 1<br>
+    Aug: IMT2 starts (LTFT 80%)<br>
+    Sept–Nov: PACES sitting<br>
+    Oct–Nov: SpR application
+  </div>
+</div>
+
+<script>
+// Date
+document.getElementById('today-date').textContent = new Date().toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+
+// Day templates
+function showTemplate(type) {
+  document.querySelectorAll('.template').forEach(t => t.classList.remove('visible'));
+  document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tpl-' + type).classList.add('visible');
+  event.currentTarget.classList.add('active');
+}
+
+// Research tracker
+const STORAGE_KEY = 'akiko_research_v1';
+let projects = [];
+
+function loadProjects() {
+  try { projects = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch { projects = []; }
+  renderProjects();
+}
+
+function saveProjects() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+}
+
+function toggleForm() {
+  const f = document.getElementById('project-form');
+  f.classList.toggle('open');
+}
+
+function addProject() {
+  const name = document.getElementById('proj-name').value.trim();
+  const stage = document.getElementById('proj-stage').value;
+  const deadline = document.getElementById('proj-deadline').value.trim();
+  const next = document.getElementById('proj-next').value.trim();
+  if (!name) return;
+  projects.push({ id: Date.now(), name, stage, deadline, next, progress: stageProgress(stage) });
+  saveProjects();
+  renderProjects();
+  document.getElementById('proj-name').value = '';
+  document.getElementById('proj-deadline').value = '';
+  document.getElementById('proj-next').value = '';
+  document.getElementById('project-form').classList.remove('open');
+}
+
+function stageProgress(stage) {
+  return { planning: 10, collecting: 35, analysing: 60, writing: 80, done: 100 }[stage] || 0;
+}
+
+function removeProject(id) {
+  projects = projects.filter(p => p.id !== id);
+  saveProjects();
+  renderProjects();
+}
+
+function renderProjects() {
+  const list = document.getElementById('project-list');
+  if (projects.length === 0) {
+    list.innerHTML = '<div style="padding:32px 24px;text-align:center;font-size:11px;color:var(--muted)">No projects yet. Add your first research project above.</div>';
+    return;
+  }
+  list.innerHTML = projects.map(p => `
+    <div class="project-item">
+      <div>
+        <div class="project-name">${p.name}</div>
+        <div class="project-meta">
+          <span class="project-stage stage-${p.stage}">${p.stage}</span>
+          ${p.deadline ? `<span>Due: ${p.deadline}</span>` : ''}
+          ${p.next ? `<span style="color:var(--ink)">Next: ${p.next}</span>` : ''}
+        </div>
+      </div>
+      <div class="project-progress">
+        <div class="progress-label">${p.progress}%</div>
+        <div class="progress-track"><div class="progress-fill" style="width:${p.progress}%"></div></div>
+        <button onclick="removeProject(${p.id})" style="font-size:9px;background:none;border:none;color:var(--muted);cursor:pointer;font-family:'IBM Plex Mono',monospace;letter-spacing:0.08em">remove</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Prompt cards
+function togglePrompt(card) {
+  card.classList.toggle('expanded');
+}
+
+function copyPrompt(btn) {
+  const text = btn.closest('.prompt-card').querySelector('.prompt-text').textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = 'Copied ✓';
+    setTimeout(() => btn.textContent = orig, 1500);
+  });
+}
+
+loadProjects();
+</script>
+</body>
+</html>

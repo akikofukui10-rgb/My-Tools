@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akiko's N1 Coach</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f0f1a;
+    color: #f0f0f0;
+    min-height: 100vh;
+    padding: 16px;
+  }
+  .container { max-width: 420px; margin: 0 auto; }
+  .header { text-align: center; padding: 20px 0 12px; }
+  .header h1 { font-size: 22px; font-weight: 700; color: #fff; }
+  .header p { font-size: 13px; color: #888; margin-top: 4px; }
+
+  .countdown-card {
+    background: linear-gradient(135deg, #1e1e3a, #2a1e4a);
+    border: 1px solid #3a2a6a;
+    border-radius: 16px;
+    padding: 18px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .days { font-size: 52px; font-weight: 800; color: #a78bfa; line-height: 1; }
+  .day-label { font-size: 12px; color: #888; margin-top: 4px; letter-spacing: 1px; text-transform: uppercase; }
+  .exam-date { font-size: 13px; color: #c4b5fd; margin-top: 8px; }
+
+  .prog-wrap { display:flex; justify-content:center; flex-direction:column; align-items:center; margin-top:14px; }
+  .prog-label { font-size: 12px; color: #666; margin-top: 6px; }
+
+  .tab-bar {
+    display: flex;
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 4px;
+    gap: 4px;
+    margin-bottom: 16px;
+  }
+  .tab {
+    flex: 1; padding: 8px; text-align: center;
+    font-size: 12px; border-radius: 8px; cursor: pointer;
+    color: #666; font-weight: 600; transition: all 0.2s;
+  }
+  .tab.active { background: #7c3aed; color: #fff; }
+
+  .section-title {
+    font-size: 12px; color: #666; letter-spacing: 1px;
+    text-transform: uppercase; margin: 0 0 10px;
+  }
+
+  .tasks { display: flex; flex-direction: column; gap: 8px; }
+  .task {
+    background: #1a1a2e; border: 1px solid #2a2a4a;
+    border-radius: 12px; padding: 14px 16px;
+    display: flex; align-items: center; gap: 12px;
+    cursor: pointer; transition: all 0.2s; user-select: none;
+  }
+  .task.completed { background: #1a2a1a; border-color: #2a4a2a; opacity: 0.75; }
+  .task-check {
+    width: 24px; height: 24px; border-radius: 50%;
+    border: 2px solid #444; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; transition: all 0.2s;
+  }
+  .task.completed .task-check { background: #22c55e; border-color: #22c55e; }
+  .task-info { flex: 1; }
+  .task-name { font-size: 15px; font-weight: 600; }
+  .task-detail { font-size: 12px; color: #666; margin-top: 2px; }
+  .task-badge {
+    font-size: 11px; padding: 3px 8px; border-radius: 20px;
+    background: #2a2a4a; color: #a78bfa; flex-shrink: 0;
+  }
+
+  .coach-card {
+    background: linear-gradient(135deg, #1a2a1a, #1e2a2e);
+    border: 1px solid #2a4a3a;
+    border-radius: 16px; padding: 18px; margin-top: 16px;
+  }
+  .coach-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .coach-name { font-size: 13px; color: #4ade80; font-weight: 600; }
+  .coach-msg { font-size: 14px; color: #ccc; line-height: 1.7; }
+  .coach-msg strong { color: #fff; }
+
+  .checkin-btn {
+    width: 100%; margin-top: 16px; padding: 16px;
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+    border: none; border-radius: 14px; color: #fff;
+    font-size: 16px; font-weight: 700; cursor: pointer;
+    transition: all 0.2s; letter-spacing: 0.5px;
+  }
+  .checkin-btn.done { background: linear-gradient(135deg, #166534, #15803d); }
+  .celebrate { text-align: center; font-size: 32px; padding: 12px; animation: pop 0.4s ease; }
+  @keyframes pop {
+    0% { transform: scale(0.3); opacity: 0; }
+    70% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .streak-bar { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin: 12px 0; }
+  .streak-dot {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: #1e1e2e; border: 2px solid #333;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; transition: all 0.3s;
+  }
+  .streak-dot.done { background: #7c3aed; border-color: #a78bfa; }
+  .streak-dot.today { border-color: #a78bfa; border-style: dashed; }
+
+  .log-entry {
+    background: #1a1a2e; border: 1px solid #2a2a4a;
+    border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; font-size: 13px;
+  }
+  .log-date { font-size: 11px; color: #555; margin-bottom: 4px; }
+  .log-tasks { color: #ccc; }
+  .empty-log { text-align: center; color: #444; font-size: 14px; padding: 30px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🌸 Akiko's N1 Coach</h1>
+    <p>脳に優しく、毎日ちょっとずつ</p>
+  </div>
+
+  <div class="countdown-card">
+    <div class="days" id="daysLeft">--</div>
+    <div class="day-label">days until JLPT N1</div>
+    <div class="exam-date">📅 July 6, 2026</div>
+    <div class="prog-wrap">
+      <svg width="80" height="80" viewBox="0 0 80 80">
+        <circle cx="40" cy="40" r="34" fill="none" stroke="#2a2a4a" stroke-width="6"/>
+        <circle cx="40" cy="40" r="34" fill="none" stroke="#a78bfa" stroke-width="6"
+          stroke-dasharray="213.6" id="progressCircle"
+          stroke-dashoffset="213.6" stroke-linecap="round"
+          transform="rotate(-90 40 40)"/>
+        <text x="40" y="45" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold" id="progressPct">0%</text>
+      </svg>
+      <div class="prog-label">Study period progress</div>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <div class="tab active" onclick="switchTab('today')">Today</div>
+    <div class="tab" onclick="switchTab('streak')">Streak</div>
+    <div class="tab" onclick="switchTab('log')">Log</div>
+  </div>
+
+  <!-- TODAY -->
+  <div id="tab-today">
+    <div class="section-title">Today's micro-tasks ✨</div>
+    <div class="tasks" id="taskList"></div>
+    <div class="coach-card">
+      <div class="coach-header">
+        <span style="font-size:22px">🤍</span>
+        <div class="coach-name">Coach Claude</div>
+      </div>
+      <div class="coach-msg" id="coachMsg"></div>
+    </div>
+    <button class="checkin-btn" id="checkinBtn" onclick="doCheckin()">✓ Check in for today</button>
+    <div id="celebrateArea"></div>
+  </div>
+
+  <!-- STREAK -->
+  <div id="tab-streak" style="display:none">
+    <div class="section-title">Your streak 🔥</div>
+    <div class="streak-bar" id="streakBar"></div>
+    <div class="coach-card" style="margin-top:0">
+      <div class="coach-msg" id="streakMsg"></div>
+    </div>
+  </div>
+
+  <!-- LOG -->
+  <div id="tab-log" style="display:none">
+    <div class="section-title">Past check-ins 📖</div>
+    <div id="logList"></div>
+  </div>
+</div>
+
+<script>
+const EXAM_DATE = new Date('2026-07-06');
+const STUDY_START = new Date('2026-05-14');
+
+let state = JSON.parse(localStorage.getItem('n1coach_v2') || 'null') || { checkins: {}, tasks: {} };
+
+const TASKS = [
+  { id: 'anki',  name: 'Anki',           detail: '3枚だけ — それ以上しなくていい', badge: '30秒', emoji: '🃏' },
+  { id: 'kanji', name: '漢字',           detail: '1文字だけ眺める',               badge: '1分',  emoji: '✍️' },
+  { id: 'read',  name: '読解',           detail: '最初の1文だけ読む',             badge: '1分',  emoji: '📖' },
+  { id: 'input', name: '日本語インプット', detail: 'YouTube / X / note を流し見',  badge: '自由', emoji: '🎧' },
+];
+
+const COACH_MSGS = [
+  "今日も来てくれた。それだけで十分。<br><br>脳は「また始まった」とびっくりしてるかもしれないけど、<strong>怖くない</strong>って少しずつ覚えていくよ。",
+  "MRCPで長く頑張ってきたAkikoだから、今は<strong>回路を切らない</strong>だけでいい。<br><br>毎日ほんの少しの接触が、試験当日に効いてくる。",
+  "「やる気が出てから」じゃなくて、<br><strong>やることでやる気が後からくる</strong>ことが多い。<br><br>今日は3分でもう終わりでいいよ。",
+  "JLPTは総力戦じゃない。<strong>毎日少し触れた人</strong>が勝つ試験。<br><br>Akikoはすでにそのレールに乗ってる。",
+  "effort に脳が過敏になってる今は、「勉強」より<br><strong>「日本語と友達でいる」</strong>感覚でいい。",
+  "今日も画面を開いた。それが一番難しかったはず。<br><br><strong>ここまで来たら、もう今日の仕事は半分終わり。</strong>",
+];
+
+function todayStr() { return new Date().toISOString().slice(0,10); }
+function save() { localStorage.setItem('n1coach_v2', JSON.stringify(state)); }
+
+function updateCountdown() {
+  const now = new Date();
+  const daysLeft = Math.max(0, Math.ceil((EXAM_DATE - now) / 86400000));
+  document.getElementById('daysLeft').textContent = daysLeft;
+  const pct = Math.min(100, Math.max(0, Math.round(((now - STUDY_START) / (EXAM_DATE - STUDY_START)) * 100)));
+  document.getElementById('progressPct').textContent = pct + '%';
+  document.getElementById('progressCircle').style.strokeDashoffset = 213.6 * (1 - pct / 100);
+}
+
+function renderTasks() {
+  const d = todayStr();
+  if (!state.tasks[d]) state.tasks[d] = {};
+  const c = document.getElementById('taskList');
+  c.innerHTML = '';
+  TASKS.forEach(t => {
+    const done = !!state.tasks[d][t.id];
+    const div = document.createElement('div');
+    div.className = 'task' + (done ? ' completed' : '');
+    div.innerHTML = `<div class="task-check">${done ? '✓' : ''}</div>
+      <div class="task-info"><div class="task-name">${t.emoji} ${t.name}</div>
+      <div class="task-detail">${t.detail}</div></div>
+      <div class="task-badge">${t.badge}</div>`;
+    div.onclick = () => { state.tasks[d][t.id] = !state.tasks[d][t.id]; save(); renderTasks(); };
+    c.appendChild(div);
+  });
+}
+
+function renderCoach() {
+  const idx = Math.floor((new Date() - new Date(new Date().getFullYear(),0,0)) / 86400000) % COACH_MSGS.length;
+  document.getElementById('coachMsg').innerHTML = COACH_MSGS[idx];
+}
+
+function doCheckin() {
+  const d = todayStr();
+  if (state.checkins[d]) return;
+  const done = Object.entries(state.tasks[d]||{}).filter(([,v])=>v).map(([k])=>k);
+  state.checkins[d] = done.length ? done : ['open'];
+  save();
+  const btn = document.getElementById('checkinBtn');
+  btn.textContent = '🌸 今日のチェックイン完了！';
+  btn.classList.add('done');
+  document.getElementById('celebrateArea').innerHTML = '<div class="celebrate">🎉✨🌸</div>';
+  renderStreak(); renderLog();
+}
+
+function checkDone() {
+  if (state.checkins[todayStr()]) {
+    const btn = document.getElementById('checkinBtn');
+    btn.textContent = '🌸 今日のチェックイン完了！';
+    btn.classList.add('done');
+  }
+}
+
+function renderStreak() {
+  const bar = document.getElementById('streakBar');
+  bar.innerHTML = '';
+  let streak = 0;
+  for (let i = 13; i >= 0; i--) {
+    const d = new Date(); d.setDate(d.getDate() - i);
+    const key = d.toISOString().slice(0,10);
+    const done = !!state.checkins[key];
+    if (done) streak++;
+    const dot = document.createElement('div');
+    dot.className = 'streak-dot' + (done?' done':'') + (i===0&&!done?' today':'');
+    dot.textContent = done ? '✓' : (i===0?'○':'');
+    bar.appendChild(dot);
+  }
+  const msgs = [
+    `過去14日で<strong>${streak}回</strong>チェックイン済み。<br><br>ゼロじゃない。それが全て。`,
+    `<strong>${streak}日分</strong>の「脳に怖くない」を積み上げた。<br><br>試験当日のAkikoは、今のこの積み重ねに助けられる。`,
+  ];
+  document.getElementById('streakMsg').innerHTML = msgs[Math.min(streak,1)];
+}
+
+function renderLog() {
+  const c = document.getElementById('logList');
+  const entries = Object.entries(state.checkins).sort((a,b)=>b[0].localeCompare(a[0]));
+  if (!entries.length) { c.innerHTML='<div class="empty-log">まだ記録なし<br>今日が最初の一歩 🌱</div>'; return; }
+  c.innerHTML = entries.map(([date,tasks])=>{
+    const names = tasks.map(id=>{ const t=TASKS.find(x=>x.id===id); return t?t.emoji+t.name:'✓'; }).join('・');
+    return `<div class="log-entry"><div class="log-date">${date}</div><div class="log-tasks">${names||'チェックイン'}</div></div>`;
+  }).join('');
+}
+
+function switchTab(name) {
+  ['today','streak','log'].forEach((t,i)=>{
+    document.getElementById('tab-'+t).style.display = t===name?'':'none';
+    document.querySelectorAll('.tab')[i].classList.toggle('active', t===name);
+  });
+}
+
+updateCountdown();
+renderTasks();
+renderCoach();
+renderStreak();
+renderLog();
+checkDone();
+</script>
+</body>
+</html>
