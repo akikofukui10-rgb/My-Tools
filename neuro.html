@@ -328,6 +328,51 @@
     letter-spacing: 0.5px;
   }
 
+  .source-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.2);
+    padding: 2px 7px;
+    border-radius: 4px;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .source-input-wrap {
+    margin-bottom: 12px;
+  }
+
+  .source-input-wrap label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .source-input-wrap input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .source-input-wrap input:focus { border-color: var(--accent); }
+  .source-input-wrap input::placeholder { color: var(--muted); }
+
   .delete-btn {
     background: none;
     border: none;
@@ -585,29 +630,6 @@
     </div>
   </header>
 
-  <!-- Extract panel -->
-  <div class="extract-panel" id="extract-panel">
-    <div class="extract-header">
-      <h3>Extract Pearls from Transcript</h3>
-      <button class="btn btn-outline" onclick="toggleExtract()">✕ Close</button>
-    </div>
-    <div class="extract-body">
-      <textarea id="transcript-input" placeholder="Paste your podcast transcript, article, or notes here. Claude will extract clinical, interview, and research pearls automatically..."></textarea>
-    </div>
-    <div class="extract-footer">
-      <button class="btn btn-primary" onclick="extractPearls()">⚡ Extract Pearls</button>
-      <div class="loading-bar" id="loading-bar">
-        <div class="spinner"></div>
-        <span>Extracting pearls...</span>
-      </div>
-    </div>
-    <div class="preview-cards" id="preview-cards"></div>
-    <div id="add-selected-wrap" style="display:none; padding: 0 20px 20px;">
-      <button class="btn btn-primary" onclick="addSelectedPearls()">+ Add Selected to KB</button>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-left:12px;" id="selected-count"></span>
-    </div>
-  </div>
-
   <!-- Controls -->
   <div class="controls">
     <div class="search-wrap">
@@ -619,9 +641,8 @@
     </div>
     <div class="divider"></div>
     <div class="action-btns">
-      <button class="btn btn-primary" onclick="toggleExtract()">⚡ Extract from Transcript</button>
-      <button class="btn btn-outline" onclick="openImport()">↑ Import</button>
-      <button class="btn btn-outline" onclick="exportData()">↓ Export</button>
+      <button class="btn btn-primary" onclick="openImport()">↑ Import JSON</button>
+      <button class="btn btn-outline" onclick="exportData()">↓ Export JSON</button>
     </div>
   </div>
 
@@ -642,9 +663,18 @@
 <!-- Import modal -->
 <div class="modal-overlay" id="import-modal">
   <div class="modal">
-    <h3>Import Knowledge Base</h3>
-    <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">Paste your previously exported JSON below.</p>
-    <textarea id="import-textarea" placeholder='[{"topic":"Stroke","type":"clinical","text":"..."}]'></textarea>
+    <h3>Import Pearls</h3>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:4px;">Paste JSON from Claude or a previous export.</p>
+    <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);margin-bottom:12px;letter-spacing:0.5px;">In Claude chat, say: "extract pearls from this" then paste your text.</p>
+    <textarea id="import-textarea" placeholder='[{"topic":"Stroke","type":"clinical","text":"...","source":"..."}]'></textarea>
+    <div style="display:flex;gap:8px;margin-bottom:12px;">
+      <label style="display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer;">
+        <input type="radio" name="import-mode" value="merge" checked> Merge with existing
+      </label>
+      <label style="display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer;">
+        <input type="radio" name="import-mode" value="replace"> Replace all
+      </label>
+    </div>
     <div class="modal-btns">
       <button class="btn btn-outline" onclick="closeImport()">Cancel</button>
       <button class="btn btn-primary" onclick="importData()">Import</button>
@@ -711,7 +741,6 @@ let pearls = [
 let nextId = pearls.length + 1;
 let activeTopicFilter = 'all';
 let activeTypeFilter = 'all';
-let pendingPearls = [];
 
 // ─── Render ──────────────────────────────────────────────────────────────────
 
@@ -746,7 +775,7 @@ function render() {
         </div>
         <div class="card-body">${p.text}</div>
         <div class="card-footer">
-          <span class="source-label">#${p.id}</span>
+          ${p.source ? `<span class="source-tag" title="${p.source}">↗ ${p.source}</span>` : `<span class="source-label">#${p.id}</span>`}
           <button class="delete-btn" onclick="deletePearl(${p.id})" title="Delete">✕</button>
         </div>
       `;
@@ -789,117 +818,6 @@ function deletePearl(id) {
   toast('Pearl removed');
 }
 
-// ─── Extract ─────────────────────────────────────────────────────────────────
-
-function toggleExtract() {
-  const panel = document.getElementById('extract-panel');
-  panel.classList.toggle('open');
-  if (panel.classList.contains('open')) {
-    document.getElementById('transcript-input').focus();
-  }
-}
-
-async function extractPearls() {
-  const text = document.getElementById('transcript-input').value.trim();
-  if (!text) { toast('Paste a transcript first'); return; }
-
-  const loading = document.getElementById('loading-bar');
-  const previewArea = document.getElementById('preview-cards');
-  const addWrap = document.getElementById('add-selected-wrap');
-
-  loading.classList.add('active');
-  previewArea.innerHTML = '';
-  addWrap.style.display = 'none';
-  pendingPearls = [];
-
-  const prompt = `You are a neurology knowledge extraction assistant. Extract clinical pearls from the following neurology content.
-
-Return ONLY a valid JSON array. No preamble, no markdown, no explanation. Each object must have exactly these fields:
-- "topic": one of "Stroke", "MS", "Parkinson's", "Epilepsy", "Dementia", "Headache", "Neuro-ophthalmology", "General", "Neuromuscular", "Movement Disorders", "Cognitive Neurology"
-- "type": one of "clinical", "interview", "research", "portfolio"
-- "text": the pearl text, 1-3 sentences. Use <strong> tags to bold the most important phrase.
-
-Extract 4-8 pearls. Focus on:
-- clinical: practical bedside knowledge, examination findings, red flags, management steps
-- interview: talking points that demonstrate thinking like a future neurologist, controversies, trials
-- research: biomarkers, emerging evidence, trial findings
-- portfolio: audit or QIP ideas
-
-Content to extract from:
-${text.substring(0, 4000)}`;
-
-  try {
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        messages: [{ role: "user", content: prompt }]
-      })
-    });
-
-    const data = await response.json();
-    const raw = data.content.map(i => i.text || '').join('');
-    const cleaned = raw.replace(/```json|```/g, '').trim();
-    const extracted = JSON.parse(cleaned);
-
-    pendingPearls = extracted.map((p, i) => ({ ...p, _tempId: i }));
-
-    previewArea.innerHTML = '';
-    pendingPearls.forEach(p => {
-      const div = document.createElement('div');
-      div.className = 'preview-card';
-      div.innerHTML = `
-        <div class="preview-check checked" id="check-${p._tempId}" onclick="toggleCheck(${p._tempId}, this)"></div>
-        <div class="preview-content">
-          <div class="preview-meta">
-            <span class="topic-tag">${p.topic}</span>
-            <span class="type-badge ${p.type}">${p.type}</span>
-          </div>
-          <div class="preview-text">${p.text}</div>
-        </div>
-      `;
-      previewArea.appendChild(div);
-    });
-
-    addWrap.style.display = 'block';
-    updateSelectedCount();
-
-  } catch (e) {
-    previewArea.innerHTML = `<div style="padding:16px;color:var(--rose);font-size:13px;">Extraction failed. Please try again.</div>`;
-    console.error(e);
-  }
-
-  loading.classList.remove('active');
-}
-
-function toggleCheck(id, el) {
-  el.classList.toggle('checked');
-  updateSelectedCount();
-}
-
-function updateSelectedCount() {
-  const total = pendingPearls.length;
-  const selected = document.querySelectorAll('.preview-check.checked').length;
-  document.getElementById('selected-count').textContent = `${selected} of ${total} selected`;
-}
-
-function addSelectedPearls() {
-  const checks = document.querySelectorAll('.preview-check');
-  checks.forEach((check, i) => {
-    if (check.classList.contains('checked') && pendingPearls[i]) {
-      pearls.push({ ...pendingPearls[i], id: nextId++ });
-    }
-  });
-  document.getElementById('preview-cards').innerHTML = '';
-  document.getElementById('add-selected-wrap').style.display = 'none';
-  document.getElementById('transcript-input').value = '';
-  pendingPearls = [];
-  render();
-  toast('Pearls added to KB ✓');
-}
-
 // ─── Import / Export ─────────────────────────────────────────────────────────
 
 function exportData() {
@@ -927,15 +845,24 @@ function importData() {
     const raw = document.getElementById('import-textarea').value;
     const imported = JSON.parse(raw);
     if (!Array.isArray(imported)) throw new Error('Not an array');
-    pearls = imported;
-    nextId = Math.max(...pearls.map(p => p.id), 0) + 1;
+    const mode = document.querySelector('input[name="import-mode"]:checked').value;
+    if (mode === 'replace') {
+      pearls = imported.map((p, i) => ({ ...p, id: p.id || (i + 1) }));
+      nextId = Math.max(...pearls.map(p => p.id), 0) + 1;
+    } else {
+      const maxId = Math.max(...pearls.map(p => p.id), 0);
+      const newPearls = imported.map((p, i) => ({ ...p, id: maxId + i + 1 }));
+      pearls = [...pearls, ...newPearls];
+      nextId = Math.max(...pearls.map(p => p.id), 0) + 1;
+    }
     activeTopicFilter = 'all';
     activeTypeFilter = 'all';
     render();
     closeImport();
-    toast(`Imported ${imported.length} pearls ✓`);
+    document.getElementById('import-textarea').value = '';
+    toast(`${mode === 'replace' ? 'Loaded' : 'Merged'} ${imported.length} pearls ✓`);
   } catch (e) {
-    alert('Invalid JSON. Please paste a valid export file.');
+    alert('Invalid JSON. Paste the JSON array from Claude or a previous export.');
   }
 }
 
