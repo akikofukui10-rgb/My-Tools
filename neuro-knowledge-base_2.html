@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neuro KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0f1a;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --border: #1e2d45;
+    --accent: #00d4ff;
+    --accent2: #7c3aed;
+    --gold: #f59e0b;
+    --green: #10b981;
+    --rose: #f43f5e;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --subtle: #334155;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  header {
+    padding: 40px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .logo-block h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .logo-block p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  .stats {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* Controls */
+  .controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .search-wrap {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+  }
+
+  .search-wrap input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 14px 10px 36px;
+    border-radius: 8px;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-wrap input:focus { border-color: var(--accent); }
+
+  .search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .filter-group {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #000; font-weight: 500; }
+
+  .divider {
+    width: 1px;
+    height: 32px;
+    background: var(--border);
+  }
+
+  /* Action buttons */
+  .action-btns {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn {
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+    font-weight: 500;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+
+  .btn-outline {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--muted);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Pearl type filters */
+  .type-filters {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+
+  /* Grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  /* Card */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+    animation: fadeIn 0.3s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    border-color: var(--subtle);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .card[data-type="clinical"]::before { background: var(--green); }
+  .card[data-type="interview"]::before { background: var(--accent); }
+  .card[data-type="research"]::before { background: var(--accent2); }
+  .card[data-type="portfolio"]::before { background: var(--gold); }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .topic-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .type-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  .type-badge.clinical { background: rgba(16,185,129,0.15); color: var(--green); }
+  .type-badge.interview { background: rgba(0,212,255,0.15); color: var(--accent); }
+  .type-badge.research { background: rgba(124,58,237,0.15); color: #a78bfa; }
+  .type-badge.portfolio { background: rgba(245,158,11,0.15); color: var(--gold); }
+
+  .card-body {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text);
+    font-weight: 300;
+  }
+
+  .card-body strong {
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .card-footer {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .source-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+
+  .source-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.2);
+    padding: 2px 7px;
+    border-radius: 4px;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .source-input-wrap {
+    margin-bottom: 12px;
+  }
+
+  .source-input-wrap label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .source-input-wrap input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .source-input-wrap input:focus { border-color: var(--accent); }
+  .source-input-wrap input::placeholder { color: var(--muted); }
+
+  .delete-btn {
+    background: none;
+    border: none;
+    color: var(--subtle);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: color 0.2s;
+  }
+  .delete-btn:hover { color: var(--rose); }
+
+  /* Empty state */
+  .empty {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--muted);
+    grid-column: 1/-1;
+  }
+
+  .empty h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--subtle);
+    margin-bottom: 8px;
+  }
+
+  .empty p { font-size: 14px; }
+
+  /* Extract panel */
+  .extract-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 32px;
+    display: none;
+  }
+
+  .extract-panel.open { display: block; }
+
+  .extract-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .extract-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .extract-body { padding: 20px; }
+
+  .extract-body textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 14px;
+    border-radius: 8px;
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
+    line-height: 1.6;
+    resize: vertical;
+    min-height: 140px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .extract-body textarea:focus { border-color: var(--accent); }
+
+  .extract-body textarea::placeholder { color: var(--muted); }
+
+  .extract-footer {
+    padding: 0 20px 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .loading-bar {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+  }
+
+  .loading-bar.active { display: flex; }
+
+  .spinner {
+    width: 14px; height: 14px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Preview area */
+  .preview-cards {
+    padding: 0 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .preview-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .preview-check {
+    width: 18px; height: 18px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .preview-check.checked {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .preview-check.checked::after {
+    content: '✓';
+    color: #000;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .preview-content { flex: 1; }
+
+  .preview-meta {
+    display: flex; gap: 6px; margin-bottom: 6px;
+  }
+
+  .preview-text {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--green);
+    color: #000;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    z-index: 100;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s;
+  }
+
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* Import/Export modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 50;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    max-width: 520px;
+    width: 100%;
+  }
+
+  .modal h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+
+  .modal textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    line-height: 1.5;
+    resize: vertical;
+    min-height: 160px;
+    outline: none;
+    margin-bottom: 12px;
+  }
+
+  .modal-btns { display: flex; gap: 8px; justify-content: flex-end; }
+
+  @media (max-width: 600px) {
+    .header-inner { flex-direction: column; align-items: flex-start; }
+    .stats { gap: 16px; }
+    .controls { flex-direction: column; align-items: stretch; }
+    .filter-group { justify-content: flex-start; }
+    .divider { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="header-inner">
+      <div class="logo-block">
+        <h1>Neuro KB</h1>
+        <p>Future Neurologist · Knowledge Base</p>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-num" id="total-count">0</div>
+          <div class="stat-label">Pearls</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" id="topic-count">0</div>
+          <div class="stat-label">Topics</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Controls -->
+  <div class="controls">
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input type="text" id="search-input" placeholder="Search pearls..." oninput="render()">
+    </div>
+    <div class="filter-group" id="topic-filters">
+      <button class="filter-btn active" data-topic="all" onclick="setFilter('topic','all',this)">All Topics</button>
+    </div>
+    <div class="divider"></div>
+    <div class="action-btns">
+      <button class="btn btn-primary" onclick="openImport()">↑ Import JSON</button>
+      <button class="btn btn-outline" onclick="exportData()">↓ Export JSON</button>
+    </div>
+  </div>
+
+  <div class="type-filters" id="type-filters">
+    <button class="filter-btn active" data-type="all" onclick="setFilter('type','all',this)">All Types</button>
+    <button class="filter-btn" data-type="clinical" onclick="setFilter('type','clinical',this)">🟢 Clinical</button>
+    <button class="filter-btn" data-type="interview" onclick="setFilter('type','interview',this)">🔵 Interview</button>
+    <button class="filter-btn" data-type="research" onclick="setFilter('type','research',this)">🟣 Research</button>
+    <button class="filter-btn" data-type="portfolio" onclick="setFilter('type','portfolio',this)">🟡 Portfolio</button>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Import modal -->
+<div class="modal-overlay" id="import-modal">
+  <div class="modal">
+    <h3>Import Pearls</h3>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:4px;">Paste JSON from Claude or a previous export.</p>
+    <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);margin-bottom:12px;letter-spacing:0.5px;">In Claude chat, say: "extract pearls from this" then paste your text.</p>
+    <textarea id="import-textarea" placeholder='[{"topic":"Stroke","type":"clinical","text":"...","source":"..."}]'></textarea>
+    <div style="display:flex;gap:8px;margin-bottom:12px;">
+      <label style="display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer;">
+        <input type="radio" name="import-mode" value="merge" checked> Merge with existing
+      </label>
+      <label style="display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer;">
+        <input type="radio" name="import-mode" value="replace"> Replace all
+      </label>
+    </div>
+    <div class="modal-btns">
+      <button class="btn btn-outline" onclick="closeImport()">Cancel</button>
+      <button class="btn btn-primary" onclick="importData()">Import</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── Data ───────────────────────────────────────────────────────────────────
+
+let pearls = [
+  // STROKE
+  { id: 1, topic: "Stroke", type: "clinical", text: "<strong>NIHSS is not just a score — it's a roadmap.</strong> Systematically walk through it: consciousness, gaze, visual fields, facial palsy, arm/leg motor, limb ataxia, sensory, language, dysarthria, neglect. It tells you exactly where the lesion is." },
+  { id: 2, topic: "Stroke", type: "clinical", text: "<strong>Time is brain.</strong> Approximately 1.9 million neurons die every minute during an ischaemic stroke. The mantra 'treat fast' has genuine biological basis — the faster the reperfusion, the greater the salvage of penumbral tissue." },
+  { id: 3, topic: "Stroke", type: "clinical", text: "<strong>Posterior circulation stroke is the great mimic.</strong> Vertigo, vomiting, and ataxia can be dismissed as labyrinthitis. HINTS exam (Head Impulse, Nystagmus, Test of Skew) outperforms early MRI in detecting posterior stroke. A normal head impulse test in an acutely vertiginous patient = posterior fossa lesion until proven otherwise." },
+  { id: 4, topic: "Stroke", type: "interview", text: "When asked about the future of stroke care, discuss the <strong>expansion of mechanical thrombectomy to 24-hour windows</strong> (DAWN, DEFUSE 3 trials) and the role of AI in automated perfusion imaging (RapidAI) to select patients beyond conventional time windows." },
+  { id: 5, topic: "Stroke", type: "interview", text: "<strong>Secondary prevention is where neurology meets general medicine.</strong> Rate- vs rhythm-control in AF, dual antiplatelet in minor stroke/TIA (POINT trial), and statin intensity matter enormously — knowing this signals clinical depth." },
+  { id: 6, topic: "Stroke", type: "research", text: "<strong>Blood biomarkers in stroke</strong> are an active frontier: GFAP and UCH-L1 can distinguish haemorrhagic from ischaemic stroke within minutes. SERUM-biomarker-guided triage may one day reduce unnecessary CT head delays." },
+  { id: 7, topic: "Stroke", type: "portfolio", text: "Audit idea: <strong>Door-to-needle times for thrombolysis</strong> at your trust vs national benchmark (60 min). Even small QIPs on checklist-driven protocols for ED stroke activation have strong publication potential." },
+
+  // MS
+  { id: 8, topic: "MS", type: "clinical", text: "<strong>Clinically isolated syndrome (CIS)</strong> — a first demyelinating episode — does not equal MS. MS diagnosis requires dissemination in time AND space (McDonald Criteria 2017). One T2 lesion with simultaneous gadolinium enhancement counts as both." },
+  { id: 9, topic: "MS", type: "clinical", text: "<strong>Uhthoff's phenomenon</strong>: transient neurological worsening with heat or exercise. This is NOT a relapse. Telling a patient this distinction avoids unnecessary MRI and steroid courses. It occurs because heat slows axonal conduction velocity in demyelinated fibres." },
+  { id: 10, topic: "MS", type: "clinical", text: "When assessing an MS patient, always ask about <strong>fatigue, bladder dysfunction, sexual dysfunction, and cognitive fog</strong> — these are often the most disabling symptoms and are frequently under-reported." },
+  { id: 11, topic: "MS", type: "interview", text: "The MS treatment paradigm has shifted from <strong>'escalation' to 'treat to target'</strong> — some centres now argue for early high-efficacy therapy (natalizumab, ocrelizumab, alemtuzumab) rather than starting with platform therapies, especially in young patients with high lesion burden." },
+  { id: 12, topic: "MS", type: "research", text: "<strong>Serum neurofilament light chain (sNfL)</strong> is emerging as a sensitive biomarker of neuroaxonal injury. Elevated sNfL correlates with relapse activity, disability progression, and response to DMTs — potentially enabling monitoring without annual MRI." },
+
+  // Parkinson's
+  { id: 13, topic: "Parkinson's", type: "clinical", text: "<strong>The cardinal features are TRAP</strong>: Tremor (rest, pill-rolling, 4-6Hz), Rigidity (cogwheel), Akinesia/bradykinesia, Postural instability. But bradykinesia is the sine qua non — you cannot diagnose PD without it." },
+  { id: 14, topic: "Parkinson's", type: "clinical", text: "<strong>Red flags for Parkinson's Plus syndromes</strong>: early falls (PSP), early autonomic failure (MSA), early dementia (DLB or MSA), symmetrical onset, poor levodopa response, cerebellar features. These should trigger rethinking the diagnosis." },
+  { id: 15, topic: "Parkinson's", type: "clinical", text: "<strong>Levodopa timing matters on the ward.</strong> Missed doses cause potentially life-threatening 'off' periods with immobility, dysphagia, and aspiration. Never stop Parkinson's medications perioperatively without specialist input." },
+  { id: 16, topic: "Parkinson's", type: "interview", text: "Discuss <strong>disease-modification vs symptomatic treatment</strong> — currently all approved PD therapies are symptomatic. Alpha-synuclein-targeted therapies (e.g. Prasinezumab) are in Phase 2/3 trials and represent the frontier of PD research." },
+  { id: 17, topic: "Parkinson's", type: "research", text: "<strong>GBA1 mutations</strong> are the most common genetic risk factor for Parkinson's disease, conferring a 5–10× lifetime risk. This has opened the door to genotype-stratified trials and potential lysosomal pathway therapies." },
+
+  // Epilepsy
+  { id: 18, topic: "Epilepsy", type: "clinical", text: "<strong>Not all seizures are epilepsy.</strong> ILAE definition requires either 2+ unprovoked seizures ≥24h apart, OR one seizure with ≥60% recurrence risk. A provoked seizure (hyponatraemia, hypoglycaemia, alcohol withdrawal) does not = epilepsy." },
+  { id: 19, topic: "Epilepsy", type: "clinical", text: "<strong>PNES (Psychogenic Non-Epileptic Seizures)</strong> affects ~20% of patients referred to epilepsy services and is frequently misdiagnosed and over-treated. Features suggesting PNES: eyes closed during event, prolonged duration >2 min, ictal crying, preserved awareness during bilateral motor activity." },
+  { id: 20, topic: "Epilepsy", type: "clinical", text: "<strong>Status epilepticus management: the 30-minute rule.</strong> Lorazepam → repeat lorazepam → IV levetiracetam or sodium valproate → anaesthesia. Know this sequence and know the doses. On call neurologists are called for status — having this fluent impresses." },
+  { id: 21, topic: "Epilepsy", type: "interview", text: "The <strong>epilepsy surgical revolution</strong>: SEEG (stereoelectroencephalography), robotic-assisted placement, and increasingly precise 3T MRI/PET co-registration mean more patients with drug-resistant epilepsy are candidates for curative surgery. This is a compelling area of growth in UK neurology." },
+  { id: 22, topic: "Epilepsy", type: "research", text: "<strong>SCN1A mutations</strong> (Dravet syndrome) are the prototypic genetic epilepsy. Sodium channel blockers (carbamazepine, lamotrigine) are contraindicated and worsen seizures — a critical clinical-genomics crossover that matters on the wards and in interviews." },
+
+  // Dementia
+  { id: 23, topic: "Dementia", type: "clinical", text: "<strong>Alzheimer's ≠ just memory loss.</strong> Posterior cortical atrophy causes visuospatial failure; logopenic aphasia variant affects language; frontal variant presents as behavioural change. Knowing the variants makes you sound far beyond the average IMT doctor." },
+  { id: 24, topic: "Dementia", type: "clinical", text: "<strong>Reversible causes of cognitive decline</strong>: B12 deficiency, hypothyroidism, NPH (wet/wobbly/wacky triad), subdural haematoma, HIV, syphilis, Wernicke's. These should be excluded before any dementia diagnosis is accepted." },
+  { id: 25, topic: "Dementia", type: "clinical", text: "<strong>DLB vs Alzheimer's</strong>: fluctuating cognition, visual hallucinations, and parkinsonism are the core DLB features. Critical point: these patients are exquisitely sensitive to antipsychotics — can cause severe, irreversible NMS-like reactions. Never prescribe haloperidol in DLB." },
+  { id: 26, topic: "Dementia", type: "interview", text: "The <strong>Lecanemab and Donanemab approval era</strong> is transforming Alzheimer's care. These anti-amyloid monoclonal antibodies are the first DMTs shown to slow cognitive decline in early AD. Key concerns: ARIA (amyloid-related imaging abnormalities), patient selection (early disease, APOE4 genotype), and NHS accessibility." },
+  { id: 27, topic: "Dementia", type: "research", text: "<strong>Blood-based biomarkers for AD</strong>: plasma p-tau217, p-tau181, and Abeta42/40 ratio can now detect AD pathology with diagnostic accuracy approaching CSF. This is set to transform screening, clinical trial recruitment, and potentially diagnostic pathways in 5–10 years." },
+
+  // Headache
+  { id: 28, topic: "Headache", type: "clinical", text: "<strong>Thunderclap headache = subarachnoid haemorrhage until proven otherwise.</strong> Non-contrast CT head within 6h has ~98% sensitivity. If CT negative and suspicion remains: LP at 12h post-onset looking for xanthochromia." },
+  { id: 29, topic: "Headache", type: "clinical", text: "<strong>Medication overuse headache (MOH)</strong> affects ~1–2% of the population and is the most underrecognised cause of chronic daily headache. Simple analgesics, triptans, or opioids used >10–15 days/month for 3+ months. Withdrawal is the treatment — warn patients headache initially worsens." },
+  { id: 30, topic: "Headache", type: "interview", text: "<strong>CGRP monoclonal antibodies</strong> (erenumab, fremanezumab, galcanezumab) are a genuine paradigm shift in migraine prevention — the first migraine-specific preventatives. Knowing the mechanism (blocking CGRP or its receptor at the trigeminal level) signals research-level understanding." },
+
+  // Neuro-ophthalmology
+  { id: 31, topic: "Neuro-ophthalmology", type: "clinical", text: "<strong>Relative Afferent Pupillary Defect (RAPD)</strong> — the swinging torch test — is one of the most important signs in neurology. RAPD = optic nerve or severe retinal disease. No RAPD in a 'blind' eye suggests non-organic visual loss." },
+  { id: 32, topic: "Neuro-ophthalmology", type: "clinical", text: "<strong>CN III palsy algorithm</strong>: complete ptosis + down-and-out eye + dilated pupil = posterior communicating artery aneurysm until proven otherwise. This is a neurosurgical emergency. Pupil-sparing CN III palsy is more likely microvascular (diabetes/hypertension)." },
+
+  // General neurology
+  { id: 33, topic: "General", type: "clinical", text: "<strong>Foot drop is peroneal nerve until proven otherwise</strong> — but always exclude L4/L5 radiculopathy (hip abductor weakness absent in peroneal palsy, present in radiculopathy) and sciatic nerve lesion (hamstrings affected)." },
+  { id: 34, topic: "General", type: "interview", text: "When asked 'why neurology?': frame it around <strong>diagnostic reasoning, the growing therapeutic landscape</strong> (the nihilism era is over), and the intersection of basic science and clinical medicine. Avoid generic answers — reference specific cases, podcasts, or experiences." },
+  { id: 35, topic: "General", type: "clinical", text: "<strong>The cerebellar speech triad</strong>: dysarthria (slurred), dysmetria (past pointing), dysdiadochokinesia (impaired rapid alternating movements). DANISH — Dysdiadochokinesia, Ataxia, Nystagmus, Intention tremor, Slurred speech, Hypotonia." },
+];
+
+let nextId = pearls.length + 1;
+let activeTopicFilter = 'all';
+let activeTypeFilter = 'all';
+
+// ─── Render ──────────────────────────────────────────────────────────────────
+
+function getTopics() {
+  return [...new Set(pearls.map(p => p.topic))].sort();
+}
+
+function render() {
+  const search = document.getElementById('search-input').value.toLowerCase();
+  const filtered = pearls.filter(p => {
+    const matchTopic = activeTopicFilter === 'all' || p.topic === activeTopicFilter;
+    const matchType = activeTypeFilter === 'all' || p.type === activeTypeFilter;
+    const matchSearch = !search || p.text.toLowerCase().includes(search) || p.topic.toLowerCase().includes(search);
+    return matchTopic && matchType && matchSearch;
+  });
+
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="empty"><h3>No pearls found</h3><p>Try a different filter or extract from a transcript.</p></div>`;
+  } else {
+    filtered.forEach((p, i) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.dataset.type = p.type;
+      card.style.animationDelay = (i * 30) + 'ms';
+      card.innerHTML = `
+        <div class="card-header">
+          <span class="topic-tag">${p.topic}</span>
+          <span class="type-badge ${p.type}">${p.type}</span>
+        </div>
+        <div class="card-body">${p.text}</div>
+        <div class="card-footer">
+          ${p.source ? `<span class="source-tag" title="${p.source}">↗ ${p.source}</span>` : `<span class="source-label">#${p.id}</span>`}
+          <button class="delete-btn" onclick="deletePearl(${p.id})" title="Delete">✕</button>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  // Stats
+  document.getElementById('total-count').textContent = pearls.length;
+  document.getElementById('topic-count').textContent = getTopics().length;
+
+  // Topic filter buttons
+  const topicWrap = document.getElementById('topic-filters');
+  topicWrap.innerHTML = `<button class="filter-btn ${activeTopicFilter === 'all' ? 'active' : ''}" data-topic="all" onclick="setFilter('topic','all',this)">All Topics</button>`;
+  getTopics().forEach(t => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (activeTopicFilter === t ? ' active' : '');
+    btn.dataset.topic = t;
+    btn.textContent = t;
+    btn.onclick = function() { setFilter('topic', t, this); };
+    topicWrap.appendChild(btn);
+  });
+}
+
+function setFilter(kind, val, btn) {
+  if (kind === 'topic') {
+    activeTopicFilter = val;
+    document.querySelectorAll('#topic-filters .filter-btn').forEach(b => b.classList.remove('active'));
+  } else {
+    activeTypeFilter = val;
+    document.querySelectorAll('#type-filters .filter-btn').forEach(b => b.classList.remove('active'));
+  }
+  btn.classList.add('active');
+  render();
+}
+
+function deletePearl(id) {
+  pearls = pearls.filter(p => p.id !== id);
+  render();
+  toast('Pearl removed');
+}
+
+// ─── Import / Export ─────────────────────────────────────────────────────────
+
+function exportData() {
+  const json = JSON.stringify(pearls, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'neuro-kb.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('Exported ✓');
+}
+
+function openImport() {
+  document.getElementById('import-modal').classList.add('open');
+}
+
+function closeImport() {
+  document.getElementById('import-modal').classList.remove('open');
+}
+
+function importData() {
+  try {
+    const raw = document.getElementById('import-textarea').value;
+    const imported = JSON.parse(raw);
+    if (!Array.isArray(imported)) throw new Error('Not an array');
+    const mode = document.querySelector('input[name="import-mode"]:checked').value;
+    if (mode === 'replace') {
+      pearls = imported.map((p, i) => ({ ...p, id: p.id || (i + 1) }));
+      nextId = Math.max(...pearls.map(p => p.id), 0) + 1;
+    } else {
+      const maxId = Math.max(...pearls.map(p => p.id), 0);
+      const newPearls = imported.map((p, i) => ({ ...p, id: maxId + i + 1 }));
+      pearls = [...pearls, ...newPearls];
+      nextId = Math.max(...pearls.map(p => p.id), 0) + 1;
+    }
+    activeTopicFilter = 'all';
+    activeTypeFilter = 'all';
+    render();
+    closeImport();
+    document.getElementById('import-textarea').value = '';
+    toast(`${mode === 'replace' ? 'Loaded' : 'Merged'} ${imported.length} pearls ✓`);
+  } catch (e) {
+    alert('Invalid JSON. Paste the JSON array from Claude or a previous export.');
+  }
+}
+
+// ─── Toast ───────────────────────────────────────────────────────────────────
+
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+// ─── Init ────────────────────────────────────────────────────────────────────
+
+render();
+</script>
+</body>
+</html>
