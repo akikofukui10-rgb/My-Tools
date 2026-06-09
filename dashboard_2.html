@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AKIKO OS — Master Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0e14;
+  --surface: #111720;
+  --surface2: #1a2232;
+  --border: rgba(255,255,255,0.07);
+  --text: #e8eaf0;
+  --text-dim: rgba(232,234,240,0.5);
+  --text-faint: rgba(232,234,240,0.25);
+  --gold: #c8963e;
+  --gold-dim: rgba(200,150,62,0.2);
+  --teal: #2dd4bf;
+  --rose: #fb7185;
+  --violet: #a78bfa;
+  --amber: #fbbf24;
+  --green: #4ade80;
+  --blue: #60a5fa;
+  --orange: #fb923c;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Lato',sans-serif;min-height:100vh;overflow-x:hidden;}
+
+/* ── TOP BAR ── */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 40px;
+  border-bottom:1px solid var(--border);
+  background:rgba(10,14,20,0.95);
+  position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(12px);
+}
+.logo{font-family:'Playfair Display',serif;font-size:18px;letter-spacing:.08em;color:var(--gold);}
+.logo span{font-style:italic;color:var(--text-dim);}
+.timestamp{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-faint);letter-spacing:.1em;}
+
+/* ── TAB NAV ── */
+.tabnav{
+  display:flex;gap:0;
+  border-bottom:1px solid var(--border);
+  background:var(--surface);
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.tabnav::-webkit-scrollbar{display:none;}
+.tab-btn{
+  padding:14px 22px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-dim);
+  border:none;background:transparent;cursor:pointer;
+  border-bottom:2px solid transparent;
+  white-space:nowrap;
+  transition:all .2s;
+}
+.tab-btn:hover{color:var(--text);background:rgba(255,255,255,0.03);}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);background:rgba(200,150,62,0.06);}
+
+/* ── TAB CONTENT ── */
+.tab-content{display:none;padding:40px;}
+.tab-content.active{display:block;}
+
+/* ── SECTION LABEL ── */
+.section-label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--gold);
+  margin-bottom:24px;display:flex;align-items:center;gap:12px;
+}
+.section-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--gold-dim),transparent);}
+
+/* ── CARDS ── */
+.card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:4px;padding:24px;
+  transition:border-color .2s;
+}
+.card:hover{border-color:rgba(200,150,62,0.3);}
+.card-title{
+  font-family:'Playfair Display',serif;font-size:18px;
+  color:var(--text);margin-bottom:6px;
+}
+.card-sub{font-size:12px;color:var(--text-dim);margin-bottom:16px;font-family:'JetBrains Mono',monospace;letter-spacing:.08em;}
+
+/* ── GRID ── */
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:24px;}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px;}
+.grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:24px;}
+
+/* ── STAT CHIPS ── */
+.stat-chip{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:4px;padding:18px;
+}
+.stat-chip .num{
+  font-family:'Playfair Display',serif;font-size:32px;
+  line-height:1;margin-bottom:4px;
+}
+.stat-chip .lbl{font-size:11px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;letter-spacing:.1em;}
+.stat-chip .chg{font-size:11px;margin-top:8px;font-family:'JetBrains Mono',monospace;}
+.up{color:#4ade80;} .down{color:#fb7185;} .same{color:#60a5fa;}
+
+/* ── GANTT ── */
+.gantt-wrap{overflow-x:auto;margin-bottom:24px;}
+.gantt{width:100%;border-collapse:collapse;min-width:800px;}
+.gantt th{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:var(--text-faint);padding:8px 6px;
+  border-bottom:1px solid var(--border);text-align:center;
+}
+.gantt td{padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.03);}
+.gantt .row-label{
+  font-size:12px;white-space:nowrap;padding-right:16px;
+  color:var(--text-dim);font-family:'JetBrains Mono',monospace;
+  min-width:180px;
+}
+.gantt .row-cat{
+  font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  padding:2px 6px;border-radius:2px;margin-right:8px;
+  font-family:'JetBrains Mono',monospace;
+}
+.bar-cell{position:relative;height:28px;min-width:20px;}
+.bar{
+  position:absolute;top:4px;height:20px;border-radius:2px;
+  display:flex;align-items:center;padding:0 8px;
+  font-size:10px;white-space:nowrap;overflow:hidden;
+  font-family:'JetBrains Mono',monospace;
+}
+.bar-hiv{background:rgba(251,113,133,0.8);color:#fff;}
+.bar-qip{background:rgba(167,139,250,0.8);color:#fff;}
+.bar-paces{background:rgba(45,212,191,0.8);color:#0a0e14;}
+.bar-acf{background:rgba(200,150,62,0.8);color:#0a0e14;}
+.bar-jlpt{background:rgba(96,165,250,0.8);color:#fff;}
+.bar-creator{background:rgba(74,222,128,0.8);color:#0a0e14;}
+.bar-key{background:rgba(251,191,36,0.9);color:#0a0e14;}
+.today-line{
+  position:absolute;top:0;bottom:0;width:1px;
+  background:var(--gold);opacity:0.6;
+  z-index:10;
+}
+
+/* ── TIMELINE LIST ── */
+.tl{list-style:none;position:relative;padding-left:24px;}
+.tl::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:1px;background:var(--border);}
+.tl li{
+  position:relative;padding:10px 0 10px 16px;
+  border-bottom:1px solid rgba(255,255,255,0.03);
+}
+.tl li::before{
+  content:'';position:absolute;left:-17px;top:16px;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--surface2);border:1px solid var(--gold);
+}
+.tl li.done::before{background:var(--gold);}
+.tl li.urgent::before{background:var(--rose);border-color:var(--rose);}
+.tl .tl-date{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:var(--gold);letter-spacing:.1em;margin-bottom:4px;
+}
+.tl .tl-title{font-size:14px;font-weight:700;margin-bottom:3px;}
+.tl .tl-desc{font-size:12px;color:var(--text-dim);line-height:1.6;}
+
+/* ── PROGRESS BAR ── */
+.progress-wrap{margin:8px 0;}
+.progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);margin-bottom:4px;font-family:'JetBrains Mono',monospace;}
+.progress-track{height:4px;background:var(--surface2);border-radius:2px;overflow:hidden;}
+.progress-fill{height:100%;border-radius:2px;transition:width .6s ease;}
+
+/* ── CHECKLIST ── */
+.checklist{list-style:none;}
+.checklist li{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);
+  font-size:13px;
+}
+.checklist li:last-child{border-bottom:none;}
+.check-icon{width:16px;height:16px;flex-shrink:0;margin-top:1px;}
+.done-text{color:var(--text-faint);text-decoration:line-through;}
+.todo-text{color:var(--text);}
+.urgent-text{color:var(--rose);}
+
+/* ── MISC TODOS ── */
+.misc-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px;background:var(--surface2);
+  border-radius:3px;margin-bottom:6px;
+  border-left:3px solid var(--amber);
+}
+.misc-item .misc-title{font-size:13px;}
+.misc-item .misc-date{font-size:11px;color:var(--amber);font-family:'JetBrains Mono',monospace;}
+
+/* ── KEYWORD TAG ── */
+.tag{
+  display:inline-block;font-size:10px;
+  font-family:'JetBrains Mono',monospace;letter-spacing:.08em;
+  padding:2px 8px;border-radius:2px;margin:2px;
+}
+.tag-teal{background:rgba(45,212,191,0.15);color:var(--teal);}
+.tag-rose{background:rgba(251,113,133,0.15);color:var(--rose);}
+.tag-violet{background:rgba(167,139,250,0.15);color:var(--violet);}
+.tag-gold{background:rgba(200,150,62,0.15);color:var(--gold);}
+.tag-green{background:rgba(74,222,128,0.15);color:var(--green);}
+.tag-blue{background:rgba(96,165,250,0.15);color:var(--blue);}
+
+/* ── TABLE ── */
+.data-table{width:100%;border-collapse:collapse;font-size:13px;}
+.data-table th{
+  padding:10px 12px;text-align:left;
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--text-faint);
+  border-bottom:1px solid var(--border);
+}
+.data-table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.03);}
+.data-table tr:hover td{background:rgba(255,255,255,0.02);}
+.new-col{color:var(--gold);font-weight:700;}
+
+/* ── MANUSCRIPT NAV ── */
+.manus-grid{display:grid;grid-template-columns:160px 1fr;gap:0;border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+.manus-nav{background:rgba(10,14,20,0.8);border-right:1px solid var(--border);}
+.manus-nav-btn{
+  display:block;width:100%;padding:13px 16px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-faint);background:transparent;border:none;
+  border-bottom:1px solid var(--border);cursor:pointer;
+  text-align:left;transition:.15s;
+}
+.manus-nav-btn:hover{color:var(--text-dim);}
+.manus-nav-btn.active{color:var(--gold);background:rgba(200,150,62,0.08);}
+.manus-body-wrap{padding:28px 32px;background:var(--surface);}
+.manus-section{display:none;}
+.manus-section.visible{display:block;}
+.manus-section h3{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:6px;}
+.manus-section .sub{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:.14em;margin-bottom:16px;}
+.manus-section p{font-size:13px;line-height:1.9;color:var(--text-dim);margin-bottom:12px;}
+.callout-box{
+  padding:14px 18px;background:rgba(200,150,62,0.08);
+  border-left:2px solid var(--gold);border-radius:2px;
+  font-size:13px;line-height:1.7;color:var(--text-dim);margin-top:16px;
+}
+
+/* ── PACES STATIONS ── */
+.station-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:20px;}
+.station{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:4px;padding:14px 12px;text-align:center;
+}
+.station .s-num{
+  font-family:'Playfair Display',serif;font-size:28px;
+  color:var(--teal);line-height:1;margin-bottom:6px;
+}
+.station .s-name{font-size:12px;font-weight:700;margin-bottom:4px;}
+.station .s-sub{font-size:11px;color:var(--text-faint);}
+
+/* ── QUOTE ── */
+.pull-quote{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:18px;line-height:1.6;color:var(--text-dim);
+  padding:24px 28px;border-left:3px solid var(--gold);
+  margin:20px 0;
+}
+.pull-quote em{color:var(--gold);font-style:normal;}
+
+/* ── SCROLL ── */
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+
+/* ── TODAY WIDGET ── */
+.today-widget{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:4px;overflow:hidden;margin-bottom:4px;
+}
+.today-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 24px;border-bottom:1px solid var(--border);
+  flex-wrap:wrap;gap:12px;
+}
+.today-date{
+  font-family:'Playfair Display',serif;font-size:22px;
+  color:var(--text);margin-bottom:4px;
+}
+.today-sub{font-size:12px;color:var(--text-faint);font-family:'JetBrains Mono',monospace;}
+.today-btn{
+  padding:10px 20px;
+  background:linear-gradient(135deg,rgba(200,150,62,0.15),rgba(200,150,62,0.25));
+  border:1px solid rgba(200,150,62,0.5);
+  border-radius:3px;color:var(--gold);
+  font-family:'JetBrains Mono',monospace;font-size:12px;
+  letter-spacing:.08em;cursor:pointer;transition:all .2s;
+  white-space:nowrap;
+}
+.today-btn:hover{background:rgba(200,150,62,0.35);border-color:var(--gold);}
+.today-btn:disabled{opacity:.5;cursor:not-allowed;}
+.today-output-area{padding:20px 24px;min-height:80px;}
+.today-placeholder{
+  font-size:13px;color:var(--text-faint);
+  font-family:'JetBrains Mono',monospace;
+  text-align:center;padding:20px 0;
+}
+.today-loading{
+  font-size:13px;color:var(--gold);
+  font-family:'JetBrains Mono',monospace;
+  display:flex;align-items:center;gap:8px;
+}
+.today-loading::before{
+  content:'';width:8px;height:8px;border-radius:50%;
+  background:var(--gold);
+  animation:pulse 1s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.8);}}
+.today-task-list{list-style:none;}
+.today-task{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04);
+  font-size:13px;line-height:1.6;
+}
+.today-task:last-child{border-bottom:none;}
+.today-task-dot{
+  width:6px;height:6px;border-radius:50%;
+  flex-shrink:0;margin-top:6px;
+}
+.task-focus{background:var(--gold);}
+.task-study{background:var(--teal);}
+.task-health{background:var(--green);}
+.task-misc{background:var(--text-faint);}
+.today-section-head{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:var(--text-faint);margin:14px 0 6px;
+}
+
+/* ── ACCORDION ── */
+.accordion-wrap{display:flex;flex-direction:column;gap:6px;margin-bottom:8px;}
+.acc-item{border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+.acc-trigger{
+  width:100%;display:flex;align-items:center;justify-content:space-between;
+  padding:13px 16px;background:var(--surface);border:none;cursor:pointer;
+  color:var(--text);font-size:13px;font-family:'Lato',sans-serif;
+  text-align:left;transition:background .15s;gap:12px;
+}
+.acc-trigger:hover{background:var(--surface2);}
+.acc-trigger.open{background:rgba(200,150,62,0.07);}
+.acc-meta{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:var(--amber);white-space:nowrap;display:flex;align-items:center;gap:8px;flex-shrink:0;
+}
+.acc-arrow{
+  display:inline-block;transition:transform .2s;
+  font-size:10px;color:var(--text-faint);
+}
+.acc-trigger.open .acc-arrow{transform:rotate(90deg);}
+.acc-body{
+  display:none;padding:14px 16px;
+  background:rgba(10,14,20,0.5);
+  font-size:13px;color:var(--text-dim);line-height:1.7;
+  border-top:1px solid var(--border);
+}
+.acc-body.open{display:block;}
+
+/* ── ANIMATE IN ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.tab-content.active{animation:fadeUp .3s ease;}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="logo">AKIKO <span>OS</span></div>
+  <div class="timestamp">MASTER DASHBOARD · MAY 2026</div>
+</div>
+
+<!-- TAB NAV -->
+<div class="tabnav">
+  <button class="tab-btn active" onclick="switchTab('dashboard',this)">📊 Dashboard</button>
+  <button class="tab-btn" onclick="switchTab('hiv',this)">🧠 HIV Research</button>
+  <button class="tab-btn" onclick="switchTab('qip',this)">📋 RSM Webinar</button>
+  <button class="tab-btn" onclick="switchTab('paces',this)">🩺 PACES</button>
+  <button class="tab-btn" onclick="switchTab('acf',this)">🎓 ACF</button>
+  <button class="tab-btn" onclick="switchTab('jlpt',this)">📖 JLPT</button>
+  <button class="tab-btn" onclick="switchTab('creator',this)">✍️ Creator</button>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 1: DASHBOARD
+══════════════════════════════════════════════ -->
+<div class="tab-content active" id="tab-dashboard">
+
+  <div class="section-label">All Workstreams — At a Glance</div>
+
+  <!-- KEY DEADLINES -->
+  <div class="grid-4">
+    <div class="stat-chip">
+      <div class="num" style="color:var(--teal)">Jul 27</div>
+      <div class="lbl">PACES Application Window</div>
+      <div class="chg" style="color:var(--teal)">→ 70 days away · urgent</div>
+    </div>
+    <div class="stat-chip">
+      <div class="num" style="color:var(--violet)">Jul 2026</div>
+      <div class="lbl">JLPT N1 Exam</div>
+      <div class="chg" style="color:var(--violet)">→ ~60 days · in prep</div>
+    </div>
+    <div class="stat-chip">
+      <div class="num" style="color:var(--gold)">Oct 2026</div>
+      <div class="lbl">ACF Application</div>
+      <div class="chg" style="color:var(--gold)">→ PS drafting started</div>
+    </div>
+    <div class="stat-chip">
+      <div class="num" style="color:var(--rose)">Oct/Nov</div>
+      <div class="lbl">PACES Exam</div>
+      <div class="chg" style="color:var(--rose)">→ date TBC post-registration</div>
+    </div>
+  </div>
+
+  <!-- GANTT CHART -->
+  <div class="section-label">Gantt — May → December 2026</div>
+  <div class="gantt-wrap">
+    <table class="gantt">
+      <thead>
+        <tr>
+          <th style="text-align:left">Project</th>
+          <th>May</th><th>Jun</th><th>Jul</th><th>Aug</th>
+          <th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+        </tr>
+      </thead>
+      <tbody id="gantt-body">
+        <!-- filled by JS -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TODAY WIDGET -->
+  <div class="section-label" style="margin-top:32px;">今日のリスト</div>
+  <div class="today-widget">
+    <div class="today-header">
+      <div>
+        <div class="today-date" id="today-date-display"></div>
+        <div class="today-sub">あなたのプロジェクト状況をもとにClaudeが今日のタスクを生成します</div>
+      </div>
+      <button class="today-btn" id="today-generate-btn" onclick="generateToday()">✦ 今日のリストを生成</button>
+    </div>
+    <div id="today-output" class="today-output-area">
+      <div class="today-placeholder">↑ ボタンを押すと、今日の日付・曜日・プロジェクト状況をもとに今日やることリストを生成します。</div>
+    </div>
+  </div>
+
+  <!-- MISC + PROMPTS — all collapsible -->
+  <div style="margin-top:28px;">
+  <div class="section-label">Misc To-Dos &amp; Claude OS ガイド</div>
+  <div class="accordion-wrap">
+
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span>📌 Miscellaneous To-Dos</span>
+        <span class="acc-meta">4 items<span class="acc-arrow">▸</span></span>
+      </button>
+      <div class="acc-body">
+        <div class="misc-item"><span class="misc-title">📱 Vodafone → VOXI 番号移転（PAC請求）</span><span class="misc-date">by May 29</span></div>
+        <div style="font-size:12px;color:var(--text-faint);padding:4px 0 10px 0;">PACコードを65075にテキスト送信 → VOXIに入力 → 翌営業日に移転完了。リマインダー設定済み（5/29）。</div>
+        <div class="misc-item"><span class="misc-title">🏋️ One Rebel パス期限切れ</span><span class="misc-date">May 30</span></div>
+        <div style="font-size:12px;color:var(--text-faint);padding:4px 0 10px 0;">更新するか別のジムプランに切り替えるかを決める。</div>
+        <div class="misc-item"><span class="misc-title">💰 Personal Finances（ISA選定 + 確定申告）</span><span class="misc-date">要対応</span></div>
+        <div style="font-size:12px;color:var(--text-faint);padding:4px 0 10px 0;">ISAの選定（S&S ISA or Cash ISA）と確定申告（Self Assessment）。キャリアブレイク中に整理。</div>
+        <div class="misc-item"><span class="misc-title">🎬 Odeon Cinema Voucher（Lloyds Silver Benefits）</span><span class="misc-date">Expires Jul 27</span></div>
+        <div style="font-size:12px;color:var(--text-faint);padding:4px 0 4px 0;">Lloyds Silver Account特典。Odeonバウチャーを使いきること。期限：2026年7月27日。</div>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span>⚡ Claude — 毎日使うクイックコマンド</span>
+        <span class="acc-meta">Daily · Claude<span class="acc-arrow">▸</span></span>
+      </button>
+      <div class="acc-body">
+        <table class="data-table" style="margin-top:4px;">
+          <thead><tr><th>用途</th><th>プロンプト</th></tr></thead>
+          <tbody>
+            <tr><td>今日の予定確認</td><td>「今日の予定を教えて」</td></tr>
+            <tr><td>カレンダー追加</td><td>「〇〇を[日時]にカレンダーに入れて」</td></tr>
+            <tr><td>タスク移動</td><td>「[イベント名]を[新しい日]に移して、仕事の日には入れないで」</td></tr>
+            <tr><td>PACES viva練習</td><td>「PACES viva始めて」</td></tr>
+            <tr><td>ACF面接練習</td><td>「ACF面接の練習をして。まずresearch interestから聞いて」</td></tr>
+            <tr><td>論文執筆</td><td>「[セクション名]の下書きを書いて。データ：〇〇、対象：△△」</td></tr>
+            <tr><td>SNSコンテンツ</td><td>「今週のX投稿を4本作って。テーマ：〇〇。月=感情、水=ストーリー、金=医療知識、日=note導線」</td></tr>
+            <tr><td>ダッシュボード更新</td><td>「Misc TODOに〇〇（期限△△）を追加して」</td></tr>
+            <tr><td>メモリー保存</td><td>「〇〇という情報をメモリーに保存して」</td></tr>
+            <tr><td>ウェブ調査</td><td>「〇〇について最新情報を調べて。特に[日付/期限]を確認して」</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span>✍️ 執筆 — Precision Rewriter / Content Optimizer</span>
+        <span class="acc-meta">Claude · ChatGPT<span class="acc-arrow">▸</span></span>
+      </button>
+      <div class="acc-body">
+        <div style="margin-bottom:14px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--violet);letter-spacing:.1em;margin-bottom:6px;">PRECISION REWRITER — note・論文・PS・エッセイ</div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:12px;font-size:11px;line-height:1.8;color:var(--text-dim);font-family:'JetBrains Mono',monospace;white-space:pre-wrap;">Rewrite the text below. Goals: preserve my voice / improve clarity and emotional impact / remove redundancy / keep natural, not AI-sounding. Context: Japanese doctor in the UK / thoughtful slightly literary style / value subtlety. Output: 1. Improved version  2. Key changes  3. Optional title ideas. Text: [PASTE]</div>
+        </div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--green);letter-spacing:.1em;margin-bottom:6px;">CONTENT OPTIMIZER — X・note・シェアされる文章</div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:12px;font-size:11px;line-height:1.8;color:var(--text-dim);font-family:'JetBrains Mono',monospace;white-space:pre-wrap;">Optimize for emotional resonance and shareability. Keep: human / authentic / intelligent — no clickbait or self-help clichés. Improve: hook / pacing / emotional rhythm / memorable phrasing. Also: 5 titles, most quotable lines, where readers connect most. Audience: thoughtful 20s–40s, internationally minded, medicine/identity/AI. Text: [PASTE]</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span>🧠 医学学習 — MRCP / Consultant Explainer / Paper Extractor</span>
+        <span class="acc-meta">Claude · NotebookLM<span class="acc-arrow">▸</span></span>
+      </button>
+      <div class="acc-body">
+        <div style="margin-bottom:14px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:.1em;margin-bottom:6px;">MRCP DEEP LEARNING</div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:12px;font-size:11px;line-height:1.8;color:var(--text-dim);font-family:'JetBrains Mono',monospace;white-space:pre-wrap;">Teach me [TOPIC] for MRCP-level understanding. Structure: 1. Core concept  2. Clinical relevance  3. High-yield facts  4. Exam traps  5. Differentials  6. Pathophysiology  7. Memory hooks  8. Vignette patterns  9. 5 active recall Qs. Rules: exam relevance first / flag common confusions / UK practice if relevant.</div>
+        </div>
+        <div style="margin-bottom:14px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--rose);letter-spacing:.1em;margin-bottom:6px;">CONSULTANT EXPLAINER</div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:12px;font-size:11px;line-height:1.8;color:var(--text-dim);font-family:'JetBrains Mono',monospace;white-space:pre-wrap;">Explain this as an excellent consultant teaching a registrar on a ward round. Focus: practical understanding / clinical reasoning / pattern recognition. Include: how experts think / common junior mistakes / exams vs real life. Topic: [PASTE]</div>
+        </div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:.1em;margin-bottom:6px;">RESEARCH PAPER EXTRACTOR</div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:12px;font-size:11px;line-height:1.8;color:var(--text-dim);font-family:'JetBrains Mono',monospace;white-space:pre-wrap;">Critically analyze this paper. Extract: research question / design / population / key findings / statistical strengths & weaknesses / limitations / biases / clinical relevance. Summarize in: plain English / MRCP language / publication-review language. Paper: [PASTE]</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span>🔬 研究・論文 — Hallucination Guard / Manuscript / Data</span>
+        <span class="acc-meta">Claude · ChatGPT<span class="acc-arrow">▸</span></span>
+      </button>
+      <div class="acc-body">
+        <div style="margin-bottom:14px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--rose);letter-spacing:.1em;margin-bottom:6px;">HALLUCINATION GUARD — 事実確認タスクの冒頭に必ずつける</div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:12px;font-size:11px;line-height:1.8;color:var(--text-dim);font-family:'JetBrains Mono',monospace;white-space:pre-wrap;">Before answering: separate verified facts from assumptions / never invent references or statistics / if uncertain say so — prefer "I don't know" over fabrication / explain reasoning step by step / flag where verification needed. Task: [PASTE]</div>
+        </div>
+        <div style="margin-bottom:14px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--violet);letter-spacing:.1em;margin-bottom:6px;">MANUSCRIPT DRAFTING — HIV論文用カスタム済み</div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:12px;font-size:11px;line-height:1.8;color:var(--text-dim);font-family:'JetBrains Mono',monospace;white-space:pre-wrap;">Draft the [Methods/Results/Discussion/Introduction] of my manuscript. Study: HIV Neurological Complications audit, RJW (Chelsea & Westminster). 2013 baseline (n=73) vs 2024 (n=51). Supervisor: consultant UCLH Queen's Square. Key findings: [PASTE]. Target journal: HIV Medicine / JNNP. Style: concise, academically credible, no fabricated references.</div>
+        </div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:.1em;margin-bottom:6px;">DATA ANALYST</div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:12px;font-size:11px;line-height:1.8;color:var(--text-dim);font-family:'JetBrains Mono',monospace;white-space:pre-wrap;">Act as a strategic analyst. Find: trends / anomalies / patterns / actionable insights. Output: 1. Executive summary  2. Key findings  3. Cautions  4. Visualizations  5. Recommendations. Avoid fake certainty. Data: [PASTE]</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span>🗂 思考整理 / 🛠 ツール使い分けガイド</span>
+        <span class="acc-meta">All tools<span class="acc-arrow">▸</span></span>
+      </button>
+      <div class="acc-body">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:.1em;margin-bottom:6px;">MESSY BRAIN → PLAN</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:12px;font-size:11px;line-height:1.8;color:var(--text-dim);font-family:'JetBrains Mono',monospace;white-space:pre-wrap;margin-bottom:14px;">Organize these scattered thoughts into a clear strategic plan. Identify: themes / priorities / bottlenecks. Create: goals / next actions / timeline / weekly focus / what to ignore / highest-leverage actions. Simplify aggressively. Dump: [PASTE]</div>
+        <table class="data-table" style="margin-bottom:14px;">
+          <thead><tr><th>ツール</th><th>得意</th><th>使うシーン</th></tr></thead>
+          <tbody>
+            <tr><td style="color:var(--teal);font-weight:700;">Claude</td><td>長文・記憶・カレンダー・ファイル</td><td>論文 / PACES / カレンダー / このOS全般</td></tr>
+            <tr><td style="color:var(--green);font-weight:700;">ChatGPT</td><td>推論・構造思考・短いプロジェクト</td><td>アイデア出し / 短い執筆</td></tr>
+            <tr><td style="color:var(--blue);font-weight:700;">NotebookLM</td><td>PDF・ガイドラインを根拠ベースで要約</td><td>ガイドライン / 勉強資料</td></tr>
+            <tr><td style="color:var(--amber);font-weight:700;">Gemini</td><td>マルチモーダル・Google連携</td><td>Docs/Sheets / 画像含むタスク</td></tr>
+          </tbody>
+        </table>
+        <ul style="list-style:none;font-size:12px;line-height:2.1;color:var(--text-dim);">
+          <li>→ <strong style="color:var(--text)">音声入力OK</strong> — 長くても雑でも整理してくれる</li>
+          <li>→ <strong style="color:var(--text)">事実確認タスク</strong> — Hallucination Guardを冒頭に必ず</li>
+          <li>→ <strong style="color:var(--text)">タスクではなくルールを渡す</strong> — 毎回説明不要になる</li>
+          <li>→ <strong style="color:var(--text)">「HTMLを更新して」</strong> — このダッシュボードはいつでも修正可</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 2: HIV RESEARCH
+══════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-hiv">
+  <div class="section-label">HIV Neurology — Research Overview</div>
+
+  <div class="pull-quote">
+    The story is not <em>"neurology is getting better."</em><br>
+    It's <em>"the nature of the problem has shifted."</em>
+  </div>
+
+  <!-- STATUS -->
+  <div class="grid-3" style="margin-bottom:24px;">
+    <div class="stat-chip">
+      <div class="num" style="color:var(--rose)">51</div>
+      <div class="lbl">RJW 2024 patients</div>
+      <div class="chg same">Primary dataset ✓</div>
+    </div>
+    <div class="stat-chip">
+      <div class="num" style="color:var(--text-faint)">73</div>
+      <div class="lbl">RJW 2013 patients</div>
+      <div class="chg same">Historical control ✓</div>
+    </div>
+    <div class="stat-chip">
+      <div class="num" style="color:var(--amber)">+52</div>
+      <div class="lbl">Cerner data pending</div>
+      <div class="chg" style="color:var(--amber)">Imaging + Dx → in progress</div>
+    </div>
+  </div>
+
+  <!-- KEY FINDINGS -->
+  <div class="section-label">Key Findings — 2013 vs 2024</div>
+  <div class="grid-4">
+    <div class="stat-chip"><div class="num" style="color:var(--rose)">52</div><div class="lbl">Median Age 2024</div><span class="chg up">↑ from 44 in 2013</span></div>
+    <div class="stat-chip"><div class="num" style="color:var(--green)">31%</div><div class="lbl">Neuro Symptoms 2024</div><span class="chg down">↓ from 73%</span></div>
+    <div class="stat-chip"><div class="num" style="color:var(--green)">29%</div><div class="lbl">Neuro Signs 2024</div><span class="chg down">↓ from 60%</span></div>
+    <div class="stat-chip"><div class="num" style="color:var(--blue)">14%</div><div class="lbl">Neuro Admissions</div><span class="chg same">→ unchanged</span></div>
+    <div class="stat-chip"><div class="num" style="color:var(--green)">93%</div><div class="lbl">On ART pre-admission</div><span class="chg up">↑ from 89%</span></div>
+    <div class="stat-chip"><div class="num" style="color:var(--rose)">81%</div><div class="lbl">Symptomatic + uncontrolled VL</div><span class="chg up">Key finding →</span></div>
+  </div>
+
+  <!-- THE ANGLE -->
+  <div class="section-label">The Angle — What Makes This Publishable</div>
+  <div class="card" style="background:var(--surface2);margin-bottom:24px;">
+    <ul class="checklist">
+      <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#4ade80" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"/></svg><span class="todo-text">Despite 93% on ART, neuro burden persists — ART necessary but not sufficient</span></li>
+      <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#4ade80" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"/></svg><span class="todo-text">Uncontrolled viral load = strongest predictor of neurological presentation in 2024</span></li>
+      <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#4ade80" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"/></svg><span class="todo-text">CNS infection rate unchanged — hard floor of irreducible risk</span></li>
+      <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#60a5fa" stroke-width="1.5"/><path d="M8 5v3l2 2" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/></svg><span class="todo-text">Cerner imaging data will reveal subclinical disease — fills key gap</span></li>
+      <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#60a5fa" stroke-width="1.5"/><path d="M8 5v3l2 2" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/></svg><span class="todo-text">Confirmed discharge diagnoses from Cerner strengthen diagnostic accuracy</span></li>
+    </ul>
+  </div>
+
+  <!-- MANUSCRIPT -->
+  <div class="section-label">Manuscript Structure</div>
+  <div class="manus-grid">
+    <div class="manus-nav">
+      <button class="manus-nav-btn active" onclick="showManus('intro',this)">Introduction</button>
+      <button class="manus-nav-btn" onclick="showManus('methods',this)">Methods</button>
+      <button class="manus-nav-btn" onclick="showManus('results',this)">Results</button>
+      <button class="manus-nav-btn" onclick="showManus('discussion',this)">Discussion</button>
+      <button class="manus-nav-btn" onclick="showManus('conclusion',this)">Conclusion</button>
+    </div>
+    <div class="manus-body-wrap">
+      <div class="manus-section visible" id="hiv-intro">
+        <div class="sub">SECTION 01</div>
+        <h3>Introduction</h3>
+        <p>Neurological complications of HIV arise from opportunistic infection, neoplasia, and direct viral effects. Despite the ART era, neurological disease remains a significant burden in HIV-positive inpatients.</p>
+        <p>The 2013 baseline audit (n=73) was conducted by a separate researcher — now a consultant neurologist at UCLH Queen's Square — who has since become the supervising consultant for this project. The 2024 audit (n=51) was conducted at the same ward using the same methodology. Both cohorts are from Ron Johnson Ward (RJW), the specialist HIV inpatient ward within Chelsea & Westminster Hospital. We now supplement the 2024 dataset with Cerner electronic records to add imaging results and confirmed discharge diagnoses.</p>
+        <div class="callout-box"><strong>One-line pitch:</strong> "ART has reduced symptom burden, but CNS infection admissions and neurology referrals remain unchanged — and uncontrolled viraemia drives virtually all neurological presentations in 2024."</div>
+      </div>
+      <div class="manus-section" id="hiv-methods">
+        <div class="sub">SECTION 02</div>
+        <h3>Methods</h3>
+        <p><strong>Design:</strong> Prospective observational audit, replicated methodology (2013 → 2024), supplemented with Cerner data (imaging + confirmed diagnoses).</p>
+        <p><strong>Setting:</strong> Ron Johnson Ward (RJW) — specialist HIV inpatient ward within Chelsea & Westminster Hospital, London.</p>
+        <p><strong>Analysis:</strong> Descriptive statistics. Chi-square for categorical. Mann-Whitney U for continuous. p&lt;0.05 significant.</p>
+      </div>
+      <div class="manus-section" id="hiv-results">
+        <div class="sub">SECTION 03</div>
+        <h3>Results</h3>
+        <p>Patients older (52 vs 44), more ART-experienced (7 vs 4 yrs), but lower current CD4 (123 vs 366 cells/μL). Major reduction in symptoms (31% vs 73%, p&lt;0.0001) and signs (29% vs 60%). CNS infections numerically lower but not statistically significant. 81% of symptomatic patients had detectable VL.</p>
+      </div>
+      <div class="manus-section" id="hiv-discussion">
+        <div class="sub">SECTION 04</div>
+        <h3>Discussion</h3>
+        <p>ART success story — but incomplete. Residual burden concentrated in those not virally suppressed. CNS infection admission rate unchanged (p=0.469). Stable neurology referral rate despite fewer symptoms may reflect heightened physician awareness.</p>
+        <p><strong>Limitations:</strong> Single-centre, single-ward (RJW at CWH). Inpatient only. Small n (51 in 2024).</p>
+      </div>
+      <div class="manus-section" id="hiv-conclusion">
+        <div class="sub">SECTION 05</div>
+        <h3>Conclusion</h3>
+        <p>Vigilance must be maintained — particularly for patients with uncontrolled viraemia. CNS infections persist. Neurological liaison services must be included in service development for HIV populations.</p>
+        <div class="callout-box"><strong>Target journals:</strong> HIV Medicine · JNNP · AIDS · The Lancet HIV (stretch)<br><strong>Submit BHIVA abstract:</strong> Oct–Dec 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:24px;">Next Steps</div>
+  <ul class="tl">
+    <li class="urgent"><div class="tl-date">May 26 →</div><div class="tl-title">Cerner データ収集（RJW 51患者分）</div><div class="tl-desc">Imaging results + confirmed discharge diagnoses from Cerner. Use HIV Excel sheet. Supervisor: consultant at UCLH Queen's Square.</div></li>
+    <li><div class="tl-date">Jun →</div><div class="tl-title">Methods section draft</div><div class="tl-desc">Clearest section to write first — methodology already established by proforma. Claude can draft.</div></li>
+    <li><div class="tl-date">Jul →</div><div class="tl-title">Results + Discussion draft</div><div class="tl-desc">Integrate Cerner imaging data into results. Frame around uncontrolled VL as key predictor.</div></li>
+    <li><div class="tl-date">Oct–Dec →</div><div class="tl-title">BHIVA Abstract submission</div><div class="tl-desc">Use ABN poster as base. Add Cerner imaging findings.</div></li>
+    <li><div class="tl-date">Q1 2027 →</div><div class="tl-title">Journal submission</div><div class="tl-desc">Target: HIV Medicine (first choice) or JNNP.</div></li>
+  </ul>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 3: RSM WEBINAR
+══════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-qip">
+  <div class="section-label">RSM Webinar Series — Publication Project</div>
+
+  <div class="card" style="background:rgba(167,139,250,0.08);border-color:rgba(167,139,250,0.3);margin-bottom:24px;">
+    <div class="card-title" style="color:var(--violet)">Quality Improvement Education Webinar Series</div>
+    <div class="card-sub">Royal Society of Medicine · Medical School · 2021 · COVID-19 Pandemic</div>
+    <p style="font-size:13px;color:var(--text-dim);line-height:1.8;margin-top:12px;">
+      An educational webinar series organised and hosted in collaboration with the Royal Society of Medicine during the COVID-19 pandemic (2021). The series focused on the concept and practice of Quality Improvement — teaching medical students and junior doctors how to design, execute, and complete a QIP in a virtual-first environment. The initiative generated data that is now being developed into a peer-reviewed publication.
+    </p>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;">
+      <span class="tag tag-violet">Medical Education</span>
+      <span class="tag tag-gold">Quality Improvement</span>
+      <span class="tag tag-teal">RSM</span>
+      <span class="tag tag-blue">Virtual Teaching</span>
+      <span class="tag tag-rose">COVID-19</span>
+    </div>
+  </div>
+
+  <!-- WHAT WAS DONE -->
+  <div class="grid-2" style="margin-bottom:24px;">
+    <div class="card">
+      <div class="card-title">What Was Done</div>
+      <ul class="checklist">
+        <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="var(--gold)"/><path d="M5 8l2 2 4-4" stroke="#0a0e14" stroke-width="1.5" stroke-linecap="round"/></svg><span class="done-text">Webinar series conceived, organised, and hosted</span></li>
+        <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="var(--gold)"/><path d="M5 8l2 2 4-4" stroke="#0a0e14" stroke-width="1.5" stroke-linecap="round"/></svg><span class="done-text">Delivered in partnership with the Royal Society of Medicine</span></li>
+        <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="var(--gold)"/><path d="M5 8l2 2 4-4" stroke="#0a0e14" stroke-width="1.5" stroke-linecap="round"/></svg><span class="done-text">Curriculum: QI theory, project design, execution, evaluation</span></li>
+        <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="var(--gold)"/><path d="M5 8l2 2 4-4" stroke="#0a0e14" stroke-width="1.5" stroke-linecap="round"/></svg><span class="done-text">Data collected — saved on Google Drive</span></li>
+        <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--text-faint)" stroke-width="1.5"/></svg><span class="todo-text">Publication in progress — supervisor: Charlie</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Publication Options</div>
+      <div class="card-sub">Agreed with supervisor Charlie</div>
+      <div style="margin-top:12px;">
+        <div style="padding:12px;background:var(--surface2);border-radius:3px;margin-bottom:10px;border-left:2px solid var(--violet);">
+          <div style="font-size:12px;font-weight:700;margin-bottom:4px;">Option A — The Clinical Teacher</div>
+          <div style="font-size:12px;color:var(--text-dim);line-height:1.6;">Short report · 1,500 words · Data-driven · Higher perceived research value · IF 3.3 · Readership in 174 countries · No publication fee</div>
+          <div style="font-size:11px;color:var(--violet);margin-top:4px);font-family:'JetBrains Mono',monospace;">Requires: data usable as research evidence</div>
+        </div>
+        <div style="padding:12px;background:var(--surface2);border-radius:3px;border-left:2px solid var(--text-faint);">
+          <div style="font-size:12px;font-weight:700;margin-bottom:4px;">Option B — Medical Teacher</div>
+          <div style="font-size:12px;color:var(--text-dim);line-height:1.6;">"12 Tips" format · 3,250 words / 4 pages · Experiential / reflective · Describes approach to running a webinar series</div>
+          <div style="font-size:11px;color:var(--text-faint);margin-top:4px;font-family:'JetBrains Mono',monospace;">Fallback if data not usable for Option A</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PUBLICATION ROADMAP -->
+  <div class="section-label">Publication Roadmap</div>
+  <ul class="tl">
+    <li class="done"><div class="tl-date">2021</div><div class="tl-title">Webinar series delivered</div><div class="tl-desc">RSM partnership · COVID-19 pandemic · QI education focus</div></li>
+    <li class="done"><div class="tl-date">Done</div><div class="tl-title">Data collected + saved</div><div class="tl-desc">Available on Google Drive — to be reviewed with Charlie</div></li>
+    <li><div class="tl-date">Next</div><div class="tl-title">Data review with Charlie</div><div class="tl-desc">Determine whether data supports Option A (research report) or Option B (12 tips). Upload to Claude for analysis if needed.</div></li>
+    <li><div class="tl-date">Jun →</div><div class="tl-title">Confirm publication route + outline</div><div class="tl-desc">Review author guidelines for chosen journal. Claude can assist with structure.</div></li>
+    <li><div class="tl-date">Aug →</div><div class="tl-title">First draft complete</div><div class="tl-desc">Co-author review with Charlie before returning to IMT training.</div></li>
+    <li><div class="tl-date">Oct →</div><div class="tl-title">Submission</div><div class="tl-desc">The Clinical Teacher (preferred) or Medical Teacher.</div></li>
+  </ul>
+
+  <!-- TARGET JOURNALS -->
+  <div class="section-label" style="margin-top:24px;">Target Journals</div>
+  <div class="grid-2">
+    <div class="card" style="border-color:rgba(167,139,250,0.4);">
+      <div class="card-title" style="color:var(--violet)">The Clinical Teacher ★ Preferred</div>
+      <div class="card-sub">IF 3.3 · 174 countries · No publication fee</div>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.7;margin-top:8px;">1,500-word short report format. Requires data to be usable as research evidence. Higher academic credibility for portfolio and ACF application.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Medical Teacher</div>
+      <div class="card-sub">12 Tips format · 3,250 words / 4 pages</div>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.7;margin-top:8px;">Reflective/experiential format. Documents the 12 key lessons from organising and running the RSM webinar series. Strong for education-focused portfolio.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 4: PACES
+══════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-paces">
+  <div class="section-label">MRCP PACES — Registration & Preparation</div>
+
+  <!-- STATUS BANNER -->
+  <div class="card" style="background:rgba(45,212,191,0.08);border-color:rgba(45,212,191,0.3);margin-bottom:24px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <div>
+        <div class="card-title" style="color:var(--teal)">Status: Ready to Register</div>
+        <div class="card-sub">Part 1 ✓ · Part 2 Written ✓ (March 2026) · UK-based trainee ✓</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);">NEXT ACTION</div>
+        <div style="font-size:14px;font-weight:700;">Apply July 27, 2026 at 8:00am BST</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PACES HUB LAUNCH -->
+  <a href="paces.html" target="_blank" style="display:flex;align-items:center;justify-content:space-between;gap:16px;background:linear-gradient(135deg,rgba(45,212,191,0.12),rgba(45,212,191,0.04));border:1px solid rgba(45,212,191,0.35);border-radius:14px;padding:16px 20px;text-decoration:none;margin-bottom:24px;transition:background 0.2s;">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <div style="font-size:28px;line-height:1;">🩺</div>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:var(--teal);letter-spacing:-0.2px;">Open PACES Hub</div>
+        <div style="font-size:12px;color:var(--text-dim);margin-top:2px;">Stations · Viva drill · Progress tracker · Exam countdown</div>
+      </div>
+    </div>
+    <div style="font-size:20px;color:var(--teal);opacity:0.7;">→</div>
+  </a>
+
+  <!-- REGISTRATION STEPS -->
+  <div class="section-label">Registration Checklist</div>
+  <ul class="checklist" style="margin-bottom:24px;">
+    <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="var(--gold)"/><path d="M5 8l2 2 4-4" stroke="#0a0e14" stroke-width="1.5" stroke-linecap="round"/></svg><span class="done-text">MRCP Part 1 合格</span></li>
+    <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="var(--gold)"/><path d="M5 8l2 2 4-4" stroke="#0a0e14" stroke-width="1.5" stroke-linecap="round"/></svg><span class="done-text">MRCP Part 2 Written 合格（2026年3月）</span></li>
+    <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--text-faint)" stroke-width="1.5"/></svg><span class="todo-text">My MRCP(UK) アカウント確認・ログイン</span></li>
+    <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--text-faint)" stroke-width="1.5"/></svg><span class="todo-text">住所・連絡先が最新か確認</span></li>
+    <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--text-faint)" stroke-width="1.5"/></svg><span class="todo-text">希望会場を決める（RCP London / RCPSG Glasgow / RCPE Edinburgh）</span></li>
+    <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--text-faint)" stroke-width="1.5"/></svg><span class="todo-text">支払い用クレジットカード準備（UK fee: ~£716）</span></li>
+    <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--rose)" stroke-width="1.5"/></svg><span class="urgent-text">7月27日 8:00am BST に申請 — 窓口は7日間のみ！</span></li>
+  </ul>
+
+  <!-- ⚠️ KEY INFO -->
+  <div class="section-label">知っておくべき重要情報</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">⚠️ 優先順位について</div>
+      <div class="card-sub">UK PACES waiting list rules</div>
+      <p style="font-size:13px;line-height:1.8;color:var(--text-dim);">UKベーストレーニーとして優先枠あり。ST3以上が最優先だが、IMTトレーニーも早めに申請すれば枠を確保しやすい。<br><br>申請後、3つのカレッジ（RCP/RCPSG/RCPE）からオファーが来る。<strong style="color:var(--text)">都合が悪い日程が来てもDeclineすればウェイティングリストに戻るが、次のオファーは保証されない。</strong></p>
+    </div>
+    <div class="card">
+      <div class="card-title">📅 2026/3 Diet タイムライン</div>
+      <div class="card-sub">PACES 3rd sitting 2026</div>
+      <ul class="tl" style="padding-left:20px;">
+        <li><div class="tl-date">Jul 27</div><div class="tl-title">申請窓口OPEN</div><div class="tl-desc">8:00am BST · 7日間のみ</div></li>
+        <li><div class="tl-date">Aug 3</div><div class="tl-title">申請窓口CLOSE</div></li>
+        <li><div class="tl-date">Oct/Nov</div><div class="tl-title">試験実施</div><div class="tl-desc">日程は申請後に割り当て</div></li>
+        <li><div class="tl-date">4–6wks後</div><div class="tl-title">結果発表</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EXAM FORMAT -->
+  <div class="section-label" style="margin-top:24px;">試験フォーマット — 5 Stations</div>
+  <div class="station-grid">
+    <div class="station"><div class="s-num">1</div><div class="s-name">Respiratory / Abdo</div><div class="s-sub">Physical exam · 20 min</div></div>
+    <div class="station"><div class="s-num">2</div><div class="s-name">Cardiology / Neuro</div><div class="s-sub">Physical exam · 20 min</div></div>
+    <div class="station"><div class="s-num">3</div><div class="s-name">Communication</div><div class="s-sub">Complex consultation · 10 min</div></div>
+    <div class="station"><div class="s-num">4</div><div class="s-name">Clinical Consultation</div><div class="s-sub">History + exam · 20 min</div></div>
+    <div class="station"><div class="s-num">5</div><div class="s-name">Integrated Clinical</div><div class="s-sub">Multi-system · 20 min</div></div>
+  </div>
+
+  <!-- PREP PLAN -->
+  <div class="section-label">準備プラン（登録後）</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Weekly Structure</div>
+      <ul class="checklist">
+        <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--teal)" stroke-width="1.5"/></svg><span>月曜 — 動画 + プレゼン練習（1.5h）</span></li>
+        <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--teal)" stroke-width="1.5"/></svg><span>水曜 — PACES viva練習（Claudeと）</span></li>
+        <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--teal)" stroke-width="1.5"/></svg><span>週1-2回 — シニアとの1:1セッション</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Claudeを使ったViva練習</div>
+      <div class="card-sub">いつでも話しかけてください</div>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.7;">「PACES viva始めて」と話しかけるとClaudeが試験官役を担当。症例を提示して、プレゼンテーション、鑑別診断、マネジメントを練習できます。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 5: ACF
+══════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-acf">
+  <div class="section-label">Academic Clinical Fellowship — Application 2026</div>
+
+  <div class="card" style="background:rgba(200,150,62,0.08);border-color:rgba(200,150,62,0.3);margin-bottom:24px;">
+    <div class="card-title" style="color:var(--gold)">Target: ACF Application — October 2026</div>
+    <div class="card-sub">Oriel system · Neurology / Internal Medicine focus</div>
+    <div style="margin-top:12px;">
+      <div class="progress-wrap">
+        <div class="progress-label"><span>Overall Progress</span><span>25%</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:25%;background:var(--gold);"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">ACF準備ステップ</div>
+      <ul class="tl" style="padding-left:20px;">
+        <li class="done"><div class="tl-date">2022/23</div><div class="tl-title">AFP応募経験（Foundation level）</div><div class="tl-desc">Academic Foundation Programme — 研究時間付きの初期研修。臨床と研究を並行するトレーニングへの最初のステップ。</div></li>
+        <li class="done"><div class="tl-date">Now</div><div class="tl-title">IMTトレーニー（IMT1/2）</div><div class="tl-desc">現在IMTプログラム在籍中。ACFはIMT2/3で応募するのが最適なタイミング。</div></li>
+        <li><div class="tl-date">May 19</div><div class="tl-title">① Oriel登録・ポスト調査</div><div class="tl-desc">ロンドン中心のNeurology ACFポストを確認。Person Specificationダウンロード。</div></li>
+        <li><div class="tl-date">May 20</div><div class="tl-title">② Personal Statement骨格</div><div class="tl-desc">なぜACFか・実績リスト・ビジョン。Claudeと共同作成。</div></li>
+        <li><div class="tl-date">May 27</div><div class="tl-title">③ Whitepaper Q&A練習</div><div class="tl-desc">Research theme · Critical appraisal · NIHR関連。</div></li>
+        <li><div class="tl-date">Aug →</div><div class="tl-title">④ PS完成・レビュー</div></li>
+        <li><div class="tl-date">Oct →</div><div class="tl-title">⑤ Oriel申請</div></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Academic Portfolio</div>
+      <div class="card-sub">今あるもの</div>
+      <ul class="checklist">
+        <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="var(--gold)"/><path d="M5 8l2 2 4-4" stroke="#0a0e14" stroke-width="1.5" stroke-linecap="round"/></svg><span class="done-text">ABN Conference — HIV Neurologyポスター発表</span></li>
+        <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="var(--gold)"/><path d="M5 8l2 2 4-4" stroke="#0a0e14" stroke-width="1.5" stroke-linecap="round"/></svg><span class="done-text">RSM Webinarシリーズ主催（医学生時代・2021）</span></li>
+        <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="var(--gold)"/><path d="M5 8l2 2 4-4" stroke="#0a0e14" stroke-width="1.5" stroke-linecap="round"/></svg><span class="done-text">MRCP Part 1 + Part 2 Written 合格（2026年3月）</span></li>
+        <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--text-faint)" stroke-width="1.5"/></svg><span>HIV Neurology manuscript（投稿準備中）</span></li>
+        <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--text-faint)" stroke-width="1.5"/></svg><span>RSM Webinar paper（執筆中 · The Clinical Teacher）</span></li>
+        <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--text-faint)" stroke-width="1.5"/></svg><span>BHIVA abstract（予定）</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:24px;">ACFを目指す理由</div>
+  <div class="grid-2">
+    <div class="card"><div class="card-title">なぜACFなのか</div><div class="card-sub">キャリア設計の観点から</div><p style="font-size:13px;color:var(--text-dim);line-height:1.7;">IMT終了後に別途neurology ST3応募をするより、ACFとしてneurology trainingに直接入る方が、研究時間・場所選択・トレーニングポストを同時に確保できる。研究者＋臨床医のデュアルキャリアを最初から設計できる唯一のルート。</p></div>
+    <div class="card"><div class="card-title">Critical Appraisal準備</div><div class="card-sub">面接対策</div><p style="font-size:13px;color:var(--text-dim);line-height:1.7;">自分の研究（HIV Neurology audit）のlimitationを正直に語れること。「Single-centre, small n」→「だからこそCernerで補完している、次は多施設研究が必要」という前向きな流れが理想。</p></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 6: JLPT
+══════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-jlpt">
+  <div class="section-label">JLPT N1 — July 2026</div>
+
+  <div class="card" style="background:rgba(96,165,250,0.08);border-color:rgba(96,165,250,0.3);margin-bottom:24px;">
+    <div class="card-title" style="color:var(--blue)">JLPT N1 試験 — 2026年7月5日（日）</div>
+    <div class="card-sub">受験料支払い済み · ~£100 · 試験日確定</div>
+    <div style="margin-top:12px;">
+      <div class="progress-wrap">
+        <div class="progress-label"><span>残り日数</span><span>~48日</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:65%;background:var(--blue);"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAILY ROUTINE -->
+  <div class="section-label">デイリールーティン（7月末まで）</div>
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-title">🗂️ Anki</div>
+      <div class="card-sub">毎日 8:30–8:40am</div>
+      <p style="font-size:13px;color:var(--text-dim);">10分。単語・漢字・文法カード。シフト日も含む。継続が最優先。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">📖 読解＋文法</div>
+      <div class="card-sub">月火水木土 17:00–17:25</div>
+      <p style="font-size:13px;color:var(--text-dim);">25分。読解問題1-2題 + 文法確認。金（シフト後）・日（PACES viva）はスキップ。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🎯 週次深集中</div>
+      <div class="card-sub">木曜 10:00–11:30am（休みの日）</div>
+      <p style="font-size:13px;color:var(--text-dim);">90分。語彙強化、模擬問題、弱点分野の集中練習。</p>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:24px;">試験構成</div>
+  <div class="grid-4">
+    <div class="stat-chip"><div class="num" style="color:var(--blue)">110</div><div class="lbl">点（言語知識）</div></div>
+    <div class="stat-chip"><div class="num" style="color:var(--blue)">60</div><div class="lbl">点（読解）</div></div>
+    <div class="stat-chip"><div class="num" style="color:var(--blue)">60</div><div class="lbl">点（聴解）</div></div>
+    <div class="stat-chip"><div class="num" style="color:var(--blue)">100</div><div class="lbl">合格ライン（180/230）</div></div>
+  </div>
+
+  <div class="section-label" style="margin-top:24px;">Claudeを使った学習法</div>
+  <div class="card">
+    <ul class="checklist">
+      <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--blue)" stroke-width="1.5"/></svg><span>「この文法の使い方を例文で説明して」→ 瞬時に例文生成</span></li>
+      <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--blue)" stroke-width="1.5"/></svg><span>「N1レベルの読解問題を1問作って」→ 問題演習</span></li>
+      <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--blue)" stroke-width="1.5"/></svg><span>「この文章の意味を詳しく説明して（難しい文法）」→ 精読支援</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB 7: CREATOR
+══════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-creator">
+  <div class="section-label">Creator Work — X / note / Buffer</div>
+
+  <div class="pull-quote" style="font-size:15px;">
+    キャリアブレイク中の今が、<em>自分の声</em>を育てる唯一のタイミング。<br>8月にIMT研修に戻る前に、<em>仕組みを作り切る</em>。
+  </div>
+
+  <!-- PLATFORMS -->
+  <div class="grid-3" style="margin-bottom:24px;">
+    <div class="card">
+      <div class="card-title">🐦 X (Twitter)</div>
+      <div class="card-sub">Started May 2026</div>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.7;">週次Bufferセットアップ（毎月曜 8:30-9:15am）で自動化済み。投稿パターン：月=感情系 / 水=ストーリー / 金=医療知識 / 日=note導線。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">✍️ note.com</div>
+      <div class="card-sub">Japanese primary → auto-translated</div>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.7;">週1本。土曜 10:00-11:30amに執筆セッション（フォーカスブロック）。月曜のBufferセットアップ時にネタ出し。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">📅 Buffer</div>
+      <div class="card-sub">Weekly setup — Monday only</div>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.7;">毎週月曜1回に集約済み。1週間分の投稿文をClaudeが生成 → BufferにコピペしてX投稿を予約。</p>
+    </div>
+  </div>
+
+  <!-- CONTENT STRATEGY -->
+  <div class="section-label">コンテンツ戦略</div>
+  <div class="card" style="margin-bottom:24px;">
+    <table class="data-table">
+      <thead><tr><th>曜日</th><th>テーマ</th><th>例</th></tr></thead>
+      <tbody>
+        <tr><td>月</td><td>感情系</td><td>「○○って、誰にも説明できないしんどさがある」</td></tr>
+        <tr><td>水</td><td>ストーリー系</td><td>「あの一言で、自信が削られた」</td></tr>
+        <tr><td>金</td><td>医療・知識系</td><td>NHS・研修医・医師キャリアの知見</td></tr>
+        <tr><td>日</td><td>note導線</td><td>「詳しくはnoteに書きました👇」</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- MONETIZATION VISION -->
+  <div class="section-label">マネタイズビジョン（長期）</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">短期（〜2026年8月 · カブレイク中）</div>
+      <ul class="checklist">
+        <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--green)" stroke-width="1.5"/></svg><span>X + note の発信基盤を確立してから研修復帰</span></li>
+        <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--green)" stroke-width="1.5"/></svg><span>Buffer週次セットアップを習慣化</span></li>
+        <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--green)" stroke-width="1.5"/></svg><span>日本語発信 → 自動翻訳でグローバル展開</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">長期（研修復帰後〜）</div>
+      <ul class="checklist">
+        <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--green)" stroke-width="1.5"/></svg><span>サイドインカムとして確立 — 単一収入依存からの脱却</span></li>
+        <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--green)" stroke-width="1.5"/></svg><span>Vlog展開（財務的に成立する場合）</span></li>
+        <li><svg class="check-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--green)" stroke-width="1.5"/></svg><span>NHS・医師キャリア × AI × 日本人医師という独自ポジション確立</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- WORKFLOW -->
+  <div class="section-label" style="margin-top:24px;">週次ワークフロー（現在）</div>
+  <ul class="tl">
+    <li><div class="tl-date">月曜 8:30</div><div class="tl-title">🐦✍️ SNS週次セットアップ（45分）</div><div class="tl-desc">Claudeにネタを話す → 投稿文生成 → Bufferにセット → noteネタ決め</div></li>
+    <li><div class="tl-date">土曜 10:00</div><div class="tl-title">✍️ note記事執筆（90分）</div><div class="tl-desc">フォーカスブロック。Claudeと共同執筆。</div></li>
+  </ul>
+</div>
+
+<script>
+// Today widget
+function setDateDisplay() {
+  const now = new Date();
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const d = document.getElementById('today-date-display');
+  if (d) d.textContent = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+}
+setDateDisplay();
+
+async function generateToday() {
+  const btn = document.getElementById('today-generate-btn');
+  const output = document.getElementById('today-output');
+  btn.disabled = true;
+  btn.textContent = '生成中...';
+  output.innerHTML = '<div class="today-loading">Claudeが今日のリストを考えています</div>';
+
+  const now = new Date();
+  const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const dayJP = ['日曜','月曜','火曜','水曜','木曜','金曜','土曜'];
+  const dayName = dayNames[now.getDay()];
+  const dayNameJP = dayJP[now.getDay()];
+  const dateStr = `${now.getDate()} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][now.getMonth()]} ${now.getFullYear()}`;
+
+  const systemPrompt = `You are AKIKO OS — the personal operating system of Akiko, a Japanese doctor working in the UK.
+Today is ${dayName} ${dateStr} (${dayNameJP}).
+
+Akiko's active projects and fixed routines:
+- DAILY: Anki (8:30–8:40am), JLPT reading+grammar (Mon/Tue/Wed/Thu/Sat 5:00–5:25pm)
+- WEEKLY: SNS setup on Mondays (Buffer + X posts + note topic)
+- PACES exam registration opens July 27 — actively preparing
+- JLPT N1 exam: Sunday 5 July 2026 — ~48 days away
+- HIV Neurology manuscript: Cerner data collection ongoing
+- RSM Webinar publication: outlining stage, supervisor Charlie
+- ACF application: October 2026, Personal Statement in progress
+- Creator work: X + note.com, Buffer scheduled weekly
+
+SHIFT PATTERN (Akiko is currently on career break before returning to IMT August 2026):
+- Free most days currently. If a day is likely a shift day in hospital context, note it.
+
+Rules for your response:
+- Generate a realistic, calm, achievable today list for ${dayName}
+- Max 6 tasks — never overwhelming
+- Prioritise based on deadlines and importance
+- Always include the fixed daily habits (Anki etc) if they apply today
+- Mark each task with a category: [Focus] [Study] [Health] [Habit] [Misc]
+- Keep descriptions short and actionable
+- End with one short "today's intention" — a single sentence to set the tone
+
+Output format (JSON only, no markdown, no extra text):
+{
+  "intention": "one sentence intention for the day",
+  "tasks": [
+    {"category": "Habit|Focus|Study|Health|Misc", "time": "optional time", "task": "task description"},
+    ...
+  ]
+}`;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: `Generate today's task list for ${dayName} ${dateStr}. JSON only.` }]
+      })
+    });
+
+    const data = await response.json();
+    const raw = data.content?.[0]?.text || '';
+    const clean = raw.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(clean);
+
+    const catColor = { Habit:'task-study', Focus:'task-focus', Study:'task-study', Health:'task-health', Misc:'task-misc' };
+    const catEmoji = { Habit:'🗂', Focus:'🎯', Study:'📖', Health:'🏃', Misc:'📌' };
+
+    let html = `<div class="today-section-head">今日の意図</div>
+<div style="font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--text-dim);padding:8px 0 16px;border-bottom:1px solid var(--border);margin-bottom:4px;">"${parsed.intention}"</div>
+<div class="today-section-head">タスクリスト</div>
+<ul class="today-task-list">`;
+
+    parsed.tasks.forEach(t => {
+      const dot = catColor[t.category] || 'task-misc';
+      const emoji = catEmoji[t.category] || '•';
+      html += `<li class="today-task">
+        <div class="today-task-dot ${dot}"></div>
+        <div><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-faint);letter-spacing:.08em;">${emoji} ${t.category}${t.time ? ' · ' + t.time : ''}</span><br>${t.task}</div>
+      </li>`;
+    });
+
+    html += '</ul>';
+    output.innerHTML = html;
+
+  } catch(err) {
+    output.innerHTML = `<div style="font-size:13px;color:var(--rose);font-family:'JetBrains Mono',monospace;">エラーが発生しました。もう一度試してください。<br><span style="color:var(--text-faint);font-size:11px;">${err.message}</span></div>`;
+  }
+
+  btn.disabled = false;
+  btn.textContent = '✦ 再生成';
+}
+
+// Accordion toggle
+function toggleAcc(btn) {
+  const body = btn.nextElementSibling;
+  const isOpen = btn.classList.contains('open');
+  btn.classList.toggle('open', !isOpen);
+  body.classList.toggle('open', !isOpen);
+}
+
+// Tab switching
+function switchTab(id, el) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  el.classList.add('active');
+}
+
+// Manuscript tabs
+function showManus(id, el) {
+  document.querySelectorAll('.manus-section').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.manus-nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('hiv-'+id).classList.add('visible');
+  el.classList.add('active');
+}
+
+// GANTT
+const ganttData = [
+  { label: '🧠 HIV Manuscript', cat: 'hiv', color: 'bar-hiv', start: 0, end: 7 },
+  { label: '📋 QIP Paper', cat: 'qip', color: 'bar-qip', start: 0, end: 6 },
+  { label: '🩺 PACES Registration', cat: 'paces', color: 'bar-key', start: 2, end: 3, text: 'Jul 27 window' },
+  { label: '🩺 PACES Preparation', cat: 'paces', color: 'bar-paces', start: 0, end: 6 },
+  { label: '🩺 PACES Exam', cat: 'paces', color: 'bar-teal', start: 5, end: 7 },
+  { label: '🎓 ACF PS Drafting', cat: 'acf', color: 'bar-acf', start: 0, end: 5 },
+  { label: '🎓 ACF Application', cat: 'acf', color: 'bar-key', start: 5, end: 6, text: 'Oct' },
+  { label: '📖 JLPT N1 Study', cat: 'jlpt', color: 'bar-jlpt', start: 0, end: 2, text: 'Jul exam' },
+  { label: '✍️ Creator / SNS', cat: 'creator', color: 'bar-creator', start: 0, end: 7 },
+];
+
+const months = ['May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const totalMonths = 8;
+const todayCol = 0; // May = col 0
+
+const tbody = document.getElementById('gantt-body');
+ganttData.forEach(row => {
+  const tr = document.createElement('tr');
+  let html = `<td class="row-label">${row.label}</td>`;
+  for(let m = 0; m < totalMonths; m++) {
+    if (m < row.start || m >= row.end) {
+      html += `<td class="bar-cell"></td>`;
+    } else if (m === row.start) {
+      const span = row.end - row.start;
+      const pct = (span / totalMonths) * 100;
+      html += `<td class="bar-cell" colspan="${span}">
+        <div class="bar ${row.color}" style="left:0;right:0;">
+          ${row.text || ''}
+        </div>
+      </td>`;
+      m = row.end - 1;
+    }
+  }
+  tr.innerHTML = html;
+  tbody.appendChild(tr);
+});
+
+// Clock
+function updateTime() {
+  const now = new Date();
+  const ts = document.querySelector('.timestamp');
+  if(ts) ts.textContent = now.toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) + ' · ' + now.toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'});
+}
+updateTime();
+setInterval(updateTime, 30000);
+</script>
+</body>
+</html>
