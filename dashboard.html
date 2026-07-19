@@ -272,70 +272,6 @@ body{background:var(--bg);color:var(--text);font-family:'Lato',sans-serif;min-he
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
 
-/* ── TODAY WIDGET ── */
-.today-widget{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:4px;overflow:hidden;margin-bottom:4px;
-}
-.today-header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:20px 24px;border-bottom:1px solid var(--border);
-  flex-wrap:wrap;gap:12px;
-}
-.today-date{
-  font-family:'Playfair Display',serif;font-size:22px;
-  color:var(--text);margin-bottom:4px;
-}
-.today-sub{font-size:12px;color:var(--text-faint);font-family:'JetBrains Mono',monospace;}
-.today-btn{
-  padding:10px 20px;
-  background:linear-gradient(135deg,rgba(200,150,62,0.15),rgba(200,150,62,0.25));
-  border:1px solid rgba(200,150,62,0.5);
-  border-radius:3px;color:var(--gold);
-  font-family:'JetBrains Mono',monospace;font-size:12px;
-  letter-spacing:.08em;cursor:pointer;transition:all .2s;
-  white-space:nowrap;
-}
-.today-btn:hover{background:rgba(200,150,62,0.35);border-color:var(--gold);}
-.today-btn:disabled{opacity:.5;cursor:not-allowed;}
-.today-output-area{padding:20px 24px;min-height:80px;}
-.today-placeholder{
-  font-size:13px;color:var(--text-faint);
-  font-family:'JetBrains Mono',monospace;
-  text-align:center;padding:20px 0;
-}
-.today-loading{
-  font-size:13px;color:var(--gold);
-  font-family:'JetBrains Mono',monospace;
-  display:flex;align-items:center;gap:8px;
-}
-.today-loading::before{
-  content:'';width:8px;height:8px;border-radius:50%;
-  background:var(--gold);
-  animation:pulse 1s ease-in-out infinite;
-}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.8);}}
-.today-task-list{list-style:none;}
-.today-task{
-  display:flex;align-items:flex-start;gap:10px;
-  padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04);
-  font-size:13px;line-height:1.6;
-}
-.today-task:last-child{border-bottom:none;}
-.today-task-dot{
-  width:6px;height:6px;border-radius:50%;
-  flex-shrink:0;margin-top:6px;
-}
-.task-focus{background:var(--gold);}
-.task-study{background:var(--teal);}
-.task-health{background:var(--green);}
-.task-misc{background:var(--text-faint);}
-.today-section-head{
-  font-family:'JetBrains Mono',monospace;font-size:10px;
-  letter-spacing:.15em;text-transform:uppercase;
-  color:var(--text-faint);margin:14px 0 6px;
-}
-
 /* ── ACCORDION ── */
 .accordion-wrap{display:flex;flex-direction:column;gap:6px;margin-bottom:8px;}
 .acc-item{border:1px solid var(--border);border-radius:4px;overflow:hidden;}
@@ -428,21 +364,6 @@ body{background:var(--bg);color:var(--text);font-family:'Lato',sans-serif;min-he
         <!-- filled by JS -->
       </tbody>
     </table>
-  </div>
-
-  <!-- TODAY WIDGET -->
-  <div class="section-label" style="margin-top:32px;">今日のリスト</div>
-  <div class="today-widget">
-    <div class="today-header">
-      <div>
-        <div class="today-date" id="today-date-display"></div>
-        <div class="today-sub">あなたのプロジェクト状況をもとにClaudeが今日のタスクを生成します</div>
-      </div>
-      <button class="today-btn" id="today-generate-btn" onclick="generateToday()">✦ 今日のリストを生成</button>
-    </div>
-    <div id="today-output" class="today-output-area">
-      <div class="today-placeholder">↑ ボタンを押すと、今日の日付・曜日・プロジェクト状況をもとに今日やることリストを生成します。</div>
-    </div>
   </div>
 
   <!-- MISC + PROMPTS — all collapsible -->
@@ -983,108 +904,6 @@ body{background:var(--bg);color:var(--text);font-family:'Lato',sans-serif;min-he
 </div>
 
 <script>
-// Today widget
-function setDateDisplay() {
-  const now = new Date();
-  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const d = document.getElementById('today-date-display');
-  if (d) d.textContent = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
-}
-setDateDisplay();
-
-async function generateToday() {
-  const btn = document.getElementById('today-generate-btn');
-  const output = document.getElementById('today-output');
-  btn.disabled = true;
-  btn.textContent = '生成中...';
-  output.innerHTML = '<div class="today-loading">Claudeが今日のリストを考えています</div>';
-
-  const now = new Date();
-  const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const dayJP = ['日曜','月曜','火曜','水曜','木曜','金曜','土曜'];
-  const dayName = dayNames[now.getDay()];
-  const dayNameJP = dayJP[now.getDay()];
-  const dateStr = `${now.getDate()} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][now.getMonth()]} ${now.getFullYear()}`;
-
-  const systemPrompt = `You are AKIKO OS — the personal operating system of Akiko, a Japanese doctor working in the UK.
-Today is ${dayName} ${dateStr} (${dayNameJP}).
-
-Akiko's active projects and fixed routines:
-- DAILY: Anki (8:30–8:40am), 医師国家試験 vocab practice
-- WEEKLY: SNS setup on Mondays (Buffer + X posts + note topic)
-- PACES exam registration opens July 27 — actively preparing
-- HIV Neurology manuscript: Cerner data collection ongoing
-- RSM Webinar publication: outlining stage, supervisor Charlie
-- ACF application: October 2026, Personal Statement in progress
-- Creator work: X + note.com, Buffer scheduled weekly
-
-SHIFT PATTERN (Akiko is currently on career break before returning to IMT August 2026):
-- Free most days currently. If a day is likely a shift day in hospital context, note it.
-
-Rules for your response:
-- Generate a realistic, calm, achievable today list for ${dayName}
-- Max 6 tasks — never overwhelming
-- Prioritise based on deadlines and importance
-- Always include the fixed daily habits (Anki etc) if they apply today
-- Mark each task with a category: [Focus] [Study] [Health] [Habit] [Misc]
-- Keep descriptions short and actionable
-- End with one short "today's intention" — a single sentence to set the tone
-
-Output format (JSON only, no markdown, no extra text):
-{
-  "intention": "one sentence intention for the day",
-  "tasks": [
-    {"category": "Habit|Focus|Study|Health|Misc", "time": "optional time", "task": "task description"},
-    ...
-  ]
-}`;
-
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: `Generate today's task list for ${dayName} ${dateStr}. JSON only.` }]
-      })
-    });
-
-    const data = await response.json();
-    const raw = data.content?.[0]?.text || '';
-    const clean = raw.replace(/```json|```/g, '').trim();
-    const parsed = JSON.parse(clean);
-
-    const catColor = { Habit:'task-study', Focus:'task-focus', Study:'task-study', Health:'task-health', Misc:'task-misc' };
-    const catEmoji = { Habit:'🗂', Focus:'🎯', Study:'📖', Health:'🏃', Misc:'📌' };
-
-    let html = `<div class="today-section-head">今日の意図</div>
-<div style="font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--text-dim);padding:8px 0 16px;border-bottom:1px solid var(--border);margin-bottom:4px;">"${parsed.intention}"</div>
-<div class="today-section-head">タスクリスト</div>
-<ul class="today-task-list">`;
-
-    parsed.tasks.forEach(t => {
-      const dot = catColor[t.category] || 'task-misc';
-      const emoji = catEmoji[t.category] || '•';
-      html += `<li class="today-task">
-        <div class="today-task-dot ${dot}"></div>
-        <div><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-faint);letter-spacing:.08em;">${emoji} ${t.category}${t.time ? ' · ' + t.time : ''}</span><br>${t.task}</div>
-      </li>`;
-    });
-
-    html += '</ul>';
-    output.innerHTML = html;
-
-  } catch(err) {
-    output.innerHTML = `<div style="font-size:13px;color:var(--rose);font-family:'JetBrains Mono',monospace;">エラーが発生しました。もう一度試してください。<br><span style="color:var(--text-faint);font-size:11px;">${err.message}</span></div>`;
-  }
-
-  btn.disabled = false;
-  btn.textContent = '✦ 再生成';
-}
-
 // Accordion toggle
 function toggleAcc(btn) {
   const body = btn.nextElementSibling;
