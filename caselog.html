@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Locum Case Log</title>
+<title>Shift + Case Log</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
 
@@ -411,11 +411,17 @@
 <body>
 
 <header>
-  <h1>Locum Case Log</h1>
+  <h1>Shift + Case Log</h1>
   <p>OOP Portfolio · Clinical Activity</p>
 </header>
 
 <div class="container">
+
+  <!-- MODE TOGGLE -->
+  <div class="section" style="padding:10px;display:flex;gap:8px;">
+    <div class="chip selected" id="mode-case-btn" style="flex:1;text-align:center;" onclick="setMode('case')">🩺 Full Case</div>
+    <div class="chip" id="mode-shift-btn" style="flex:1;text-align:center;" onclick="setMode('shift')">🕐 Shift Only</div>
+  </div>
 
   <!-- SHIFT INFO -->
   <div class="section">
@@ -459,12 +465,13 @@
   </div>
 
   <!-- CASE DETAILS (filled by AI or manually) -->
-  <div class="section">
+  <div class="section" id="section-case-details">
     <div class="section-title">Case Details</div>
     <div class="field">
-      <label>Presenting Complaint</label>
+      <label id="presenting-complaint-label">Presenting Complaint</label>
       <input type="text" id="presenting-complaint" placeholder="e.g. Sudden onset headache, GCS 14">
     </div>
+    <div id="case-extra-fields">
     <div class="field">
       <label>Key Clinical Findings</label>
       <textarea id="clinical-findings" rows="3" placeholder="Examination findings, observations, relevant investigations…"></textarea>
@@ -484,17 +491,18 @@
         ✦ Auto-fill reflection from learning points
       </button>
     </div>
+    </div>
   </div>
 
   <!-- PROCEDURES -->
-  <div class="section">
+  <div class="section" id="section-procedures">
     <div class="section-title">Procedures Performed</div>
     <div id="procedures-list"></div>
     <button class="add-proc" onclick="addProcedure()">+ Add procedure</button>
   </div>
 
   <!-- PORTFOLIO -->
-  <div class="section">
+  <div class="section" id="section-portfolio">
     <div class="section-title">Portfolio Mapping</div>
     <div class="field">
       <label>Assessment Type</label>
@@ -530,6 +538,15 @@
     </div>
   </div>
 
+  <!-- SHIFT STATUS (shift mode only) -->
+  <div class="section" id="section-shift-status" style="display:none;">
+    <div class="section-title">Shift Status</div>
+    <div class="chip-group" id="shift-status-chips">
+      <div class="chip selected" onclick="toggleSingle(this, 'shift-status-chips')">⏳ Pending</div>
+      <div class="chip" onclick="toggleSingle(this, 'shift-status-chips')">✅ Logged</div>
+    </div>
+  </div>
+
   <!-- OUTSTANDING TASK -->
   <div class="section">
     <div class="section-title">Outstanding Task</div>
@@ -539,7 +556,7 @@
   </div>
 
   <!-- REFLECTION -->
-  <div class="section">
+  <div class="section" id="section-reflection">
     <button class="accordion-toggle open" onclick="toggleAccordion(this)">
       <span>Reflection <span style="color:var(--accent);font-weight:500;font-size:0.78rem">— auto-filled from dictation</span></span>
       <span class="arrow">▼</span>
@@ -726,6 +743,45 @@ function toggleSingle(el, groupId) {
   el.classList.add('selected');
 }
 
+let currentMode = 'case';
+function setMode(mode) {
+  currentMode = mode;
+  const caseBtn = document.getElementById('mode-case-btn');
+  const shiftBtn = document.getElementById('mode-shift-btn');
+  const extra = document.getElementById('case-extra-fields');
+  const procSection = document.getElementById('section-procedures');
+  const portfolioSection = document.getElementById('section-portfolio');
+  const reflectionSection = document.getElementById('section-reflection');
+  const shiftStatusSection = document.getElementById('section-shift-status');
+  const pcLabel = document.getElementById('presenting-complaint-label');
+  const pcInput = document.getElementById('presenting-complaint');
+  const submitBtn = document.getElementById('submit-btn');
+
+  if (mode === 'shift') {
+    caseBtn.classList.remove('selected');
+    shiftBtn.classList.add('selected');
+    extra.style.display = 'none';
+    procSection.style.display = 'none';
+    portfolioSection.style.display = 'none';
+    reflectionSection.style.display = 'none';
+    shiftStatusSection.style.display = 'block';
+    pcLabel.textContent = 'Presenting Complaint (or note if no notable case)';
+    pcInput.placeholder = 'e.g. Quiet shift, no notable cases';
+    submitBtn.textContent = 'Save Shift';
+  } else {
+    caseBtn.classList.add('selected');
+    shiftBtn.classList.remove('selected');
+    extra.style.display = 'block';
+    procSection.style.display = 'block';
+    portfolioSection.style.display = 'block';
+    reflectionSection.style.display = 'block';
+    shiftStatusSection.style.display = 'none';
+    pcLabel.textContent = 'Presenting Complaint';
+    pcInput.placeholder = 'e.g. Sudden onset headache, GCS 14';
+    submitBtn.textContent = 'Save to Logbook';
+  }
+}
+
 function toggleAccordion(btn) {
   btn.classList.toggle('open');
   btn.nextElementSibling.classList.toggle('open');
@@ -758,6 +814,44 @@ function showToast(msg) {
 async function submitEntry() {
   const btn = document.getElementById('submit-btn');
 
+  if (currentMode === 'shift') {
+    const shiftStatus = document.querySelector('#shift-status-chips .chip.selected')?.textContent || '⏳ Pending';
+    const shiftEntry = {
+      type: 'shift',
+      date: document.getElementById('shift-date').value,
+      shift_type: document.getElementById('shift-type').value,
+      presenting_complaint: document.getElementById('presenting-complaint').value,
+      status: shiftStatus,
+      outstanding_task: document.getElementById('outstanding-task').value,
+      timestamp: new Date().toISOString()
+    };
+
+    if (!shiftEntry.date || !shiftEntry.shift_type) {
+      showToast('⚠ Please fill Date and Shift Type');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Saving…';
+
+    try {
+      await fetch(SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(shiftEntry)
+      });
+      showToast('✓ Shift saved');
+      setTimeout(() => resetForm(), 1500);
+    } catch (err) {
+      showToast('Save failed — check connection');
+    }
+
+    btn.disabled = false;
+    btn.innerHTML = 'Save Shift';
+    return;
+  }
+
   // Gather procedures
   const procs = [];
   document.querySelectorAll('#procedures-list .proc-row').forEach(row => {
@@ -771,6 +865,7 @@ async function submitEntry() {
   const status = document.querySelector('#status-chips .chip.selected')?.textContent || '';
 
   const entry = {
+    type: 'case',
     date: document.getElementById('shift-date').value,
     shift_type: document.getElementById('shift-type').value,
     hospital: document.getElementById('hospital').value,
@@ -837,8 +932,10 @@ function resetForm() {
   document.getElementById('procedures-list').innerHTML = '';
   document.getElementById('transcript-box').value = '';
   
-  document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('#status-chips .chip, #assessment-chips .chip').forEach(c => c.classList.remove('selected'));
   document.querySelector('#status-chips .chip:nth-child(2)').classList.add('selected');
+  document.querySelectorAll('#shift-status-chips .chip').forEach(c => c.classList.remove('selected'));
+  document.querySelector('#shift-status-chips .chip:nth-child(1)').classList.add('selected');
   document.getElementById('shift-date').valueAsDate = new Date();
 }
 </script>
