@@ -214,25 +214,25 @@ body{background:#0f0f12;color:#f0eff5;font-family:-apple-system,BlinkMacSystemFo
 <div class="app">
 <div class="hdr">
   <div class="hdr-r">
-    <div class="logo">PACES<em>·</em>prep</div>
+    <div class="logo">PACES<em>Â·</em>prep</div>
     <div class="dpill" id="dpill">Set exam date</div>
   </div>
   <div class="hsub" id="hsub">Your personal PACES tracker</div>
 </div>
 <div class="undo-bar" id="undo-bar">
   <span class="undo-txt" id="undo-txt">Action logged</span>
-  <button class="undo-btn" onclick="undoLast()">↩ Undo</button>
+  <button class="undo-btn" onclick="undoLast()">â© Undo</button>
 </div>
 
 <!-- TODAY -->
 <div id="s-today" class="sec on">
   <div class="ph"><div class="pt">Today's plan</div><div class="ps" id="today-date"></div></div>
   <div id="cd-wrap" style="display:none" class="cd">
-    <div><div class="cdn" id="cdn">—</div><div class="cdl">days to exam</div></div>
-    <div class="cdr"><div class="cdd" id="cdd">—</div><div class="cde">PACES sitting</div></div>
+    <div><div class="cdn" id="cdn">â</div><div class="cdl">days to exam</div></div>
+    <div class="cdr"><div class="cdd" id="cdd">â</div><div class="cde">PACES sitting</div></div>
   </div>
   <div class="sk-row">
-    <div class="sk"><div class="sv" id="sv1" style="color:var(--amb)">0</div><div class="sl">day streak 🔥</div></div>
+    <div class="sk"><div class="sv" id="sv1" style="color:var(--amb)">0</div><div class="sl">day streak ð¥</div></div>
     <div class="sk"><div class="sv" id="sv2" style="color:var(--grn)">0</div><div class="sl">done today</div></div>
     <div class="sk"><div class="sv" id="sv3" style="color:var(--blu)">0</div><div class="sl">total ever</div></div>
   </div>
@@ -240,14 +240,14 @@ body{background:#0f0f12;color:#f0eff5;font-family:-apple-system,BlinkMacSystemFo
     <div class="dp-r"><span class="dp-l">Today's sessions</span><span class="dp-v" id="dpv">0</span></div>
     <div class="dp-b"><div class="dp-f" id="dpf" style="width:0%"></div></div>
   </div>
-  <div class="slbl">Tasks — log sessions in Stations tab</div>
+  <div class="slbl">Tasks â log sessions in Stations tab</div>
   <div class="tl" id="tl"></div>
-  <button class="setbtn" onclick="showM()">⚙ Set exam date</button>
+  <button class="setbtn" onclick="showM()">â Set exam date</button>
 </div>
 
 <!-- STATIONS -->
 <div id="s-stations" class="sec">
-  <div class="ph"><div class="pt">Stations</div><div class="ps">+ logs one session · − removes one · ↩ Undo above if you made a mistake</div></div>
+  <div class="ph"><div class="pt">Stations</div><div class="ps">+ logs one session Â· â removes one Â· â© Undo above if you made a mistake</div></div>
   <div class="sg" id="sg"></div>
 </div>
 
@@ -260,12 +260,12 @@ body{background:#0f0f12;color:#f0eff5;font-family:-apple-system,BlinkMacSystemFo
   </div>
   <!-- Level 1: case list for a station -->
   <div id="cases-l1" style="display:none">
-    <div class="back-btn" onclick="casesBack(0)">← <span id="l1-station-name">Back</span></div>
+    <div class="back-btn" onclick="casesBack(0)">â <span id="l1-station-name">Back</span></div>
     <div class="case-list" id="cases-l1-list"></div>
   </div>
   <!-- Level 2: case detail -->
   <div id="cases-l2" style="display:none">
-    <div class="back-btn" onclick="casesBack(1)">← <span id="l2-back-label">Back</span></div>
+    <div class="back-btn" onclick="casesBack(1)">â <span id="l2-back-label">Back</span></div>
     <div class="case-title-row">
       <div class="case-title" id="case-detail-title"></div>
       <div class="case-station-badge" id="case-detail-badge"></div>
@@ -288,17 +288,17 @@ body{background:#0f0f12;color:#f0eff5;font-family:-apple-system,BlinkMacSystemFo
     <div class="reveal-section" id="case-presentation"></div>
     <!-- Mark practised -->
     <div style="padding:0 18px 20px">
-      <button class="practised-btn ready" id="practised-btn" onclick="markPractised()">✓ Mark as practised</button>
+      <button class="practised-btn ready" id="practised-btn" onclick="markPractised()">â Mark as practised</button>
     </div>
   </div>
 </div>
 
 <!-- VIVA -->
 <div id="s-viva" class="sec">
-  <div class="ph"><div class="pt">Quick viva drill</div><div class="ps">Think first — then reveal and rate yourself</div></div>
+  <div class="ph"><div class="pt">Quick viva drill</div><div class="ps">Think first â then reveal and rate yourself</div></div>
   <div id="vtv"><div class="vtl" id="vtl"></div></div>
   <div id="vdv" style="display:none">
-    <div class="back-btn" onclick="vivaBack()">← Topics</div>
+    <div class="back-btn" onclick="vivaBack()">â Topics</div>
     <div class="vbox">
       <div class="vcard">
         <div class="vq" id="vq"></div>
@@ -308,14 +308,14 @@ body{background:#0f0f12;color:#f0eff5;font-family:-apple-system,BlinkMacSystemFo
         </div>
         <div class="vans" id="va"></div>
         <div class="vrat" id="vrat" style="display:none">
-          <button class="rbtn" style="color:var(--red)" onclick="rQ(0)">❌ Missed</button>
-          <button class="rbtn" style="color:var(--amb)" onclick="rQ(1)">⚡ Partial</button>
-          <button class="rbtn" style="color:var(--grn)" onclick="rQ(2)">✓ Got it</button>
+          <button class="rbtn" style="color:var(--red)" onclick="rQ(0)">â Missed</button>
+          <button class="rbtn" style="color:var(--amb)" onclick="rQ(1)">â¡ Partial</button>
+          <button class="rbtn" style="color:var(--grn)" onclick="rQ(2)">â Got it</button>
         </div>
         <div class="vnav">
-          <button class="vbtn vbs" style="flex:0;padding:9px 13px;font-size:12px" onclick="pQ()">← Prev</button>
+          <button class="vbtn vbs" style="flex:0;padding:9px 13px;font-size:12px" onclick="pQ()">â Prev</button>
           <span class="vcnt" id="vc"></span>
-          <button class="vbtn vbp" style="flex:0;padding:9px 13px;font-size:12px" onclick="nQ()">Next →</button>
+          <button class="vbtn vbp" style="flex:0;padding:9px 13px;font-size:12px" onclick="nQ()">Next â</button>
         </div>
       </div>
     </div>
@@ -332,11 +332,11 @@ body{background:#0f0f12;color:#f0eff5;font-family:-apple-system,BlinkMacSystemFo
 </div>
 
 <div class="bnav">
-  <button class="ni on" onclick="sw('today',this)"><span class="nico">📅</span><span class="nlbl">Today</span></button>
-  <button class="ni" onclick="sw('stations',this)"><span class="nico">🏥</span><span class="nlbl">Stations</span></button>
-  <button class="ni" onclick="sw('cases',this)"><span class="nico">📖</span><span class="nlbl">Cases</span></button>
-  <button class="ni" onclick="sw('viva',this)"><span class="nico">⚡</span><span class="nlbl">Viva</span></button>
-  <button class="ni" onclick="sw('stats',this)"><span class="nico">📊</span><span class="nlbl">Stats</span></button>
+  <button class="ni on" onclick="sw('today',this)"><span class="nico">ð</span><span class="nlbl">Today</span></button>
+  <button class="ni" onclick="sw('stations',this)"><span class="nico">ð¥</span><span class="nlbl">Stations</span></button>
+  <button class="ni" onclick="sw('cases',this)"><span class="nico">ð</span><span class="nlbl">Cases</span></button>
+  <button class="ni" onclick="sw('viva',this)"><span class="nico">â¡</span><span class="nlbl">Viva</span></button>
+  <button class="ni" onclick="sw('stats',this)"><span class="nico">ð</span><span class="nlbl">Stats</span></button>
 </div>
 </div>
 
@@ -354,103 +354,103 @@ body{background:#0f0f12;color:#f0eff5;font-family:-apple-system,BlinkMacSystemFo
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════════════
-// CASE DATA — examination steps, findings, ideal presentation
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// CASE DATA â examination steps, findings, ideal presentation
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const CASE_DATA = {
   cardio: [
     {
       name: "Aortic stenosis",
       steps: [
         {l:"General inspection",d:"End of bed: breathlessness, pallor, malar flush, scars (sternotomy). Assess severity impression."},
-        {l:"Hands — pulse character",d:"Slow-rising, low-volume (anachrotic) pulse = AS. State character explicitly. Check for clubbing, splinters."},
+        {l:"Hands â pulse character",d:"Slow-rising, low-volume (anachrotic) pulse = AS. State character explicitly. Check for clubbing, splinters."},
         {l:"Blood pressure both arms",d:"Narrow pulse pressure (<50 mmHg) = severe AS. Wide pulse pressure suggests AR."},
         {l:"Face and eyes",d:"Conjunctival pallor, xanthelasma, malar flush (rare in AS). Signs of endocarditis."},
         {l:"JVP",d:"Usually normal unless RV failure (preterminal). Giant a-waves suggest pulmonary HTN."},
-        {l:"Apex beat — character and position",d:"Sustained, pressure-loaded, non-displaced. Describe: 5th ICS, MCL."},
-        {l:"Palpation — thrill and heaves",d:"Aortic area thrill (URSE) = grade ≥4. No parasternal heave unless RVH/pulmonary HTN."},
-        {l:"Auscultation — all areas",d:"ESM loudest URSE. A2 intensity (quiet = severe), S4 (stiff LV), S3 (decompensation)."},
-        {l:"Carotid radiation",d:"Place stethoscope over both carotids — confirm radiation. Distinguishes from MR (axilla)."},
+        {l:"Apex beat â character and position",d:"Sustained, pressure-loaded, non-displaced. Describe: 5th ICS, MCL."},
+        {l:"Palpation â thrill and heaves",d:"Aortic area thrill (URSE) = grade â¥4. No parasternal heave unless RVH/pulmonary HTN."},
+        {l:"Auscultation â all areas",d:"ESM loudest URSE. A2 intensity (quiet = severe), S4 (stiff LV), S3 (decompensation)."},
+        {l:"Carotid radiation",d:"Place stethoscope over both carotids â confirm radiation. Distinguishes from MR (axilla)."},
         {l:"Lung bases + peripheral oedema",d:"Bibasal crackles = LV decompensation. Ankle oedema = right heart failure (preterminal)."},
         {l:"Complete",d:"'To complete: BP, temperature chart, urine dipstick, ECG and echo.'"}
       ],
       findings: "Slow-rising low-volume pulse. Narrow pulse pressure. Sustained non-displaced apex. ESM grade 3/6 upper right sternal edge radiating to carotids. Quiet A2. No decompensation.",
-      ideal: `"On examination, the most striking finding is an ejection systolic murmur loudest at the upper right sternal edge, radiating to the carotids — consistent with <strong>aortic stenosis</strong>.<br><br>Supporting: slow-rising low-volume pulse, narrow pulse pressure, and a sustained pressure-loaded apex beat. A2 is quiet, suggesting significant calcification.<br><br>There are no signs of decompensation — apex non-displaced, no crackles, no oedema.<br><br>In summary: moderate-to-severe aortic stenosis. To complete I would request ECG and echocardiogram."<br><br><strong>Key PACES phrases:</strong> 'most striking finding' / 'consistent with' / 'supporting this' / 'no signs of decompensation' / 'to complete I would'`,
-      severity: `<strong>Signs of severe AS:</strong><ul><li>Quiet or absent A2</li><li>Late-peaking ESM</li><li>Narrow pulse pressure (&lt;50 mmHg)</li><li>S4 gallop</li><li>Symptoms: angina (5yr) → syncope (3yr) → breathlessness (2yr) — 50% mortality each</li><li>LV failure: displaced apex, crackles, oedema</li></ul>`
+      ideal: `"On examination, the most striking finding is an ejection systolic murmur loudest at the upper right sternal edge, radiating to the carotids â consistent with <strong>aortic stenosis</strong>.<br><br>Supporting: slow-rising low-volume pulse, narrow pulse pressure, and a sustained pressure-loaded apex beat. A2 is quiet, suggesting significant calcification.<br><br>There are no signs of decompensation â apex non-displaced, no crackles, no oedema.<br><br>In summary: moderate-to-severe aortic stenosis. To complete I would request ECG and echocardiogram."<br><br><strong>Key PACES phrases:</strong> 'most striking finding' / 'consistent with' / 'supporting this' / 'no signs of decompensation' / 'to complete I would'`,
+      severity: `<strong>Signs of severe AS:</strong><ul><li>Quiet or absent A2</li><li>Late-peaking ESM</li><li>Narrow pulse pressure (&lt;50 mmHg)</li><li>S4 gallop</li><li>Symptoms: angina (5yr) â syncope (3yr) â breathlessness (2yr) â 50% mortality each</li><li>LV failure: displaced apex, crackles, oedema</li></ul>`
     },
     {
       name: "Aortic regurgitation",
       steps: [
         {l:"General inspection",d:"Marfan habitus. De Musset's sign (head nodding). Corrigan's (visible neck pulsation). Sternotomy scar."},
-        {l:"Hands — collapsing pulse",d:"Rapidly rising and falling waterhammer pulse. Wide pulse pressure. Quincke's sign (nailbed pulsation)."},
+        {l:"Hands â collapsing pulse",d:"Rapidly rising and falling waterhammer pulse. Wide pulse pressure. Quincke's sign (nailbed pulsation)."},
         {l:"Blood pressure both arms",d:"Wide pulse pressure (>60 mmHg) = significant AR."},
         {l:"Face",d:"High arched palate (Marfan's). Argyll Robertson pupils (syphilis). Butterfly rash (SLE)."},
         {l:"JVP",d:"Usually normal. Elevated in cardiac failure."},
-        {l:"Apex beat",d:"Hyperkinetic (thrusting) and displaced — volume-loaded LV. Anterior axillary line in severe AR."},
+        {l:"Apex beat",d:"Hyperkinetic (thrusting) and displaced â volume-loaded LV. Anterior axillary line in severe AR."},
         {l:"Palpation",d:"Diastolic thrill at lower left sternal edge in severe AR. Thrill in aortic area."},
-        {l:"Auscultation",d:"EDM at lower left sternal edge — patient sitting forward, breath held in expiration. Austin-Flint murmur (MDM at apex). Soft A2."},
+        {l:"Auscultation",d:"EDM at lower left sternal edge â patient sitting forward, breath held in expiration. Austin-Flint murmur (MDM at apex). Soft A2."},
         {l:"Femoral arteries",d:"Duroziez's sign (diastolic murmur). Traube's sign (pistol-shot sound)."},
         {l:"Lung bases and oedema",d:"Bibasal crackles, oedema = LV decompensation."},
         {l:"Complete",d:"'To complete: Marfan's features (span, height), syphilis serology, ECG, CXR, echo.'"}
       ],
       findings: "Collapsing pulse, wide pulse pressure (175/50). Displaced hyperdynamic apex. EDM lower left sternal edge loudest sitting forward in expiration. Soft A2. No decompensation.",
-      ideal: `"On examination, the most striking finding is an early diastolic murmur at the lower left sternal edge — consistent with <strong>aortic regurgitation</strong>.<br><br>Supporting: collapsing waterhammer pulse with wide pulse pressure, and a displaced hyperdynamic volume-loaded apex. A2 is soft.<br><br>No signs of decompensation.<br><br>To complete I would examine for Marfan's features, request ECG, CXR, and echo."<br><br><strong>Key eponyms:</strong> Corrigan's, Quincke's, De Musset's, Duroziez's, Traube's.`,
+      ideal: `"On examination, the most striking finding is an early diastolic murmur at the lower left sternal edge â consistent with <strong>aortic regurgitation</strong>.<br><br>Supporting: collapsing waterhammer pulse with wide pulse pressure, and a displaced hyperdynamic volume-loaded apex. A2 is soft.<br><br>No signs of decompensation.<br><br>To complete I would examine for Marfan's features, request ECG, CXR, and echo."<br><br><strong>Key eponyms:</strong> Corrigan's, Quincke's, De Musset's, Duroziez's, Traube's.`,
       severity: `<strong>Signs of severe AR:</strong><ul><li>Collapsing pulse with very wide pulse pressure</li><li>Displaced hyperdynamic apex</li><li>EDM may paradoxically become quiet in free-flow regurgitation</li><li>S3 gallop</li><li>Austin-Flint murmur (MDM at apex)</li><li>LV failure signs</li><li>Echo: LVEF &lt;50%, LV systolic diameter >5.5cm</li></ul>`
     },
     {
       name: "Mitral stenosis",
       steps: [
         {l:"General inspection",d:"Malar flush (low CO + peripheral vasoconstriction). AF on monitors. Sternotomy or lateral thoracotomy scar."},
-        {l:"Hands — pulse",d:"Irregularly irregular if AF. Small volume. Check rate and rhythm carefully."},
+        {l:"Hands â pulse",d:"Irregularly irregular if AF. Small volume. Check rate and rhythm carefully."},
         {l:"Face",d:"Malar flush. Confirm AF status."},
         {l:"JVP",d:"Elevated if pulmonary HTN or right heart failure. Giant a-waves (pulmonary HTN in SR)."},
         {l:"Apex beat",d:"Tapping apex = palpable loud S1. Non-displaced usually. Left parasternal heave = RVH."},
-        {l:"Palpation — heaves",d:"Left parasternal heave = RVH from pulmonary HTN. Diastolic thrill at apex (severe MS)."},
-        {l:"Auscultation",d:"Loud S1. Opening snap after A2. MDM at apex — bell, left lateral position, expiration. Loud P2 if pulmonary HTN."},
+        {l:"Palpation â heaves",d:"Left parasternal heave = RVH from pulmonary HTN. Diastolic thrill at apex (severe MS)."},
+        {l:"Auscultation",d:"Loud S1. Opening snap after A2. MDM at apex â bell, left lateral position, expiration. Loud P2 if pulmonary HTN."},
         {l:"A2-OS interval",d:"Shorter = more severe MS. A2-OS <0.07s = severe."},
         {l:"Lung bases",d:"Crackles = pulmonary oedema. Bilateral pleural effusions."},
         {l:"Peripheral oedema",d:"Ankle/sacral oedema = right heart failure. Check for embolic complications."},
         {l:"Complete",d:"'To complete: AF monitoring, INR if anticoagulated, ECG, CXR, echo. Signs of stroke.'"}
       ],
       findings: "Malar flush. Irregularly irregular pulse. Tapping non-displaced apex. Left parasternal heave. Loud S1, opening snap, MDM at apex. Loud P2. No pulmonary oedema.",
-      ideal: `"On examination, the most striking finding is a mid-diastolic murmur at the apex with a loud S1 and opening snap — consistent with <strong>mitral stenosis</strong>.<br><br>Supporting: malar flush, AF, a tapping non-displaced apex, left parasternal heave and loud P2 indicating pulmonary hypertension.<br><br>No pulmonary oedema at present, though pulmonary hypertension is established.<br><br>In summary: significant mitral stenosis with pulmonary hypertension and AF. To complete: ECG, echo, anticoagulation status."`,
-      severity: `<strong>Signs of severe MS:</strong><ul><li>Short A2-OS interval (&lt;0.07s)</li><li>Long MDM</li><li>Pulmonary hypertension: RV heave, loud P2, functional TR</li><li>Atrial fibrillation</li><li>Echo: valve area &lt;1.0 cm²</li></ul>`
+      ideal: `"On examination, the most striking finding is a mid-diastolic murmur at the apex with a loud S1 and opening snap â consistent with <strong>mitral stenosis</strong>.<br><br>Supporting: malar flush, AF, a tapping non-displaced apex, left parasternal heave and loud P2 indicating pulmonary hypertension.<br><br>No pulmonary oedema at present, though pulmonary hypertension is established.<br><br>In summary: significant mitral stenosis with pulmonary hypertension and AF. To complete: ECG, echo, anticoagulation status."`,
+      severity: `<strong>Signs of severe MS:</strong><ul><li>Short A2-OS interval (&lt;0.07s)</li><li>Long MDM</li><li>Pulmonary hypertension: RV heave, loud P2, functional TR</li><li>Atrial fibrillation</li><li>Echo: valve area &lt;1.0 cmÂ²</li></ul>`
     },
     {
       name: "Mitral regurgitation",
       steps: [
         {l:"General inspection",d:"Lateral thoracotomy scar (valvotomy/MVR). AF. Signs of connective tissue disease, endocarditis."},
-        {l:"Hands — pulse",d:"AF. Clubbing, splinters, Osler's nodes, Janeway lesions."},
+        {l:"Hands â pulse",d:"AF. Clubbing, splinters, Osler's nodes, Janeway lesions."},
         {l:"Face",d:"Conjunctival pallor, high arched palate, butterfly rash."},
         {l:"JVP",d:"Elevated in right heart failure. CV waves if TR develops."},
         {l:"Apex beat",d:"Displaced laterally (volume-loaded dilated LV). Hyperdynamic/thrusting."},
-        {l:"Palpation",d:"Apical thrill (grade ≥4). Palpable S3. Left parasternal heave (late)."},
+        {l:"Palpation",d:"Apical thrill (grade â¥4). Palpable S3. Left parasternal heave (late)."},
         {l:"Auscultation",d:"Soft S1. PSM at apex radiating to axilla, loudest in expiration. Wide A2-P2 splitting. S3."},
-        {l:"Axillary radiation",d:"Confirm radiation to axilla — distinguishes MR from AS (carotids)."},
+        {l:"Axillary radiation",d:"Confirm radiation to axilla â distinguishes MR from AS (carotids)."},
         {l:"Lung bases",d:"Bibasal crackles = pulmonary oedema. Check O2 saturation."},
-        {l:"Peripheral oedema",d:"Late sign — right heart failure from severe decompensated MR."},
+        {l:"Peripheral oedema",d:"Late sign â right heart failure from severe decompensated MR."},
         {l:"Complete",d:"'To complete: ECG for AF, echo for jet severity and EF, blood cultures, urine dipstick.'"}
       ],
       findings: "AF. Displaced thrusting apex to anterior axillary line. Soft S1. PSM grade 3/6 at apex radiating to axilla. S3. No pulmonary oedema.",
-      ideal: `"On examination, the most striking finding is a pan-systolic murmur at the apex radiating to the axilla — consistent with <strong>mitral regurgitation</strong>.<br><br>Supporting: displaced volume-loaded thrusting apex, soft S1, S3 gallop, and atrial fibrillation.<br><br>No signs of decompensation at present, though the S3 and AF indicate significant haemodynamic compromise.<br><br>In summary: significant MR, likely myxomatous or rheumatic. To complete: echo, ECG, check anticoagulation."`,
+      ideal: `"On examination, the most striking finding is a pan-systolic murmur at the apex radiating to the axilla â consistent with <strong>mitral regurgitation</strong>.<br><br>Supporting: displaced volume-loaded thrusting apex, soft S1, S3 gallop, and atrial fibrillation.<br><br>No signs of decompensation at present, though the S3 and AF indicate significant haemodynamic compromise.<br><br>In summary: significant MR, likely myxomatous or rheumatic. To complete: echo, ECG, check anticoagulation."`,
       severity: `<strong>Signs of severe MR:</strong><ul><li>Displaced hyperdynamic apex</li><li>S3 gallop</li><li>Soft S1</li><li>Pulmonary oedema / AF</li><li>Severity is NOT determined by murmur intensity</li></ul>`
     },
     {
       name: "HOCM",
       steps: [
         {l:"General inspection",d:"Young patient, often athletic. Marfan's features. Friedreich's ataxia signs (pes cavus, cerebellar). Sternotomy scar."},
-        {l:"Hands — jerky pulse",d:"Jerky bisferiens pulse — rapid rise and fall with a notch. Contrast with slow-rising AS or collapsing AR."},
+        {l:"Hands â jerky pulse",d:"Jerky bisferiens pulse â rapid rise and fall with a notch. Contrast with slow-rising AS or collapsing AR."},
         {l:"Blood pressure",d:"Usually normal. Check for hypotension. Evidence of dynamic obstruction."},
         {l:"JVP",d:"Giant a-waves (hypertrophied stiff RV from septal involvement)."},
-        {l:"Apex beat",d:"Double apical impulse (palpable atrial kick + ventricular contraction) — pathognomonic of HOCM."},
+        {l:"Apex beat",d:"Double apical impulse (palpable atrial kick + ventricular contraction) â pathognomonic of HOCM."},
         {l:"Palpation",d:"Systolic thrill at LLSE. Double apical impulse. Left parasternal heave."},
         {l:"Auscultation",d:"ESM at LLSE. S4. Dynamic: louder standing/Valsalva (strain). Quieter squatting."},
-        {l:"Dynamic manoeuvres — stand then squat",d:"Stand: louder (reduces LV volume). Squat: quieter (increases LV volume). Key differentiator from AS."},
+        {l:"Dynamic manoeuvres â stand then squat",d:"Stand: louder (reduces LV volume). Squat: quieter (increases LV volume). Key differentiator from AS."},
         {l:"Lung bases",d:"Pulmonary oedema if outflow obstruction severe."},
         {l:"Complete",d:"'To complete: ECG for LVH and deep T-wave inversion, Holter for arrhythmia, echo for LVOT gradient, family history, genetic testing.'"}
       ],
       findings: "Young male. Jerky pulse. Double apical impulse. Systolic thrill LLSE. ESM grade 3/6 LLSE loudest standing, quieter squatting. S4. No decompensation.",
-      ideal: `"On examination, the most striking finding is an ejection systolic murmur at the lower left sternal edge — louder on standing and quieter on squatting — with a jerky pulse and a double apical impulse. This is consistent with <strong>hypertrophic obstructive cardiomyopathy</strong>.<br><br>The dynamic behaviour of the murmur with postural manoeuvres is the key distinguishing feature from fixed outflow obstruction.<br><br>There is an S4, consistent with a stiff hypertrophied ventricle. No decompensation.<br><br>To complete: ECG, 24-hour Holter, echo, family history and genetic testing."`,
+      ideal: `"On examination, the most striking finding is an ejection systolic murmur at the lower left sternal edge â louder on standing and quieter on squatting â with a jerky pulse and a double apical impulse. This is consistent with <strong>hypertrophic obstructive cardiomyopathy</strong>.<br><br>The dynamic behaviour of the murmur with postural manoeuvres is the key distinguishing feature from fixed outflow obstruction.<br><br>There is an S4, consistent with a stiff hypertrophied ventricle. No decompensation.<br><br>To complete: ECG, 24-hour Holter, echo, family history and genetic testing."`,
       severity: `<strong>Poor prognostic signs in HOCM:</strong><ul><li>Young age at diagnosis</li><li>Syncope</li><li>Family history of sudden cardiac death</li><li>Septal thickness >3cm</li><li>LVOT gradient >30 mmHg at rest</li><li>NSVT on Holter</li></ul>`
     }
   ],
@@ -459,91 +459,91 @@ const CASE_DATA = {
       name: "Cerebellar syndrome",
       steps: [
         {l:"General inspection and speech",d:"Listen for scanning dysarthria immediately. Wheelchair, walking aids. Alcohol signs, cachexia (malignancy), phenytoin gum hypertrophy."},
-        {l:"Outstretched arms — rebound",d:"Ask patient to hold arms out, eyes closed. Tap one arm down — overshoot on return = cerebellar. Postural tremor."},
+        {l:"Outstretched arms â rebound",d:"Ask patient to hold arms out, eyes closed. Tap one arm down â overshoot on return = cerebellar. Postural tremor."},
         {l:"Finger-nose test",d:"'Touch my finger then your nose.' Intention tremor (worsening on approach to target) and past-pointing. Test both sides."},
         {l:"Dysdiadochokinesis",d:"'Tap the back of your hand as fast as you can.' Irregular, clumsy = dysdiadochokinesis."},
         {l:"Tone and reflexes (upper limbs)",d:"Hypotonia and hyporeflexia in affected limbs."},
-        {l:"Eye movements — nystagmus",d:"Horizontal nystagmus maximal on lateral gaze. Fast phase towards side of lesion. Check for INO (MS clue)."},
+        {l:"Eye movements â nystagmus",d:"Horizontal nystagmus maximal on lateral gaze. Fast phase towards side of lesion. Check for INO (MS clue)."},
         {l:"Heel-shin test",d:"'Place your heel on your knee and slide it down.' Incoordination = ipsilateral cerebellar lobe lesion."},
         {l:"Gait",d:"Wide-based, unsteady, 'drunken.' Romberg test: positive in posterior column disease (not cerebellar)."},
         {l:"Aetiological clues",d:"MS: INO, optic atrophy, pyramidal signs. Alcohol: liver disease stigmata. Malignancy: clubbing, cachexia. Phenytoin: gum hypertrophy. Friedreich's: pes cavus, absent reflexes."},
         {l:"Complete",d:"'To complete: fundoscopy, BP, MRI brain/posterior fossa, CXR for malignancy, TFTs, paraneoplastic antibodies.'"}
       ],
       findings: "Young woman, broad-based gait. Intention tremor and past-pointing bilaterally worse left. Dysdiadochokinesis left > right. Horizontal nystagmus fast phase left. Scanning dysarthria. Hypotonia left arm.",
-      ideal: `"On examination, the most striking finding is a <strong>cerebellar syndrome</strong> — intention tremor, past-pointing and dysdiadochokinesis, worse on the left, with horizontal nystagmus with fast phase to the left, a broad-based ataxic gait and scanning dysarthria.<br><br>Lateralisation to the left suggests a left cerebellar lobe lesion.<br><br>There are no signs of MS, alcohol or malignancy. No optic atrophy, no pyramidal signs.<br><br>To complete: MRI posterior fossa, TFTs, paraneoplastic antibody screen."`,
-      severity: `<strong>Causes — PASTRIES mnemonic:</strong><ul><li><strong>P</strong>araneoplastic</li><li><strong>A</strong>lcohol</li><li><strong>S</strong>clerosis (MS)</li><li><strong>T</strong>umour (posterior fossa)</li><li><strong>R</strong>are (Friedreich's, ataxia-telangiectasia)</li><li><strong>I</strong>atrogenic (phenytoin)</li><li><strong>E</strong>ndocrine (hypothyroidism)</li><li><strong>S</strong>troke (brainstem)</li></ul>`
+      ideal: `"On examination, the most striking finding is a <strong>cerebellar syndrome</strong> â intention tremor, past-pointing and dysdiadochokinesis, worse on the left, with horizontal nystagmus with fast phase to the left, a broad-based ataxic gait and scanning dysarthria.<br><br>Lateralisation to the left suggests a left cerebellar lobe lesion.<br><br>There are no signs of MS, alcohol or malignancy. No optic atrophy, no pyramidal signs.<br><br>To complete: MRI posterior fossa, TFTs, paraneoplastic antibody screen."`,
+      severity: `<strong>Causes â PASTRIES mnemonic:</strong><ul><li><strong>P</strong>araneoplastic</li><li><strong>A</strong>lcohol</li><li><strong>S</strong>clerosis (MS)</li><li><strong>T</strong>umour (posterior fossa)</li><li><strong>R</strong>are (Friedreich's, ataxia-telangiectasia)</li><li><strong>I</strong>atrogenic (phenytoin)</li><li><strong>E</strong>ndocrine (hypothyroidism)</li><li><strong>S</strong>troke (brainstem)</li></ul>`
     },
     {
       name: "Parkinson's disease",
       steps: [
-        {l:"General inspection — observe before touching",d:"Expressionless (hypomimic) face. Reduced blinking. Drooling. Stooped posture. Resting tremor — pill-rolling. Observe walk before starting."},
-        {l:"Gait — crucial early",d:"Shuffling, festinant (short accelerating steps). Reduced arm swing — often asymmetrical. Freezing. Turning en bloc."},
-        {l:"Tremor — characterise it",d:"Resting 3-5 Hz pill-rolling. Stops during voluntary movement. Asymmetrical onset. Ask patient to do a task — tremor should reduce."},
-        {l:"Rigidity — wrists and cogwheeling",d:"Cogwheel rigidity. Enhance with synkinesis: ask patient to tap opposite hand on knee while you assess wrist."},
-        {l:"Bradykinesia",d:"Repeatedly oppose each finger to thumb rapidly — progressive slowing, reduced amplitude."},
+        {l:"General inspection â observe before touching",d:"Expressionless (hypomimic) face. Reduced blinking. Drooling. Stooped posture. Resting tremor â pill-rolling. Observe walk before starting."},
+        {l:"Gait â crucial early",d:"Shuffling, festinant (short accelerating steps). Reduced arm swing â often asymmetrical. Freezing. Turning en bloc."},
+        {l:"Tremor â characterise it",d:"Resting 3-5 Hz pill-rolling. Stops during voluntary movement. Asymmetrical onset. Ask patient to do a task â tremor should reduce."},
+        {l:"Rigidity â wrists and cogwheeling",d:"Cogwheel rigidity. Enhance with synkinesis: ask patient to tap opposite hand on knee while you assess wrist."},
+        {l:"Bradykinesia",d:"Repeatedly oppose each finger to thumb rapidly â progressive slowing, reduced amplitude."},
         {l:"Speech",d:"Hypophonic, monotonous. Spastic speech + brisk jaw jerk = pseudobulbar (PSP/MSA)."},
-        {l:"Postural instability — pull test",d:"Stand behind patient, warn them, pull shoulders back. Parkinson's: may fall backwards."},
+        {l:"Postural instability â pull test",d:"Stand behind patient, warn them, pull shoulders back. Parkinson's: may fall backwards."},
         {l:"Vertical eye movements",d:"Ask patient to look up and down. Impaired downgaze = PSP (key Parkinson-plus differentiator)."},
         {l:"BP lying and standing",d:"Postural hypotension = multisystem atrophy (Shy-Drager). Drop >20 systolic = significant."},
         {l:"Complete",d:"'To complete: cognitive assessment (MMSE), medication review, DaTscan if uncertain.'"}
       ],
       findings: "Elderly male. Expressionless face, reduced blinking. Festinant shuffling gait, reduced right arm swing. Resting pill-rolling tremor 4Hz right > left. Cogwheel rigidity bilaterally right > left. Bradykinesia right hand. No postural hypotension, vertical eye movements preserved.",
-      ideal: `"On examination, there is an asymmetrical <strong>Parkinson's syndrome</strong> — resting tremor, cogwheel rigidity and bradykinesia all more prominent on the right.<br><br>The gait is festinant with reduced right arm swing. The face is hypomimic.<br><br>Vertical eye movements are preserved and there is no postural hypotension — making Parkinson-plus syndromes less likely. This is consistent with idiopathic Parkinson's disease.<br><br>To complete: medication history (drug-induced Parkinsonism), cognitive assessment, DaTscan if diagnostic uncertainty."`,
-      severity: `<strong>Parkinson-plus syndromes — distinguish:</strong><ul><li><strong>MSA (Shy-Drager):</strong> Parkinsonism + postural hypotension + cerebellar ± pyramidal signs</li><li><strong>PSP (Steele-Richardson):</strong> Parkinsonism + impaired downgaze + early falls</li><li><strong>Corticobasal degeneration:</strong> asymmetric, alien limb phenomenon</li><li><strong>Lewy body dementia:</strong> dementia + Parkinsonism + visual hallucinations</li></ul>`
+      ideal: `"On examination, there is an asymmetrical <strong>Parkinson's syndrome</strong> â resting tremor, cogwheel rigidity and bradykinesia all more prominent on the right.<br><br>The gait is festinant with reduced right arm swing. The face is hypomimic.<br><br>Vertical eye movements are preserved and there is no postural hypotension â making Parkinson-plus syndromes less likely. This is consistent with idiopathic Parkinson's disease.<br><br>To complete: medication history (drug-induced Parkinsonism), cognitive assessment, DaTscan if diagnostic uncertainty."`,
+      severity: `<strong>Parkinson-plus syndromes â distinguish:</strong><ul><li><strong>MSA (Shy-Drager):</strong> Parkinsonism + postural hypotension + cerebellar Â± pyramidal signs</li><li><strong>PSP (Steele-Richardson):</strong> Parkinsonism + impaired downgaze + early falls</li><li><strong>Corticobasal degeneration:</strong> asymmetric, alien limb phenomenon</li><li><strong>Lewy body dementia:</strong> dementia + Parkinsonism + visual hallucinations</li></ul>`
     },
     {
       name: "Motor neurone disease",
       steps: [
-        {l:"General inspection",d:"Wasting and fasciculation — visible at rest. PEG tube (bulbar). Walking aids. Note speech on introduction."},
+        {l:"General inspection",d:"Wasting and fasciculation â visible at rest. PEG tube (bulbar). Walking aids. Note speech on introduction."},
         {l:"Speech and bulbar assessment",d:"Bulbar: nasal 'Donald Duck' speech, palatal weakness. Pseudobulbar: spastic 'hot potato' speech, brisk jaw jerk. Dysphagia and drooling."},
         {l:"Tongue",d:"Bulbar MND: tongue wasting + fasciculation (LMN). Pseudobulbar: spastic tongue, brisk jaw jerk (UMN)."},
-        {l:"Upper limbs — mixed UMN and LMN",d:"Wasting + fasciculation (LMN) WITH brisk reflexes (UMN). The hallmark combination."},
+        {l:"Upper limbs â mixed UMN and LMN",d:"Wasting + fasciculation (LMN) WITH brisk reflexes (UMN). The hallmark combination."},
         {l:"Look for fasciculation actively",d:"Ask patient to relax. Observe chest, abdomen, thighs. Tap muscles to precipitate."},
-        {l:"Lower limbs — mixed pattern",d:"Extensor plantars (UMN). Wasting + absent reflexes if anterior horn severely affected."},
-        {l:"Sensory examination — NORMAL",d:"NORMAL sensation throughout. If sensory signs present, reconsider the diagnosis. This is critical."},
+        {l:"Lower limbs â mixed pattern",d:"Extensor plantars (UMN). Wasting + absent reflexes if anterior horn severely affected."},
+        {l:"Sensory examination â NORMAL",d:"NORMAL sensation throughout. If sensory signs present, reconsider the diagnosis. This is critical."},
         {l:"Eyes and cognition",d:"Eye movements spared in MND. No cerebellar signs."},
         {l:"Complete",d:"'To complete: FVC (prognostic, determines need for NIPPV), EMG, MRI spine to exclude compression.'"}
       ],
       findings: "Elderly male. Bilateral hand and thigh wasting with fasciculation. Brisk reflexes upper and lower limbs. Extensor plantars. Bulbar dysarthria, tongue wasting and fasciculation. Normal eye movements. NO sensory signs.",
       ideal: `"On examination, there is a mixed upper and lower motor neurone syndrome affecting all four limbs and bulbar muscles.<br><br>LMN signs: wasting and fasciculation of hand muscles and thighs, tongue wasting, absent ankle jerks.<br><br>UMN signs: brisk upper limb reflexes, extensor plantars, bulbar dysarthria.<br><br>Crucially, there are <strong>no sensory signs</strong> anywhere, and eye movements are preserved. This pattern is consistent with <strong>motor neurone disease</strong>.<br><br>To complete: FVC for respiratory function, EMG, MRI spine."`,
-      severity: `<strong>MND types:</strong><ul><li><strong>ALS (50%):</strong> corticospinal + anterior horn — mixed UMN/LMN</li><li><strong>Progressive muscular atrophy (25%):</strong> pure LMN — best prognosis</li><li><strong>Progressive bulbar palsy (25%):</strong> lower cranial nerves — worst prognosis</li></ul><strong>Riluzole:</strong> slows progression by ~3 months. No curative treatment.`
+      severity: `<strong>MND types:</strong><ul><li><strong>ALS (50%):</strong> corticospinal + anterior horn â mixed UMN/LMN</li><li><strong>Progressive muscular atrophy (25%):</strong> pure LMN â best prognosis</li><li><strong>Progressive bulbar palsy (25%):</strong> lower cranial nerves â worst prognosis</li></ul><strong>Riluzole:</strong> slows progression by ~3 months. No curative treatment.`
     },
     {
       name: "Multiple sclerosis",
       steps: [
         {l:"General inspection",d:"Wheelchair, walking aids. UMN posture. Catheter bag. Wasting from disuse."},
-        {l:"Cranial nerves — eyes first",d:"Visual acuity. Fields. Fundoscopy: optic atrophy (pale disc). Eye movements: INO is the classic MS sign."},
+        {l:"Cranial nerves â eyes first",d:"Visual acuity. Fields. Fundoscopy: optic atrophy (pale disc). Eye movements: INO is the classic MS sign."},
         {l:"Internuclear ophthalmoplegia",d:"Follow finger laterally. INO: ipsilateral eye fails to adduct, contralateral nystagmus. Bilateral INO = strongly suggests MS."},
         {l:"Other cranial nerves",d:"Any cranial nerve can be affected. Facial sensation, movement, hearing. Dysarthria (cerebellar or pseudobulbar)."},
-        {l:"Upper limbs — pyramidal signs",d:"Spasticity (clasp-knife). UMN pattern weakness. Brisk reflexes. Cerebellar signs too."},
-        {l:"Lower limbs — pyramidal signs",d:"Increased tone, weakness (extensors > flexors), hyper-reflexia, extensor plantars, clonus."},
+        {l:"Upper limbs â pyramidal signs",d:"Spasticity (clasp-knife). UMN pattern weakness. Brisk reflexes. Cerebellar signs too."},
+        {l:"Lower limbs â pyramidal signs",d:"Increased tone, weakness (extensors > flexors), hyper-reflexia, extensor plantars, clonus."},
         {l:"Sensation",d:"Posterior column: reduced vibration and proprioception. Spinothalamic: pain and temperature. Lhermitte's sign: ask about electric shocks on neck flexion."},
         {l:"Gait",d:"Spastic (scissoring) or cerebellar (wide-based ataxic) or mixed."},
-        {l:"Synthesise — dissemination in space",d:"State the different pathways affected: 'There are pyramidal, cerebellar and visual pathway signs suggesting dissemination in space.'"},
+        {l:"Synthesise â dissemination in space",d:"State the different pathways affected: 'There are pyramidal, cerebellar and visual pathway signs suggesting dissemination in space.'"},
         {l:"Complete",d:"'To complete: MRI brain, visual evoked potentials, CSF for oligoclonal bands, full MS functional assessment.'"}
       ],
       findings: "Young woman in wheelchair. Bilateral optic atrophy. Bilateral INO. Spastic paraparesis with bilateral extensor plantars and brisk reflexes. Cerebellar signs upper limbs. Scanning dysarthria.",
-      ideal: `"On examination, there is evidence of demyelination disseminated in space — affecting multiple CNS pathways.<br><br>Cranial: bilateral optic atrophy and bilateral INO (MLF lesions). Cerebellar: scanning dysarthria, upper limb intention tremor. Pyramidal: spastic paraparesis, bilateral extensor plantars.<br><br>This constellation — bilateral INO, optic atrophy, cerebellar and pyramidal signs in a young woman — is highly consistent with <strong>multiple sclerosis</strong>.<br><br>To complete: MRI brain (periventricular plaques), CSF (oligoclonal IgG bands), VEPs, functional assessment."`,
+      ideal: `"On examination, there is evidence of demyelination disseminated in space â affecting multiple CNS pathways.<br><br>Cranial: bilateral optic atrophy and bilateral INO (MLF lesions). Cerebellar: scanning dysarthria, upper limb intention tremor. Pyramidal: spastic paraparesis, bilateral extensor plantars.<br><br>This constellation â bilateral INO, optic atrophy, cerebellar and pyramidal signs in a young woman â is highly consistent with <strong>multiple sclerosis</strong>.<br><br>To complete: MRI brain (periventricular plaques), CSF (oligoclonal IgG bands), VEPs, functional assessment."`,
       severity: `<strong>MS investigations:</strong><ul><li>MRI: periventricular white matter plaques (Dawson's fingers)</li><li>CSF: oligoclonal IgG bands (not in serum)</li><li>VEPs: delayed latency, normal amplitude</li></ul><strong>Uthoff's:</strong> worsening with heat/exercise.<br><strong>Lhermitte's:</strong> electric shocks down spine on neck flexion.`
     },
     {
       name: "Stroke (hemiplegia)",
       steps: [
         {l:"General inspection",d:"Walking aids, NG/PEG tube, catheter. UMN posture: flexed arm, extended leg. Note handedness first."},
-        {l:"Tone — upper limbs",d:"Spastic clasp-knife rigidity. Slower passive movements reveal spasticity better."},
-        {l:"Power — upper limbs",d:"UMN pattern: extensors weaker. Grade 0-5. Finger extension and abduction weakest early."},
-        {l:"Reflexes — upper limbs",d:"Brisk biceps, triceps, supinator. Hoffman's sign."},
-        {l:"Tone and power — lower limbs",d:"Increased tone, ankle clonus. UMN pattern: flexors weaker (hip flexors, knee flexors, ankle dorsiflexors)."},
+        {l:"Tone â upper limbs",d:"Spastic clasp-knife rigidity. Slower passive movements reveal spasticity better."},
+        {l:"Power â upper limbs",d:"UMN pattern: extensors weaker. Grade 0-5. Finger extension and abduction weakest early."},
+        {l:"Reflexes â upper limbs",d:"Brisk biceps, triceps, supinator. Hoffman's sign."},
+        {l:"Tone and power â lower limbs",d:"Increased tone, ankle clonus. UMN pattern: flexors weaker (hip flexors, knee flexors, ankle dorsiflexors)."},
         {l:"Reflexes + plantars",d:"Brisk knee and ankle jerks. Extensor plantar (Babinski)."},
         {l:"Face",d:"UMN facial weakness: lower face only (forehead spared). Raise eyebrows (normal in UMN) then show teeth (weak)."},
         {l:"Higher cortical function and fields",d:"Dysphasia (dominant). Neglect (non-dominant). Homonymous hemianopia."},
         {l:"Gait",d:"Hemiplegic gait: circumduction of extended leg, arm held flexed."},
-        {l:"Cause — examine for it",d:"AF (pulse). Murmur. Carotid bruit. BP. Diabetic signs. Cholesterol signs."},
+        {l:"Cause â examine for it",d:"AF (pulse). Murmur. Carotid bruit. BP. Diabetic signs. Cholesterol signs."},
         {l:"Complete + Bamford classify",d:"'Bamford classify the stroke. ECG for AF, CT/MRI head, carotid Doppler, echo, glucose, lipids.'"}
       ],
       findings: "Elderly male. Right-sided UMN weakness: spastic tone, clasp-knife. Power 3/5 right arm (extensors weakest), 3/5 right leg (flexors weakest). Brisk right reflexes, right extensor plantar. Right lower facial droop sparing forehead. AF.",
-      ideal: `"On examination, there is a right-sided upper motor neurone syndrome — spastic tone, pyramidal pattern weakness (grade 3/5), brisk reflexes and an extensor plantar on the right.<br><br>Right lower facial droop sparing the forehead confirms a UMN lesion above the pons.<br><br>The likely cause is cardioembolic stroke given the AF.<br><br>Using Bamford classification: with hemiplegia present, I would assess for higher cortical dysfunction and visual field defect — if all three present, this is a <strong>TACS</strong>.<br><br>To complete: ECG, CT head, carotid Doppler, echo, glucose."`,
-      severity: `<strong>Bamford classification:</strong><ul><li>TACS: hemiplegia + hemianopia + higher cortical dysfunction — 60% dead at 1 year</li><li>PACS: 2 of 3 — 15% dead</li><li>LACS: pure motor or sensory — 10% dead</li><li>POCS: posterior circulation</li></ul>`
+      ideal: `"On examination, there is a right-sided upper motor neurone syndrome â spastic tone, pyramidal pattern weakness (grade 3/5), brisk reflexes and an extensor plantar on the right.<br><br>Right lower facial droop sparing the forehead confirms a UMN lesion above the pons.<br><br>The likely cause is cardioembolic stroke given the AF.<br><br>Using Bamford classification: with hemiplegia present, I would assess for higher cortical dysfunction and visual field defect â if all three present, this is a <strong>TACS</strong>.<br><br>To complete: ECG, CT head, carotid Doppler, echo, glucose."`,
+      severity: `<strong>Bamford classification:</strong><ul><li>TACS: hemiplegia + hemianopia + higher cortical dysfunction â 60% dead at 1 year</li><li>PACS: 2 of 3 â 15% dead</li><li>LACS: pure motor or sensory â 10% dead</li><li>POCS: posterior circulation</li></ul>`
     }
   ],
   resp: [
@@ -552,25 +552,25 @@ const CASE_DATA = {
       steps: [
         {l:"General inspection",d:"Tachypnoea at rest, pursed lips, accessory muscles. Central cyanosis (blue lips/tongue). Oxygen. Clubbing from afar. Cushingoid (steroids)."},
         {l:"Hands",d:"Clubbing: loss of nail fold angle, drumstick. Peripheral cyanosis. Rheumatoid hands (cause). Sclerodactyly (systemic sclerosis)."},
-        {l:"Face",d:"Central cyanosis. Butterfly rash (SLE). Cushingoid. Grey skin discolouration (amiodarone). Sicca (Sjögren's)."},
-        {l:"Trachea",d:"Central in bilateral fibrosis — state explicitly. Deviation = unilateral pathology."},
+        {l:"Face",d:"Central cyanosis. Butterfly rash (SLE). Cushingoid. Grey skin discolouration (amiodarone). Sicca (SjÃ¶gren's)."},
+        {l:"Trachea",d:"Central in bilateral fibrosis â state explicitly. Deviation = unilateral pathology."},
         {l:"Chest expansion",d:"Reduced bilaterally and symmetrically. Small stiff lungs."},
         {l:"Percussion",d:"Usually resonant or mildly dull at bases. Not stony dull."},
-        {l:"Auscultation — the key sign",d:"Fine end-inspiratory crackles, bibasal, Velcro quality. DO NOT CHANGE WITH COUGHING — distinguishes from bronchiectasis. Listen from bases upwards."},
-        {l:"Ask patient to cough — confirm crackles unchanged",d:"Actively ask patient to cough and re-auscultate. If crackles unchanged = fibrosis. If they change = bronchiectasis."},
+        {l:"Auscultation â the key sign",d:"Fine end-inspiratory crackles, bibasal, Velcro quality. DO NOT CHANGE WITH COUGHING â distinguishes from bronchiectasis. Listen from bases upwards."},
+        {l:"Ask patient to cough â confirm crackles unchanged",d:"Actively ask patient to cough and re-auscultate. If crackles unchanged = fibrosis. If they change = bronchiectasis."},
         {l:"Aetiological clues",d:"RA hands, sclerodactyly (SSc), butterfly rash (SLE), grey skin (amiodarone), radiation burns (iatrogenic)."},
-        {l:"Cor pulmonale",d:"RV heave, loud P2, elevated JVP, ankle oedema — late complication."},
+        {l:"Cor pulmonale",d:"RV heave, loud P2, elevated JVP, ankle oedema â late complication."},
         {l:"Complete",d:"'To complete: O2 sats, HRCT thorax, spirometry (restrictive), ABG, autoantibody screen, occupational history.'"}
       ],
       findings: "Middle-aged woman. Tachypnoeic. Clubbed. Central cyanosis. Fine bibasal end-inspiratory Velcro crackles not changing with coughing. Trachea central. Reduced bilateral expansion. Rheumatoid hands.",
-      ideal: `"On examination, the most striking finding is fine bibasal end-inspiratory crackles with a Velcro quality that do <strong>not</strong> change with coughing — consistent with <strong>pulmonary fibrosis</strong>.<br><br>Supporting: clubbing, central cyanosis, tachypnoea and reduced bilateral chest expansion reflecting small stiff lungs.<br><br>Rheumatoid changes in the hands suggest RA-associated ILD as a likely cause.<br><br>No cor pulmonale at present.<br><br>In summary: pulmonary fibrosis in the context of rheumatoid arthritis. To complete: HRCT, spirometry for restrictive pattern, ABG, autoantibody screen."`,
-      severity: `<strong>Causes of basal fibrosis:</strong><ul><li>Idiopathic (UIP/CFA)</li><li>Connective tissue disease: RA, SLE, systemic sclerosis, Sjögren's</li><li>Asbestosis</li><li>Drugs: amiodarone, methotrexate, nitrofurantoin, bleomycin</li></ul><strong>Lung function:</strong> restrictive — FEV1/FVC >0.8, reduced TLC, reduced TLco.`
+      ideal: `"On examination, the most striking finding is fine bibasal end-inspiratory crackles with a Velcro quality that do <strong>not</strong> change with coughing â consistent with <strong>pulmonary fibrosis</strong>.<br><br>Supporting: clubbing, central cyanosis, tachypnoea and reduced bilateral chest expansion reflecting small stiff lungs.<br><br>Rheumatoid changes in the hands suggest RA-associated ILD as a likely cause.<br><br>No cor pulmonale at present.<br><br>In summary: pulmonary fibrosis in the context of rheumatoid arthritis. To complete: HRCT, spirometry for restrictive pattern, ABG, autoantibody screen."`,
+      severity: `<strong>Causes of basal fibrosis:</strong><ul><li>Idiopathic (UIP/CFA)</li><li>Connective tissue disease: RA, SLE, systemic sclerosis, SjÃ¶gren's</li><li>Asbestosis</li><li>Drugs: amiodarone, methotrexate, nitrofurantoin, bleomycin</li></ul><strong>Lung function:</strong> restrictive â FEV1/FVC >0.8, reduced TLC, reduced TLco.`
     },
     {
       name: "COPD",
       steps: [
         {l:"General inspection",d:"Inhaler devices, nebuliser, sputum pot. Venturi mask oxygen. Pursed lip breathing. Tachypnoea. Tar staining. Cachexia."},
-        {l:"Hands — CO2 retention flap",d:"Bounding pulse (CO2 vasodilation). Tar staining. Asterixis (CO2 flap): wrists extended, arms out."},
+        {l:"Hands â CO2 retention flap",d:"Bounding pulse (CO2 vasodilation). Tar staining. Asterixis (CO2 flap): wrists extended, arms out."},
         {l:"Face",d:"Central cyanosis. Pursed lips. Plethora (secondary polycythaemia). Conjunctival injection (CO2)."},
         {l:"Trachea",d:"Central or mildly high. Tracheal descent on inspiration = Hoover's sign (severe hyperinflation)."},
         {l:"Chest shape and expansion",d:"Barrel chest: increased AP diameter, horizontal ribs. Harrison's sulcus. Bilaterally reduced symmetrical expansion. Accessory muscles."},
@@ -581,25 +581,25 @@ const CASE_DATA = {
         {l:"Complete",d:"'To complete: O2 sats, spirometry, ABG, CXR. Check inhaler technique. Smoking pack-year history.'"}
       ],
       findings: "Elderly male. Tar staining. Pursed lip breathing. Barrel chest. Bilateral reduced expansion. Hyper-resonant, loss of cardiac dullness. Reduced breath sounds, expiratory polyphonic wheeze. No cor pulmonale. O2 sats 89% on air.",
-      ideal: `"On examination, this patient has features consistent with <strong>COPD</strong>.<br><br>There is a barrel chest with bilaterally reduced expansion, hyper-resonant percussion with loss of cardiac dullness, and reduced breath sounds with expiratory polyphonic wheeze — indicating airflow obstruction and emphysematous hyperinflation.<br><br>Tar staining and pursed lip breathing. O2 sats 89% on air.<br><br>No cor pulmonale. Importantly, <strong>no clubbing</strong> — its presence would prompt me to consider lung cancer or bronchiectasis.<br><br>In summary: COPD with emphysema. To complete: spirometry (FEV1/FVC &lt;0.7), ABG, CXR."`,
-      severity: `<strong>GOLD classification by FEV1:</strong><ul><li>Mild: FEV1 >80%</li><li>Moderate: 50-80%</li><li>Severe: 30-50%</li><li>Very severe: &lt;30%</li></ul><strong>COPD does NOT cause clubbing</strong> — if present, think lung cancer or bronchiectasis.`
+      ideal: `"On examination, this patient has features consistent with <strong>COPD</strong>.<br><br>There is a barrel chest with bilaterally reduced expansion, hyper-resonant percussion with loss of cardiac dullness, and reduced breath sounds with expiratory polyphonic wheeze â indicating airflow obstruction and emphysematous hyperinflation.<br><br>Tar staining and pursed lip breathing. O2 sats 89% on air.<br><br>No cor pulmonale. Importantly, <strong>no clubbing</strong> â its presence would prompt me to consider lung cancer or bronchiectasis.<br><br>In summary: COPD with emphysema. To complete: spirometry (FEV1/FVC &lt;0.7), ABG, CXR."`,
+      severity: `<strong>GOLD classification by FEV1:</strong><ul><li>Mild: FEV1 >80%</li><li>Moderate: 50-80%</li><li>Severe: 30-50%</li><li>Very severe: &lt;30%</li></ul><strong>COPD does NOT cause clubbing</strong> â if present, think lung cancer or bronchiectasis.`
     },
     {
       name: "Bronchiectasis",
       steps: [
-        {l:"General inspection",d:"Cachexia, tachypnoea. Sputum pot — look in it (copious purulent sputum). Inhalers. CF habitus (young, cachexic). Portacath/Hickman scar."},
+        {l:"General inspection",d:"Cachexia, tachypnoea. Sputum pot â look in it (copious purulent sputum). Inhalers. CF habitus (young, cachexic). Portacath/Hickman scar."},
         {l:"Hands",d:"Clubbing (chronic suppurative disease). Cyanosis. Yellow nail syndrome."},
         {l:"Face",d:"Central cyanosis. CF signs (young, nasal polyps). Rheumatoid, IBD signs."},
         {l:"Trachea",d:"Usually central. May deviate if lobar collapse or fibrosis."},
         {l:"Expansion",d:"Reduced bilaterally or unilaterally. May be hyperinflated if airflow obstruction."},
         {l:"Percussion",d:"Dull (consolidation, mucous plugging) or resonant. Hyperinflation if COPD coexists."},
-        {l:"Auscultation — key sign",d:"Coarse crackles that CHANGE WITH COUGHING — pathognomonic. Secretions move on cough. Wheeze, high-pitched squeaks."},
-        {l:"Ask patient to cough — re-auscultate immediately",d:"Crucial step. Re-auscultate immediately after cough. Crackles change/clear = bronchiectasis. Unchanged = fibrosis. State this to the examiner."},
-        {l:"Cor pulmonale",d:"JVP, RV heave, loud P2, ankle oedema — late complication."},
+        {l:"Auscultation â key sign",d:"Coarse crackles that CHANGE WITH COUGHING â pathognomonic. Secretions move on cough. Wheeze, high-pitched squeaks."},
+        {l:"Ask patient to cough â re-auscultate immediately",d:"Crucial step. Re-auscultate immediately after cough. Crackles change/clear = bronchiectasis. Unchanged = fibrosis. State this to the examiner."},
+        {l:"Cor pulmonale",d:"JVP, RV heave, loud P2, ankle oedema â late complication."},
         {l:"Complete",d:"'To complete: urine dip for protein (amyloidosis), sputum culture, HRCT (signet ring sign), immunoglobulins, CF screen if young.'"}
       ],
-      findings: "Middle-aged woman. Copious green sputum in pot. Clubbed. Coarse bilateral lower zone crackles and wheeze — crackles reduce and shift with coughing. No central cyanosis. No cor pulmonale.",
-      ideal: `"On examination, the most striking finding is coarse bilateral crackles and wheeze that <strong>change with coughing</strong> — characteristic of bronchiectasis, in which pooled secretions shift with cough.<br><br>There is clubbing and copious purulent sputum, consistent with chronic suppurative lung disease.<br><br>No central cyanosis, no cor pulmonale.<br><br>In summary: bronchiectasis. To complete: urine dip (amyloidosis), sputum culture, HRCT for signet ring sign, immunoglobulins, CF screen."`,
+      findings: "Middle-aged woman. Copious green sputum in pot. Clubbed. Coarse bilateral lower zone crackles and wheeze â crackles reduce and shift with coughing. No central cyanosis. No cor pulmonale.",
+      ideal: `"On examination, the most striking finding is coarse bilateral crackles and wheeze that <strong>change with coughing</strong> â characteristic of bronchiectasis, in which pooled secretions shift with cough.<br><br>There is clubbing and copious purulent sputum, consistent with chronic suppurative lung disease.<br><br>No central cyanosis, no cor pulmonale.<br><br>In summary: bronchiectasis. To complete: urine dip (amyloidosis), sputum culture, HRCT for signet ring sign, immunoglobulins, CF screen."`,
       severity: `<strong>Causes of bronchiectasis:</strong><ul><li>Congenital: Kartagener's (situs inversus + sinusitis), CF</li><li>Childhood infection: measles, TB, pertussis</li><li>Immune overactivity: ABPA (upper lobe), IBD-associated</li><li>Immune underactivity: hypogammaglobulinaemia, CVID</li><li>Aspiration: GORD, alcoholism (right lower lobe)</li></ul>`
     },
     {
@@ -608,16 +608,16 @@ const CASE_DATA = {
         {l:"General inspection",d:"Asymmetric breathing. Breathlessness at rest. Tracheal deviation. Cachexia. Mastectomy scar."},
         {l:"Hands",d:"Clubbing (malignancy, mesothelioma). Rheumatoid hands. Lymphoedema."},
         {l:"Face and neck",d:"Cervical lymphadenopathy. SLE butterfly rash. Raised JVP (CCF, SVC obstruction). Oedematous facies (nephrotic)."},
-        {l:"Trachea — critical step",d:"Deviated AWAY from large effusion (mediastinum pushed). Deviated TOWARDS in collapse/fibrosis. State direction explicitly."},
+        {l:"Trachea â critical step",d:"Deviated AWAY from large effusion (mediastinum pushed). Deviated TOWARDS in collapse/fibrosis. State direction explicitly."},
         {l:"Chest expansion",d:"Asymmetrically reduced on side of effusion."},
-        {l:"Percussion — diagnostic sign",d:"STONY DULL note over effusion — dull to the extreme. Distinguish from: consolidation (dull, bronchial breathing), collapse (dull, trachea towards)."},
-        {l:"Tactile vocal fremitus",d:"ABSENT over effusion — fluid conducts poorly. Key distinguishing feature from consolidation (TVF increased). State explicitly."},
+        {l:"Percussion â diagnostic sign",d:"STONY DULL note over effusion â dull to the extreme. Distinguish from: consolidation (dull, bronchial breathing), collapse (dull, trachea towards)."},
+        {l:"Tactile vocal fremitus",d:"ABSENT over effusion â fluid conducts poorly. Key distinguishing feature from consolidation (TVF increased). State explicitly."},
         {l:"Auscultation",d:"Reduced/absent breath sounds. Aegophony at upper border. Bronchial breathing just above fluid (compressed lung). Pleural rub if pleuritis."},
         {l:"Aetiological clues",d:"Malignancy: clubbing, lymphadenopathy, cachexia, mastectomy scar. CCF: raised JVP, oedema, murmur. Liver disease: leuconychia, spider naevi. Renal: AV fistula."},
-        {l:"Complete",d:"'To complete: O2 sats, bilateral effusion check (CCF), CXR, pleural aspiration — protein (Light's), LDH, glucose, pH, cytology, culture.'"}
+        {l:"Complete",d:"'To complete: O2 sats, bilateral effusion check (CCF), CXR, pleural aspiration â protein (Light's), LDH, glucose, pH, cytology, culture.'"}
       ],
       findings: "Middle-aged woman. Reduced right expansion. Trachea to the left. Stony dull percussion right base. Absent TVF right base. Absent breath sounds right base, bronchial breathing just above. Cachexia. Cervical lymphadenopathy.",
-      ideal: `"On examination, the most striking finding is a right-sided pleural effusion — stony dull percussion, absent TVF, absent breath sounds at the right base, with bronchial breathing just above the fluid level.<br><br>The trachea is deviated to the left, indicating a large effusion displacing the mediastinum.<br><br>Importantly, there is cachexia and cervical lymphadenopathy, raising strong concern for a <strong>malignant exudative effusion</strong>. No bilateral effusion or peripheral oedema to suggest a transudate.<br><br>In summary: right-sided pleural effusion, likely malignant. To complete: CXR, pleural aspiration with Light's criteria, cytology, CT thorax."`,
+      ideal: `"On examination, the most striking finding is a right-sided pleural effusion â stony dull percussion, absent TVF, absent breath sounds at the right base, with bronchial breathing just above the fluid level.<br><br>The trachea is deviated to the left, indicating a large effusion displacing the mediastinum.<br><br>Importantly, there is cachexia and cervical lymphadenopathy, raising strong concern for a <strong>malignant exudative effusion</strong>. No bilateral effusion or peripheral oedema to suggest a transudate.<br><br>In summary: right-sided pleural effusion, likely malignant. To complete: CXR, pleural aspiration with Light's criteria, cytology, CT thorax."`,
       severity: `<strong>Transudate (protein &lt;30g/L):</strong> CCF, renal failure, liver failure, nephrotic syndrome.<br><strong>Exudate (protein >30g/L):</strong> malignancy, infection, PE, RA, SLE.<br><br><strong>Light's criteria (exudate if any one):</strong><ul><li>Effusion protein / serum protein >0.5</li><li>Effusion LDH / serum LDH >0.6</li><li>Effusion LDH >2/3 upper limit of normal LDH</li></ul>`
     }
   ],
@@ -626,55 +626,55 @@ const CASE_DATA = {
       name: "Chronic liver disease",
       steps: [
         {l:"General inspection",d:"Cachexia, jaundice (icterus), bruising (coagulopathy), excoriation (pruritus), pedal oedema. Ascitic distension. State overall impression."},
-        {l:"Hands — multiple signs",d:"Leuconychia (hypoalbuminaemia). Clubbing. Palmar erythema. Dupuytren's (alcohol). Asterixis (flap): wrists extended, arms outstretched — encephalopathy."},
+        {l:"Hands â multiple signs",d:"Leuconychia (hypoalbuminaemia). Clubbing. Palmar erythema. Dupuytren's (alcohol). Asterixis (flap): wrists extended, arms outstretched â encephalopathy."},
         {l:"Arms and chest",d:"Bruising. Spider naevi on arms/chest (>5 in SVC distribution = significant). Gynaecomastia (oestrogen excess). Reduced body hair. Parotid enlargement (alcohol)."},
         {l:"Face",d:"Scleral jaundice. Xanthelasma (PBC). Fetor hepaticus (sweet musty breath = encephalopathy). Spider naevi."},
         {l:"Abdominal inspection",d:"Distension (ascites). Caput medusae (dilated periumbilical veins). Surgical scars. Visible veins."},
-        {l:"Palpation — liver",d:"Start in RIF, work to RUQ. Ask about pain first. Note size, character (smooth early, craggy/nodular advanced/malignant, pulsatile = TR), tenderness."},
-        {l:"Palpation — spleen",d:"Start in RIF, toward LUQ. Cannot ballot, cannot get above it, inferomedial movement, notch. Splenomegaly = portal hypertension."},
-        {l:"Percussion — ascites",d:"Shifting dullness: percuss from umbilicus laterally, note where dullness begins, patient rolls toward you — fluid shifts. Fluid thrill in massive ascites."},
+        {l:"Palpation â liver",d:"Start in RIF, work to RUQ. Ask about pain first. Note size, character (smooth early, craggy/nodular advanced/malignant, pulsatile = TR), tenderness."},
+        {l:"Palpation â spleen",d:"Start in RIF, toward LUQ. Cannot ballot, cannot get above it, inferomedial movement, notch. Splenomegaly = portal hypertension."},
+        {l:"Percussion â ascites",d:"Shifting dullness: percuss from umbilicus laterally, note where dullness begins, patient rolls toward you â fluid shifts. Fluid thrill in massive ascites."},
         {l:"Auscultation",d:"Bruit over liver = HCC (AV shunting). Cruveilhier-Baumgarten murmur over caput medusae."},
         {l:"Aetiological clues",d:"Alcohol: parotid enlargement, Dupuytren's, unkempt. Haemochromatosis: bronze skin, arthropathy, injection sites. PBC: xanthelasma, scratch marks. Wilson's: young, neurological, KF rings."},
         {l:"Complete",d:"'To complete: testicular atrophy (males), BP, urine dip (SBP, haematuria), LFTs, clotting, albumin, FBC, USS.'"}
       ],
       findings: "Middle-aged male. Jaundiced. Leuconychia, palmar erythema, Dupuytren's bilaterally. Multiple spider naevi. Gynaecomastia. Parotid enlargement. Hepatomegaly 4 finger-breadths smooth. Splenomegaly 3 finger-breadths. Shifting dullness (ascites). No asterixis.",
-      ideal: `"On examination, this jaundiced patient has stigmata of <strong>chronic liver disease with portal hypertension</strong>.<br><br>Peripheral signs: leuconychia, palmar erythema, Dupuytren's. Torso: spider naevi, gynaecomastia. Parotid enlargement suggests alcohol as the aetiology.<br><br>Abdominally: smooth hepatomegaly 4 finger-breadths, splenomegaly 3 finger-breadths, and shifting dullness confirming ascites — decompensated portal hypertension.<br><br>No asterixis — no encephalopathy. No hepatic bruit — no HCC.<br><br>In summary: decompensated alcoholic CLD. To complete: LFTs, clotting, albumin, ascitic tap, USS, AFP."`,
-      severity: `<strong>Decompensation — the big three complications:</strong><ul><li>Variceal haemorrhage (portal hypertension)</li><li>Hepatic encephalopathy</li><li>Spontaneous bacterial peritonitis (SBP)</li></ul><strong>Child-Pugh:</strong> A (5-6): 100% 1yr survival · B (7-9): 81% · C (10-15): 45%`
+      ideal: `"On examination, this jaundiced patient has stigmata of <strong>chronic liver disease with portal hypertension</strong>.<br><br>Peripheral signs: leuconychia, palmar erythema, Dupuytren's. Torso: spider naevi, gynaecomastia. Parotid enlargement suggests alcohol as the aetiology.<br><br>Abdominally: smooth hepatomegaly 4 finger-breadths, splenomegaly 3 finger-breadths, and shifting dullness confirming ascites â decompensated portal hypertension.<br><br>No asterixis â no encephalopathy. No hepatic bruit â no HCC.<br><br>In summary: decompensated alcoholic CLD. To complete: LFTs, clotting, albumin, ascitic tap, USS, AFP."`,
+      severity: `<strong>Decompensation â the big three complications:</strong><ul><li>Variceal haemorrhage (portal hypertension)</li><li>Hepatic encephalopathy</li><li>Spontaneous bacterial peritonitis (SBP)</li></ul><strong>Child-Pugh:</strong> A (5-6): 100% 1yr survival Â· B (7-9): 81% Â· C (10-15): 45%`
     },
     {
       name: "Splenomegaly",
       steps: [
-        {l:"General inspection",d:"Anaemia (pallor). Purpura (thrombocytopenia — doesn't blanch). Lymphadenopathy. Cachexia. Jaundice (haemolytic)."},
+        {l:"General inspection",d:"Anaemia (pallor). Purpura (thrombocytopenia â doesn't blanch). Lymphadenopathy. Cachexia. Jaundice (haemolytic)."},
         {l:"Hands and arms",d:"Pallor, koilonychia (iron deficiency). Rheumatoid hands (Felty's). Signs of CLD (portal hypertension cause). Splinters (endocarditis)."},
-        {l:"Lymph nodes — systematic",d:"Cervical (anterior and posterior), axillary, inguinal. Generalised = haematological malignancy, sarcoidosis, HIV."},
-        {l:"Abdominal inspection",d:"Visible mass in LUQ if massive. Surgical scars (previous splenectomy — left subcostal). Caput medusae (portal hypertension)."},
-        {l:"Palpation — spleen technique",d:"Start in RIF (spleen grows toward RIF). Roll patient 45° toward you. Cannot get above it, cannot ballot, moves inferomedially, medial notch, dull to percussion."},
+        {l:"Lymph nodes â systematic",d:"Cervical (anterior and posterior), axillary, inguinal. Generalised = haematological malignancy, sarcoidosis, HIV."},
+        {l:"Abdominal inspection",d:"Visible mass in LUQ if massive. Surgical scars (previous splenectomy â left subcostal). Caput medusae (portal hypertension)."},
+        {l:"Palpation â spleen technique",d:"Start in RIF (spleen grows toward RIF). Roll patient 45Â° toward you. Cannot get above it, cannot ballot, moves inferomedially, medial notch, dull to percussion."},
         {l:"Confirm the three cardinal features",d:"1) Cannot get above it. 2) Notch on medial border. 3) Dull to percussion. State all three explicitly."},
-        {l:"Palpation — liver",d:"Hepatomegaly (lymphoma, CML, portal HTN). Hepatosplenomegaly together narrows differential significantly."},
-        {l:"Estimate size — classify",d:"Tip only (&lt;4cm): portal HTN, infection, haemolytic anaemia. Moderate (4-8cm): lymphoma, CML. Massive (>8cm): CML, myelofibrosis, tropical infections."},
+        {l:"Palpation â liver",d:"Hepatomegaly (lymphoma, CML, portal HTN). Hepatosplenomegaly together narrows differential significantly."},
+        {l:"Estimate size â classify",d:"Tip only (&lt;4cm): portal HTN, infection, haemolytic anaemia. Moderate (4-8cm): lymphoma, CML. Massive (>8cm): CML, myelofibrosis, tropical infections."},
         {l:"Complete",d:"'To complete: sternal/bony tenderness (myeloma), FBC and film, LDH, uric acid, USS, bone marrow if haematological.'"}
       ],
-      findings: "Middle-aged male. Pallor. Generalised lymphadenopathy — cervical, axillary and inguinal. Splenomegaly 6 finger-breadths below costal margin, moves inferomedially, notch palpable, cannot get above it. Mild hepatomegaly. No stigmata of CLD.",
-      ideal: `"On examination, this patient has pallor, generalised lymphadenopathy and moderate splenomegaly 6 finger-breadths below the costal margin with classical splenic characteristics — I cannot get above it, it has a palpable notch and is dull to percussion.<br><br>There is mild hepatomegaly. No stigmata of CLD to suggest portal hypertension.<br><br>Generalised lymphadenopathy with hepatosplenomegaly in the absence of liver disease is most consistent with a <strong>lymphoproliferative disorder</strong> — likely lymphoma or CLL.<br><br>To complete: FBC and film, LDH, CT chest/abdomen/pelvis, bone marrow biopsy, lymph node biopsy."`,
-      severity: `<strong>Massive splenomegaly (>8cm) — causes:</strong><ul><li>Chronic myeloid leukaemia (CML)</li><li>Myelofibrosis</li><li>Malaria (chronic)</li><li>Visceral leishmaniasis (kala-azar)</li><li>Gaucher's disease</li></ul>In the UK: CML and myelofibrosis are commonest.`
+      findings: "Middle-aged male. Pallor. Generalised lymphadenopathy â cervical, axillary and inguinal. Splenomegaly 6 finger-breadths below costal margin, moves inferomedially, notch palpable, cannot get above it. Mild hepatomegaly. No stigmata of CLD.",
+      ideal: `"On examination, this patient has pallor, generalised lymphadenopathy and moderate splenomegaly 6 finger-breadths below the costal margin with classical splenic characteristics â I cannot get above it, it has a palpable notch and is dull to percussion.<br><br>There is mild hepatomegaly. No stigmata of CLD to suggest portal hypertension.<br><br>Generalised lymphadenopathy with hepatosplenomegaly in the absence of liver disease is most consistent with a <strong>lymphoproliferative disorder</strong> â likely lymphoma or CLL.<br><br>To complete: FBC and film, LDH, CT chest/abdomen/pelvis, bone marrow biopsy, lymph node biopsy."`,
+      severity: `<strong>Massive splenomegaly (>8cm) â causes:</strong><ul><li>Chronic myeloid leukaemia (CML)</li><li>Myelofibrosis</li><li>Malaria (chronic)</li><li>Visceral leishmaniasis (kala-azar)</li><li>Gaucher's disease</li></ul>In the UK: CML and myelofibrosis are commonest.`
     },
     {
       name: "Haemochromatosis",
       steps: [
-        {l:"General inspection — the key clue",d:"Slate-grey or bronze skin pigmentation — the hallmark. Look at face, neck, dorsum of hands carefully. Diabetes injection sites. Joint deformity."},
+        {l:"General inspection â the key clue",d:"Slate-grey or bronze skin pigmentation â the hallmark. Look at face, neck, dorsum of hands carefully. Diabetes injection sites. Joint deformity."},
         {l:"Skin pigmentation",d:"Bronze or slate-grey (melanin + haemosiderin). Most on sun-exposed areas, genitalia, axillae. State: 'bronze/slate-grey pigmentation consistent with haemochromatosis.'"},
-        {l:"Hands",d:"Arthropathy: 2nd and 3rd MCP joints — hard, swollen, tender (pseudo-gout). Koilonychia (iron). Insulin injection sites."},
+        {l:"Hands",d:"Arthropathy: 2nd and 3rd MCP joints â hard, swollen, tender (pseudo-gout). Koilonychia (iron). Insulin injection sites."},
         {l:"Venesection sites",d:"Antecubital fossa marks from regular venesection. Liver biopsy scar. Joint replacement scars. Note all."},
         {l:"Endocrine signs",d:"Hypogonadism: reduced secondary sexual hair, testicular atrophy (males). Iron deposition in pituitary and gonads."},
-        {l:"Abdominal palpation",d:"Hepatomegaly: smooth, may be firm (iron → cirrhosis). Estimate size. Splenomegaly (portal hypertension if cirrhotic)."},
+        {l:"Abdominal palpation",d:"Hepatomegaly: smooth, may be firm (iron â cirrhosis). Estimate size. Splenomegaly (portal hypertension if cirrhotic)."},
         {l:"Cardiac signs",d:"Cardiomegaly (dilated cardiomyopathy). CCF: elevated JVP, crackles, oedema. Arrhythmias. Listen for murmurs."},
         {l:"Joints",d:"2nd and 3rd MCP joints: bony hard, limited ROM (pseudo-gout). Wrist, hip, knee also affected. Compare with RA."},
-        {l:"Urine dipstick",d:"Glucose (diabetes — 'bronze diabetes'). Proteinuria if diabetic nephropathy."},
+        {l:"Urine dipstick",d:"Glucose (diabetes â 'bronze diabetes'). Proteinuria if diabetic nephropathy."},
         {l:"Complete",d:"'To complete: urine dip for glucose, ECG for arrhythmias, ferritin + transferrin saturation, HFE genotyping, AFP + USS (HCC surveillance).'"}
       ],
       findings: "Male 52. Bronze-grey skin pigmentation. 2nd and 3rd MCP arthropathy bilaterally. Insulin injection sites. Hepatomegaly 4 finger-breadths smooth firm. No ascites. No cardiac failure. Venesection marks in antecubital fossae.",
-      ideal: `"On examination, the most striking finding is bronze-grey skin pigmentation, arthropathy of the 2nd and 3rd MCP joints, insulin injection sites, hepatomegaly and venesection marks — consistent with <strong>hereditary haemochromatosis</strong>.<br><br>The hepatomegaly is firm and smooth at 4 finger-breadths. No decompensated liver disease — no ascites, no encephalopathy.<br><br>No cardiac failure to suggest cardiomyopathy at present.<br><br>In summary: haemochromatosis with the classic triad of bronze diabetes, hepatomegaly and arthropathy. To complete: urine glucose, ferritin + transferrin saturation, HFE genotyping, AFP + USS for HCC surveillance."`,
-      severity: `<strong>Haemochromatosis complications:</strong><ul><li>Cirrhosis → HCC (200× increased risk if cirrhotic)</li><li>Cardiomyopathy / arrhythmias</li><li>Diabetes mellitus ('bronze diabetes')</li><li>Hypogonadism</li><li>Arthropathy (2nd/3rd MCP — pseudo-gout)</li></ul><strong>Treatment:</strong> venesection 1 unit/week until ferritin &lt;50 µg/L.`
+      ideal: `"On examination, the most striking finding is bronze-grey skin pigmentation, arthropathy of the 2nd and 3rd MCP joints, insulin injection sites, hepatomegaly and venesection marks â consistent with <strong>hereditary haemochromatosis</strong>.<br><br>The hepatomegaly is firm and smooth at 4 finger-breadths. No decompensated liver disease â no ascites, no encephalopathy.<br><br>No cardiac failure to suggest cardiomyopathy at present.<br><br>In summary: haemochromatosis with the classic triad of bronze diabetes, hepatomegaly and arthropathy. To complete: urine glucose, ferritin + transferrin saturation, HFE genotyping, AFP + USS for HCC surveillance."`,
+      severity: `<strong>Haemochromatosis complications:</strong><ul><li>Cirrhosis â HCC (200Ã increased risk if cirrhotic)</li><li>Cardiomyopathy / arrhythmias</li><li>Diabetes mellitus ('bronze diabetes')</li><li>Hypogonadism</li><li>Arthropathy (2nd/3rd MCP â pseudo-gout)</li></ul><strong>Treatment:</strong> venesection 1 unit/week until ferritin &lt;50 Âµg/L.`
     }
   ],
   comms: [
@@ -682,10 +682,10 @@ const CASE_DATA = {
       name: "DNACPR discussion",
       steps: [
         {l:"Set up and explore understanding",d:"Private. Introduce. 'Before we talk about care going forward, can I ask how things have been going from your perspective?'"},
-        {l:"Establish priorities and values",d:"'What matters most to you at the moment? What are you hoping for from your care?' — essential before raising DNACPR."},
-        {l:"Explain CPR honestly",d:"'Can I ask what your understanding of CPR is?' Then explain: chest compressions, electric shocks, possibly a machine to breathe. Be honest — not sanitised."},
-        {l:"Explain the clinical reasoning — clearly",d:"'In your situation, with your illness, if your heart stopped, CPR would be very unlikely to work and could cause significant harm.' Be clear. Do not be vague."},
-        {l:"Explain what DNACPR does AND does NOT mean",d:"'This only means if your heart stops we would not attempt resuscitation. It does NOT mean withdrawing other treatments — we would still treat infections, manage pain.'"},
+        {l:"Establish priorities and values",d:"'What matters most to you at the moment? What are you hoping for from your care?' â essential before raising DNACPR."},
+        {l:"Explain CPR honestly",d:"'Can I ask what your understanding of CPR is?' Then explain: chest compressions, electric shocks, possibly a machine to breathe. Be honest â not sanitised."},
+        {l:"Explain the clinical reasoning â clearly",d:"'In your situation, with your illness, if your heart stopped, CPR would be very unlikely to work and could cause significant harm.' Be clear. Do not be vague."},
+        {l:"Explain what DNACPR does AND does NOT mean",d:"'This only means if your heart stops we would not attempt resuscitation. It does NOT mean withdrawing other treatments â we would still treat infections, manage pain.'"},
         {l:"Acknowledge reaction",d:"Pause. Allow silence. 'How does that feel to hear?' Do not rush through emotional response."},
         {l:"Address concerns",d:"'Is there anything about this that worries you?' Address: feeling abandoned, pain at end, family not present."},
         {l:"Family involvement",d:"'Would you like your family involved in this conversation?' Patient's consent required."},
@@ -694,7 +694,7 @@ const CASE_DATA = {
       ],
       findings: "Mr Gerald Brooks, 74, metastatic prostate cancer. Largely bedbound. Two recent pneumonia admissions. Team believes CPR futile. Patient has capacity. Not yet involved in the discussion.",
       ideal: `<strong>Pitfall warning:</strong> Do not present DNACPR as 'asking permission.' Do not be so indirect the patient doesn't understand what's being discussed. Always explain what WILL still be done.<br><br><strong>Key phrases:</strong><br>'This decision only covers CPR specifically...'<br>'We would still treat infections, manage pain...'<br>'This is about making sure we give you the best care possible...'<br>'This can be revisited at any time...'`,
-      severity: `<strong>Tracey (2014) — key legal points:</strong><ul><li>Legal obligation to discuss DNACPR with patients</li><li>Doctors NOT required to offer CPR if futile</li><li>But the decision MUST be discussed</li><li>Avoiding the conversation to prevent distress is no longer legally acceptable</li></ul><strong>Doctrine of double effect:</strong> high-dose morphine for terminal pain — foreseen but unintended respiratory depression is legally and ethically acceptable.`
+      severity: `<strong>Tracey (2014) â key legal points:</strong><ul><li>Legal obligation to discuss DNACPR with patients</li><li>Doctors NOT required to offer CPR if futile</li><li>But the decision MUST be discussed</li><li>Avoiding the conversation to prevent distress is no longer legally acceptable</li></ul><strong>Doctrine of double effect:</strong> high-dose morphine for terminal pain â foreseen but unintended respiratory depression is legally and ethically acceptable.`
     },
     {
       name: "Breaking bad news",
@@ -702,36 +702,36 @@ const CASE_DATA = {
         {l:"Set up correctly",d:"Private room, no bleeps. Introduce yourself. Invite support person. 'Is there anyone you'd like with you today?'"},
         {l:"Check existing awareness",d:"'Before I go through your results, what have you been told so far, and what have you made of things yourself?' Gauges insight."},
         {l:"Fire a warning shot",d:"'I have to tell you that the results show something serious.' Pause. Watch reaction. Do not rush on."},
-        {l:"Deliver diagnosis clearly",d:"'The scan shows there is a tumour — a cancer.' Use the word 'cancer.' Avoid euphemisms — they cause confusion and false hope."},
+        {l:"Deliver diagnosis clearly",d:"'The scan shows there is a tumour â a cancer.' Use the word 'cancer.' Avoid euphemisms â they cause confusion and false hope."},
         {l:"Pause and acknowledge",d:"Stop talking. Allow silence. 'I know this is an enormous shock...' Do not fill silence prematurely."},
         {l:"Explore concerns and questions",d:"'What's going through your mind right now?' Follow their lead. Do not launch into staging and treatment unprompted."},
-        {l:"Address 'How long have I got?'",d:"Explore why they want to know. Give broad ranges: 'It varies very much depending on treatment — weeks to months to longer. We'll know more after our team reviews everything.' Never give a precise figure."},
-        {l:"Explain next steps — MDT",d:"'Our specialist team meets this Wednesday. I'll call you the same day and we'll meet Thursday to go through the plan.' Use real days and dates."},
+        {l:"Address 'How long have I got?'",d:"Explore why they want to know. Give broad ranges: 'It varies very much depending on treatment â weeks to months to longer. We'll know more after our team reviews everything.' Never give a precise figure."},
+        {l:"Explain next steps â MDT",d:"'Our specialist team meets this Wednesday. I'll call you the same day and we'll meet Thursday to go through the plan.' Use real days and dates."},
         {l:"Safety net and practical support",d:"Specialist nurse contact. Charity info. 'Are you okay to drive home, or shall we call someone?' Do NOT let a distressed patient drive."},
         {l:"Summarise and close",d:"'Here's what will happen next...' Confirm they have a way to reach you. Arrange definite follow-up."}
       ],
       findings: "Mrs Patricia Hughes, 58. CT chest: 4cm RUL mass with mediastinal lymphadenopathy. Bronchoscopy confirmed NSCLC. She does not yet know the diagnosis. In clinic for results. Husband in waiting room.",
-      ideal: `<strong>SPIKES framework:</strong><ul><li><strong>S</strong>etting — private, seated, no bleeps</li><li><strong>P</strong>erception — check what they know/suspect</li><li><strong>I</strong>nvitation — how much do they want to know?</li><li><strong>K</strong>nowledge — warning shot then deliver clearly, no jargon</li><li><strong>E</strong>mpathy — acknowledge emotion, allow silence</li><li><strong>S</strong>trategy/Summary — MDT, next steps, support</li></ul><strong>Never:</strong> use euphemisms / give a precise prognosis / let a distressed patient drive home`,
+      ideal: `<strong>SPIKES framework:</strong><ul><li><strong>S</strong>etting â private, seated, no bleeps</li><li><strong>P</strong>erception â check what they know/suspect</li><li><strong>I</strong>nvitation â how much do they want to know?</li><li><strong>K</strong>nowledge â warning shot then deliver clearly, no jargon</li><li><strong>E</strong>mpathy â acknowledge emotion, allow silence</li><li><strong>S</strong>trategy/Summary â MDT, next steps, support</li></ul><strong>Never:</strong> use euphemisms / give a precise prognosis / let a distressed patient drive home`,
       severity: `<strong>Key pitfalls:</strong><ul><li>Delivering diagnosis without a warning shot</li><li>Using jargon ('adenocarcinoma', 'T3N2M0')</li><li>Giving too much information at once</li><li>Not pausing after delivering the diagnosis</li><li>Forgetting to arrange follow-up with a specific date</li></ul>`
     }
   ],
   consult: [
     {
-      name: "Haemoptysis — bronchiectasis",
+      name: "Haemoptysis â bronchiectasis",
       steps: [
         {l:"Read the referral carefully",d:"GP letter: Mr Daniel Steele, 63. Haemoptysis for several weeks. CXR: changes consistent with bronchiectasis. Note what the GP has and has not done."},
-        {l:"Open — check existing awareness",d:"'Before I ask you some questions, can I ask what you understand about what's been happening?' Establish his cancer fear early."},
+        {l:"Open â check existing awareness",d:"'Before I ask you some questions, can I ask what you understand about what's been happening?' Establish his cancer fear early."},
         {l:"Haemoptysis history",d:"Onset, volume, frequency, mixed with sputum or pure blood. Duration. Colour."},
         {l:"Chronic cough",d:"Duration (2 years), sputum volume and colour, antibiotic courses (6-7), postural drainage."},
-        {l:"Cancer red flags — must exclude",d:"Weight loss, anorexia, bone pain, hoarseness, haemoptysis (already noted). This is a 63-year-old smoker — cancer must be your first priority."},
+        {l:"Cancer red flags â must exclude",d:"Weight loss, anorexia, bone pain, hoarseness, haemoptysis (already noted). This is a 63-year-old smoker â cancer must be your first priority."},
         {l:"Smoking history",d:"Pack-years: 15/day since age 17 = 34 pack-years. Significant risk factor."},
-        {l:"Childhood history",d:"Severe pneumonia age 5 — post-infectious bronchiectasis aetiology."},
-        {l:"Occupational and travel history",d:"Joiner — asbestos exposure? (mesothelioma). Travel — TB risk?"},
-        {l:"Examine the patient",d:"Sputum pot. Hands: clubbing, tar staining. Lymphadenopathy. Weight/cachexia. Chest: expansion, percussion, auscultation — coarse crackles changing with cough."},
-        {l:"Explain diagnosis and exclude cancer honestly",d:"'Most likely: bronchiectasis. But because of your smoking history and the blood, we need to also check there isn't a growth. I can't reassure you it's definitely not cancer — the CT will tell us more.'"},
+        {l:"Childhood history",d:"Severe pneumonia age 5 â post-infectious bronchiectasis aetiology."},
+        {l:"Occupational and travel history",d:"Joiner â asbestos exposure? (mesothelioma). Travel â TB risk?"},
+        {l:"Examine the patient",d:"Sputum pot. Hands: clubbing, tar staining. Lymphadenopathy. Weight/cachexia. Chest: expansion, percussion, auscultation â coarse crackles changing with cough."},
+        {l:"Explain diagnosis and exclude cancer honestly",d:"'Most likely: bronchiectasis. But because of your smoking history and the blood, we need to also check there isn't a growth. I can't reassure you it's definitely not cancer â the CT will tell us more.'"},
         {l:"Agree management plan",d:"Urgent CT chest. Bronchoscopy if suspicious. Spirometry. Sputum culture (including AFB). Chest physiotherapy. Smoking cessation. Respiratory referral."}
       ],
-      findings: "Mr Daniel Steele, 63. Haemoptysis 4 weeks. Chronic productive cough 2 years. 6-7 antibiotic courses. 34 pack-year history. Severe pneumonia age 5. Joiner — no known asbestos. CXR: bronchiectasis changes.",
+      findings: "Mr Daniel Steele, 63. Haemoptysis 4 weeks. Chronic productive cough 2 years. 6-7 antibiotic courses. 34 pack-year history. Severe pneumonia age 5. Joiner â no known asbestos. CXR: bronchiectasis changes.",
       ideal: `<strong>Most likely diagnosis:</strong> Bronchiectasis (2-year productive cough, recurrent infections, childhood pneumonia aetiology, CXR consistent).<br><br><strong>Must exclude:</strong> Lung cancer (34 pack-years, 63-year-old male, haemoptysis).<br><br><strong>Key management:</strong><ul><li>Urgent CT chest</li><li>Bronchoscopy if CT suspicious</li><li>Spirometry</li><li>Sputum AFB</li><li>Smoking cessation</li></ul><strong>Do NOT offer false reassurance about cancer.</strong>`,
       severity: `<strong>Cancer red flags requiring urgent CT:</strong><ul><li>Haemoptysis + smoking history</li><li>Age >40</li><li>Weight loss</li><li>Persistent cough >3 weeks</li><li>Hoarseness (RLN involvement)</li><li>Clubbing</li></ul>`
     },
@@ -740,147 +740,147 @@ const CASE_DATA = {
       steps: [
         {l:"Read the referral",d:"Mr Ahmed Al-Rashid, 58, taxi driver. T2DM 8 years. HbA1c 96 mmol/mol (target <58). Metformin + gliclazide. 'Too busy to eat properly.' Stopped glucose monitoring."},
         {l:"Explore barriers before prescribing",d:"Why is control poor? Irregular eating (taxi shifts), missed doses, no self-monitoring. Understanding? Motivation? What worries him about his diabetes?"},
-        {l:"Complications screening",d:"Foot tingling (peripheral neuropathy — already present). Visual symptoms. Chest symptoms. Last retinal screening, urine ACR, eGFR."},
-        {l:"Occupation — DVLA implications",d:"Taxi driver — DVLA rules relevant to treatment choices. Insulin = must declare to DVLA, may need to stop driving."},
-        {l:"Examine: feet + BP",d:"Feet: peripheral pulses, monofilament test, vibration, skin integrity. BP (already 148/88 — undertreated hypertension). BMI."},
+        {l:"Complications screening",d:"Foot tingling (peripheral neuropathy â already present). Visual symptoms. Chest symptoms. Last retinal screening, urine ACR, eGFR."},
+        {l:"Occupation â DVLA implications",d:"Taxi driver â DVLA rules relevant to treatment choices. Insulin = must declare to DVLA, may need to stop driving."},
+        {l:"Examine: feet + BP",d:"Feet: peripheral pulses, monofilament test, vibration, skin integrity. BP (already 148/88 â undertreated hypertension). BMI."},
         {l:"Explain the HbA1c honestly",d:"'Your blood sugar control has not been where we need it. HbA1c of 96 means your sugars have been consistently high for the past 3 months.' Use the patient's language."},
         {l:"Lifestyle first",d:"Regular meals, structured diet, dose-timing advice for shift work."},
-        {l:"Medication escalation — DVLA-aware",d:"Add SGLT2 inhibitor (empagliflozin) — cardiovascular and renal benefit, no hypoglycaemia, no DVLA implications for taxi licence. Avoid insulin as first escalation in a driver."},
+        {l:"Medication escalation â DVLA-aware",d:"Add SGLT2 inhibitor (empagliflozin) â cardiovascular and renal benefit, no hypoglycaemia, no DVLA implications for taxi licence. Avoid insulin as first escalation in a driver."},
         {l:"Address neuropathy",d:"'The tingling in your feet is likely early nerve damage from high sugar. This is reversible with better control.' Podiatry referral."},
-        {l:"Retinal screening overdue",d:"2 years overdue — urgent ophthalmology referral for retinal screening."},
+        {l:"Retinal screening overdue",d:"2 years overdue â urgent ophthalmology referral for retinal screening."},
         {l:"Agree plan and safety net",d:"Agree: SGLT2 inhibitor, lifestyle advice, podiatry, retinal screen, BP treatment (ACE inhibitor), follow-up in 3 months with repeat HbA1c."}
       ],
       findings: "Mr Ahmed Al-Rashid, 58, taxi driver. HbA1c 96 mmol/mol. Foot tingling. Retinal screening 2 years overdue. BP 148/88. Missing medication doses. Irregular diet. Stopped glucose monitoring.",
       ideal: `<strong>Priority approach:</strong><ol style='padding-left:1.2rem'><li>Explore WHY control is poor (barriers) before adding drugs</li><li>Examine feet (neuropathy already present)</li><li>DVLA implications of insulin for taxi licence</li><li>SGLT2 inhibitor as first escalation (no hypoglycaemia risk)</li><li>ACE inhibitor for BP + urine ACR</li></ol><strong>Never escalate to insulin first</strong> in a taxi driver without discussing DVLA implications.`,
-      severity: `<strong>DVLA rules — diabetes:</strong><ul><li>Non-insulin: may drive; must monitor if hypoglycaemia risk</li><li>Insulin-treated: must declare to DVLA; group 2 (HGV/taxi) likely revoked or restricted</li></ul><strong>SGLT2 inhibitors (empagliflozin, dapagliflozin):</strong> cardiovascular mortality benefit, renal protection, no hypoglycaemia.`
+      severity: `<strong>DVLA rules â diabetes:</strong><ul><li>Non-insulin: may drive; must monitor if hypoglycaemia risk</li><li>Insulin-treated: must declare to DVLA; group 2 (HGV/taxi) likely revoked or restricted</li></ul><strong>SGLT2 inhibitors (empagliflozin, dapagliflozin):</strong> cardiovascular mortality benefit, renal protection, no hypoglycaemia.`
     }
   ]
 };
 
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 // STATION METADATA FOR CASES TAB
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const CASE_STATIONS = [
-  {id:'cardio', n:'Cardiovascular', ic:'🫀', c:'var(--blu)', d:'rgba(96,165,250,0.1)', sub:'Station 3 · 5 cases with checklists'},
-  {id:'neuro',  n:'Neurology',      ic:'🧠', c:'var(--amb)', d:'rgba(251,191,36,0.1)',  sub:'Station 3 · 5 cases with checklists'},
-  {id:'resp',   n:'Respiratory',    ic:'🫁', c:'var(--grn)', d:'rgba(74,222,128,0.1)', sub:'Station 1 · 4 cases with checklists'},
-  {id:'abdo',   n:'Abdominal',      ic:'🧫', c:'var(--red)', d:'rgba(248,113,113,0.1)', sub:'Station 4 · 3 cases with checklists'},
-  {id:'comms',  n:'Communication',  ic:'💬', c:'var(--pur)', d:'rgba(167,139,250,0.1)', sub:'Stations 1 & 4 · 2 scenarios'},
-  {id:'consult',n:'Consultation',   ic:'📋', c:'var(--tel)', d:'rgba(45,212,191,0.1)', sub:'Stations 2 & 5 · 2 consultation cases'},
+  {id:'cardio', n:'Cardiovascular', ic:'ð«', c:'var(--blu)', d:'rgba(96,165,250,0.1)', sub:'Station 3 Â· 5 cases with checklists'},
+  {id:'neuro',  n:'Neurology',      ic:'ð§ ', c:'var(--amb)', d:'rgba(251,191,36,0.1)',  sub:'Station 3 Â· 5 cases with checklists'},
+  {id:'resp',   n:'Respiratory',    ic:'ð«', c:'var(--grn)', d:'rgba(74,222,128,0.1)', sub:'Station 1 Â· 4 cases with checklists'},
+  {id:'abdo',   n:'Abdominal',      ic:'ð§«', c:'var(--red)', d:'rgba(248,113,113,0.1)', sub:'Station 4 Â· 3 cases with checklists'},
+  {id:'comms',  n:'Communication',  ic:'ð¬', c:'var(--pur)', d:'rgba(167,139,250,0.1)', sub:'Stations 1 & 4 Â· 2 scenarios'},
+  {id:'consult',n:'Consultation',   ic:'ð', c:'var(--tel)', d:'rgba(45,212,191,0.1)', sub:'Stations 2 & 5 Â· 2 consultation cases'},
 ];
 
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 // STATIONS FOR PROGRESS TRACKING
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const STATIONS = [
-  {id:'cardio', n:'Cardiovascular', st:'Station 3', ic:'🫀', c:'var(--blu)', d:'rgba(96,165,250,0.1)',
+  {id:'cardio', n:'Cardiovascular', st:'Station 3', ic:'ð«', c:'var(--blu)', d:'rgba(96,165,250,0.1)',
    cases:['Aortic stenosis','Aortic regurgitation','Mitral stenosis','Mitral regurgitation','Tricuspid regurgitation','Pulmonary stenosis','Prosthetic valves','ASD','VSD','HOCM'],
-   tip:'10 cases — build a systematic routine for each'},
-  {id:'neuro', n:'Neurology', st:'Station 3', ic:'🧠', c:'var(--amb)', d:'rgba(251,191,36,0.1)',
+   tip:'10 cases â build a systematic routine for each'},
+  {id:'neuro', n:'Neurology', st:'Station 3', ic:'ð§ ', c:'var(--amb)', d:'rgba(251,191,36,0.1)',
    cases:['Cerebellar syndrome','Multiple sclerosis','Stroke','Spastic paraparesis','MND','Parkinson\'s','Syringomyelia','HSMN','Friedreich\'s','Myasthenia','Facial nerve palsy','Wallenberg'],
-   tip:'12 cases — mixed UMN/LMN and dissociated sensory loss'},
-  {id:'resp', n:'Respiratory', st:'Station 1', ic:'🫁', c:'var(--grn)', d:'rgba(74,222,128,0.1)',
+   tip:'12 cases â mixed UMN/LMN and dissociated sensory loss'},
+  {id:'resp', n:'Respiratory', st:'Station 1', ic:'ð«', c:'var(--grn)', d:'rgba(74,222,128,0.1)',
    cases:['Pulmonary fibrosis','COPD','Bronchiectasis','Pleural effusion','Lung cancer','Old TB'],
-   tip:'6 cases — always cough and re-auscultate'},
-  {id:'abdo', n:'Abdominal', st:'Station 4', ic:'🧫', c:'var(--red)', d:'rgba(248,113,113,0.1)',
+   tip:'6 cases â always cough and re-auscultate'},
+  {id:'abdo', n:'Abdominal', st:'Station 4', ic:'ð§«', c:'var(--red)', d:'rgba(248,113,113,0.1)',
    cases:['Chronic liver disease','Splenomegaly','Renal/ADPKD','Liver transplant','Renal transplant','Haemochromatosis'],
-   tip:'6 cases — read the scars first'},
-  {id:'comms', n:'Communication', st:'Stations 1 & 4', ic:'💬', c:'var(--pur)', d:'rgba(167,139,250,0.1)',
+   tip:'6 cases â read the scars first'},
+  {id:'comms', n:'Communication', st:'Stations 1 & 4', ic:'ð¬', c:'var(--pur)', d:'rgba(167,139,250,0.1)',
    cases:['Breaking bad news','DNACPR','Capacity','Consent','Angry patient','Driving/epilepsy','Confidentiality','Brainstem death'],
-   tip:'8 scenarios — structure first, never skip pitfalls'},
-  {id:'consult', n:'Consultation', st:'Stations 2 & 5', ic:'📋', c:'var(--tel)', d:'rgba(45,212,191,0.1)',
+   tip:'8 scenarios â structure first, never skip pitfalls'},
+  {id:'consult', n:'Consultation', st:'Stations 2 & 5', ic:'ð', c:'var(--tel)', d:'rgba(45,212,191,0.1)',
    cases:['Haemoptysis/bronchiectasis','Abnormal LFTs','Chest pain','Anaemia','Diabetes control','Breathlessness','Headache/BP','New hypertension'],
-   tip:'8 cases — 20 min integrated simulation'}
+   tip:'8 cases â 20 min integrated simulation'}
 ];
 
-// ═══════════════════════════════════════════════════════════════
-// VIVA DATA — EXPANDED
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// VIVA DATA â EXPANDED
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const VT = [
   {n:'Cardiovascular', c:'var(--blu)', qs:[
-    {q:'Classic symptoms of AS and associated mortality?',a:'<strong>Angina</strong> → 50% at 5 years<br><strong>Syncope</strong> → 50% at 3 years<br><strong>Breathlessness</strong> → 50% at 2 years<br><em>Mnemonic: ASB (5-3-2)</em>'},
-    {q:'HOCM murmur — standing vs squatting?',a:'<strong>Standing:</strong> reduces LV volume → worse obstruction → louder<br><strong>Squatting:</strong> increases LV volume → less obstruction → quieter<br>Opposite of fixed AS (unaffected by posture).'},
-    {q:'Echo criteria for severe AS?',a:'Mean gradient >40 mmHg<br>Aortic valve area <1.0 cm²<br>Peak velocity >4 m/s'},
+    {q:'Classic symptoms of AS and associated mortality?',a:'<strong>Angina</strong> â 50% at 5 years<br><strong>Syncope</strong> â 50% at 3 years<br><strong>Breathlessness</strong> â 50% at 2 years<br><em>Mnemonic: ASB (5-3-2)</em>'},
+    {q:'HOCM murmur â standing vs squatting?',a:'<strong>Standing:</strong> reduces LV volume â worse obstruction â louder<br><strong>Squatting:</strong> increases LV volume â less obstruction â quieter<br>Opposite of fixed AS (unaffected by posture).'},
+    {q:'Echo criteria for severe AS?',a:'Mean gradient >40 mmHg<br>Aortic valve area <1.0 cmÂ²<br>Peak velocity >4 m/s'},
     {q:'Five peripheral signs of aortic regurgitation?',a:'Corrigan\'s (neck pulsation), Quincke\'s (nailbed), De Musset\'s (head nodding), Duroziez\'s (femoral murmur), Traube\'s (pistol shot)'},
-    {q:'Fixed split S2 — cause?',a:'S2 splitting that does NOT vary with respiration — pathognomonic of ASD.'},
-    {q:'Duke\'s criteria for infective endocarditis?',a:'2 major OR 1 major + 2 minor OR 5 minor<br><strong>Major:</strong> typical organism ×2; echo vegetation/abscess<br><strong>Minor:</strong> fever >38°C, predisposed, emboli, vasculitic, atypical organism'},
-    {q:'TAVI — when is it indicated?',a:'EuroSCORE >20% or inoperable. NNT=5 to prevent death at 1 year (inoperable patients).'},
-    {q:'Causes of aortic regurgitation — acute vs chronic?',a:'<strong>Valve leaflet — Acute:</strong> endocarditis<br><strong>Valve leaflet — Chronic:</strong> rheumatic fever<br><strong>Aortic root — Acute:</strong> dissection type A<br><strong>Aortic root — Chronic:</strong> Marfan\'s, hypertension, syphilis, ankylosing spondylitis'},
-    {q:'Signs of severe MR — which is NOT determined by murmur loudness?',a:'Severity of MR is NOT determined by murmur intensity.<br>Signs of severe MR: displaced hyperdynamic apex, S3 gallop, soft S1, AF, pulmonary oedema, LV failure.'},
-    {q:'Antibiotic prophylaxis — when is it needed in valve disease?',a:'No longer routine for dental procedures.<br>Required for: prosthetic valves, previous IE, cardiac transplant with valvulopathy, certain congenital heart disease.'},
+    {q:'Fixed split S2 â cause?',a:'S2 splitting that does NOT vary with respiration â pathognomonic of ASD.'},
+    {q:'Duke\'s criteria for infective endocarditis?',a:'2 major OR 1 major + 2 minor OR 5 minor<br><strong>Major:</strong> typical organism Ã2; echo vegetation/abscess<br><strong>Minor:</strong> fever >38Â°C, predisposed, emboli, vasculitic, atypical organism'},
+    {q:'TAVI â when is it indicated?',a:'EuroSCORE >20% or inoperable. NNT=5 to prevent death at 1 year (inoperable patients).'},
+    {q:'Causes of aortic regurgitation â acute vs chronic?',a:'<strong>Valve leaflet â Acute:</strong> endocarditis<br><strong>Valve leaflet â Chronic:</strong> rheumatic fever<br><strong>Aortic root â Acute:</strong> dissection type A<br><strong>Aortic root â Chronic:</strong> Marfan\'s, hypertension, syphilis, ankylosing spondylitis'},
+    {q:'Signs of severe MR â which is NOT determined by murmur loudness?',a:'Severity of MR is NOT determined by murmur intensity.<br>Signs of severe MR: displaced hyperdynamic apex, S3 gallop, soft S1, AF, pulmonary oedema, LV failure.'},
+    {q:'Antibiotic prophylaxis â when is it needed in valve disease?',a:'No longer routine for dental procedures.<br>Required for: prosthetic valves, previous IE, cardiac transplant with valvulopathy, certain congenital heart disease.'},
     {q:'What scars are found after cardiac surgery and what do they indicate?',a:'<strong>Midline sternotomy:</strong> AVR, MVR, CABG, TAVI<br><strong>Lateral thoracotomy:</strong> MVR, mitral valvotomy, coarctation repair, BT shunt<br><strong>Subclavicular:</strong> pacemaker/ICD<br><strong>Medial leg:</strong> saphenous vein harvest (CABG)'},
     {q:'What are the ECG findings in AS?',a:'LVH (Sokolov-Lyon: S in V1 + R in V5/V6 >35mm)<br>Lateral strain: ST depression + T-wave inversion<br>Prolonged PR, LBBB if severe'},
   ]},
   {n:'Neurology', c:'var(--amb)', qs:[
-    {q:'DANISH — cerebellar signs mnemonic?',a:'<strong>D</strong>ysdiadochokinesis · <strong>A</strong>taxia · <strong>N</strong>ystagmus (fast phase towards lesion) · <strong>I</strong>ntention tremor · <strong>S</strong>canning dysarthria · <strong>H</strong>ypotonia/hyporeflexia'},
+    {q:'DANISH â cerebellar signs mnemonic?',a:'<strong>D</strong>ysdiadochokinesis Â· <strong>A</strong>taxia Â· <strong>N</strong>ystagmus (fast phase towards lesion) Â· <strong>I</strong>ntention tremor Â· <strong>S</strong>canning dysarthria Â· <strong>H</strong>ypotonia/hyporeflexia'},
     {q:'Causes of extensor plantars with absent knee jerks?',a:'Friedreich\'s ataxia, Subacute combined degeneration (B12), Motor neurone disease, Taboparesis, Conus medullaris lesion'},
-    {q:'What is INO and what does it indicate?',a:'MLF lesion. Ipsilateral eye fails to adduct; contralateral nystagmus. Convergence preserved. Bilateral INO → strongly suggests MS.'},
-    {q:'MND — what must be present AND absent?',a:'<strong>Present:</strong> mixed UMN + LMN signs (fasciculation + brisk reflexes)<br><strong>Absent:</strong> NO sensory signs anywhere. Reconsider if present.'},
-    {q:'Wallenberg — the crossed pattern?',a:'<strong>Ipsilateral:</strong> Horner\'s, facial pain/temp loss, palatal weakness, cerebellar<br><strong>Contralateral:</strong> body pain/temp loss (spinothalamic)<br>Motor power PRESERVED.'},
+    {q:'What is INO and what does it indicate?',a:'MLF lesion. Ipsilateral eye fails to adduct; contralateral nystagmus. Convergence preserved. Bilateral INO â strongly suggests MS.'},
+    {q:'MND â what must be present AND absent?',a:'<strong>Present:</strong> mixed UMN + LMN signs (fasciculation + brisk reflexes)<br><strong>Absent:</strong> NO sensory signs anywhere. Reconsider if present.'},
+    {q:'Wallenberg â the crossed pattern?',a:'<strong>Ipsilateral:</strong> Horner\'s, facial pain/temp loss, palatal weakness, cerebellar<br><strong>Contralateral:</strong> body pain/temp loss (spinothalamic)<br>Motor power PRESERVED.'},
     {q:'Four criteria for capacity (MCA 2005)?',a:'1. Understand the information<br>2. Retain it<br>3. Weigh pros and cons<br>4. Communicate the decision<br><em>Decision-specific and time-specific.</em>'},
-    {q:'Bamford classification and 1-year mortality?',a:'TACS: all 3 (hemiplegia + hemianopia + higher cortical) — 60% dead at 1 year<br>PACS: 2 of 3 — 15%<br>LACS: pure motor or sensory — 10%'},
+    {q:'Bamford classification and 1-year mortality?',a:'TACS: all 3 (hemiplegia + hemianopia + higher cortical) â 60% dead at 1 year<br>PACS: 2 of 3 â 15%<br>LACS: pure motor or sensory â 10%'},
     {q:'What is dissociated sensory loss? Two causes?',a:'Loss of one sensory modality with preservation of another at the same level.<br><strong>Syringomyelia:</strong> pain/temperature lost, vibration/proprioception preserved<br><strong>Posterior column disease (B12):</strong> opposite pattern'},
-    {q:'Friedreich\'s ataxia — pathognomonic combination?',a:'Cerebellar ataxia + absent reflexes + extensor plantars + posterior column loss<br>Also: pes cavus, kyphoscoliosis, HOCM murmur (leading cause of death)<br>Autosomal recessive, GAA repeat in frataxin gene'},
-    {q:'Resting vs postural vs intention tremor — causes?',a:'<strong>Resting (3-5 Hz):</strong> Parkinson\'s disease<br><strong>Postural:</strong> essential tremor, anxiety, thyrotoxicosis, alcohol<br><strong>Intention (worsens approaching target):</strong> cerebellar disease'},
-    {q:'Myasthenia vs Lambert-Eaton — key differences?',a:'<strong>MG:</strong> post-synaptic (AChR antibodies), ptosis, EOMs, proximal arms, normal reflexes, fatigable<br><strong>LEMS:</strong> pre-synaptic (Ca²⁺ channels), proximal legs, reflexes initially absent but IMPROVE after exercise, associated with SCLC'},
-    {q:'What is the medical management of Parkinson\'s disease?',a:'L-Dopa (most effective, motor fluctuations after years)<br>Dopamine agonists (ropinirole — younger patients, fewer motor complications)<br>MAO-B inhibitors (selegiline)<br>COMT inhibitors (entacapone — reduce "off" periods)'},
+    {q:'Friedreich\'s ataxia â pathognomonic combination?',a:'Cerebellar ataxia + absent reflexes + extensor plantars + posterior column loss<br>Also: pes cavus, kyphoscoliosis, HOCM murmur (leading cause of death)<br>Autosomal recessive, GAA repeat in frataxin gene'},
+    {q:'Resting vs postural vs intention tremor â causes?',a:'<strong>Resting (3-5 Hz):</strong> Parkinson\'s disease<br><strong>Postural:</strong> essential tremor, anxiety, thyrotoxicosis, alcohol<br><strong>Intention (worsens approaching target):</strong> cerebellar disease'},
+    {q:'Myasthenia vs Lambert-Eaton â key differences?',a:'<strong>MG:</strong> post-synaptic (AChR antibodies), ptosis, EOMs, proximal arms, normal reflexes, fatigable<br><strong>LEMS:</strong> pre-synaptic (CaÂ²âº channels), proximal legs, reflexes initially absent but IMPROVE after exercise, associated with SCLC'},
+    {q:'What is the medical management of Parkinson\'s disease?',a:'L-Dopa (most effective, motor fluctuations after years)<br>Dopamine agonists (ropinirole â younger patients, fewer motor complications)<br>MAO-B inhibitors (selegiline)<br>COMT inhibitors (entacapone â reduce "off" periods)'},
   ]},
   {n:'Respiratory', c:'var(--grn)', qs:[
-    {q:'Fibrosis vs bronchiectasis crackles?',a:'<strong>Fibrosis:</strong> fine end-inspiratory Velcro — do NOT change with coughing<br><strong>Bronchiectasis:</strong> coarse — CHANGE with coughing<br><em>Ask patient to cough and re-auscultate — critical PACES step.</em>'},
-    {q:'TRASHE — causes of apical fibrosis?',a:'<strong>T</strong>B · <strong>R</strong>adiation · <strong>A</strong>nkylosing spondylitis/ABPA · <strong>S</strong>arcoidosis · <strong>H</strong>istoplasmosis · <strong>E</strong>xtrinsic allergic alveolitis'},
-    {q:'Light\'s criteria for pleural exudate?',a:'Exudate if ANY ONE of:<br>• Effusion protein / serum protein >0.5<br>• Effusion LDH / serum LDH >0.6<br>• Effusion LDH >2/3 upper limit of normal LDH'},
-    {q:'Why controlled oxygen in COPD?',a:'CO2 retainers use hypoxic drive. High-flow O2 → apnoea + CO2 retention. Venturi mask 24%, target SpO2 88-92%. ABG to guide.'},
-    {q:'Old TB vs pleural effusion — key discriminator?',a:'Both dull. Key: TVF<br><strong>Old TB:</strong> TVF PRESENT (fibrosis conducts sound)<br><strong>Effusion:</strong> TVF ABSENT (fluid blocks sound)'},
-    {q:'TB drug side effects?',a:'<strong>Isoniazid:</strong> neuropathy (give pyridoxine)<br><strong>Rifampicin:</strong> hepatitis, orange secretions, reduces OCP<br><strong>Ethambutol:</strong> optic neuritis — check vision first<br><strong>Pyrazinamide:</strong> hepatitis, gout'},
-    {q:'LTOT criteria in COPD?',a:'PaO2 &lt;7.3 kPa on air (or &lt;8 kPa if cor pulmonale). Non-smoker. CO2 does not rise excessively.<br>2-4 L/min nasal prongs, ≥15 hours/day. Improves survival by 9 months.'},
+    {q:'Fibrosis vs bronchiectasis crackles?',a:'<strong>Fibrosis:</strong> fine end-inspiratory Velcro â do NOT change with coughing<br><strong>Bronchiectasis:</strong> coarse â CHANGE with coughing<br><em>Ask patient to cough and re-auscultate â critical PACES step.</em>'},
+    {q:'TRASHE â causes of apical fibrosis?',a:'<strong>T</strong>B Â· <strong>R</strong>adiation Â· <strong>A</strong>nkylosing spondylitis/ABPA Â· <strong>S</strong>arcoidosis Â· <strong>H</strong>istoplasmosis Â· <strong>E</strong>xtrinsic allergic alveolitis'},
+    {q:'Light\'s criteria for pleural exudate?',a:'Exudate if ANY ONE of:<br>â¢ Effusion protein / serum protein >0.5<br>â¢ Effusion LDH / serum LDH >0.6<br>â¢ Effusion LDH >2/3 upper limit of normal LDH'},
+    {q:'Why controlled oxygen in COPD?',a:'CO2 retainers use hypoxic drive. High-flow O2 â apnoea + CO2 retention. Venturi mask 24%, target SpO2 88-92%. ABG to guide.'},
+    {q:'Old TB vs pleural effusion â key discriminator?',a:'Both dull. Key: TVF<br><strong>Old TB:</strong> TVF PRESENT (fibrosis conducts sound)<br><strong>Effusion:</strong> TVF ABSENT (fluid blocks sound)'},
+    {q:'TB drug side effects?',a:'<strong>Isoniazid:</strong> neuropathy (give pyridoxine)<br><strong>Rifampicin:</strong> hepatitis, orange secretions, reduces OCP<br><strong>Ethambutol:</strong> optic neuritis â check vision first<br><strong>Pyrazinamide:</strong> hepatitis, gout'},
+    {q:'LTOT criteria in COPD?',a:'PaO2 &lt;7.3 kPa on air (or &lt;8 kPa if cor pulmonale). Non-smoker. CO2 does not rise excessively.<br>2-4 L/min nasal prongs, â¥15 hours/day. Improves survival by 9 months.'},
     {q:'COPD treatment by GOLD stage?',a:'Mild (>80%): SABA PRN<br>Moderate (<60%): LABA + LAMA<br>Severe (<40%) or frequent exacerbations: add ICS<br>All: smoking cessation (most beneficial single intervention), vaccinations, pulmonary rehab'},
     {q:'Paraneoplastic syndromes of SCLC?',a:'SIADH (hyponatraemia), ectopic ACTH (Cushing\'s), Lambert-Eaton (proximal leg weakness, reflexes improve with exercise)'},
     {q:'What is a Pancoast tumour?',a:'Apical lung tumour (usually squamous) invading adjacent structures.<br><strong>Signs:</strong> Horner\'s, wasted small hand muscles (T1), arm pain/paraesthesia (brachial plexus), absent radial pulse (subclavian)'},
-    {q:'Causes of clubbing in a respiratory patient?',a:'Pulmonary fibrosis, bronchiectasis, lung cancer (not SCLC), lung abscess, empyema, mesothelioma.<br><strong>COPD does NOT cause clubbing</strong> — if present, think lung cancer or bronchiectasis.'},
-    {q:'What is type I vs type II respiratory failure?',a:'<strong>Type I:</strong> PaO2 &lt;8kPa, normal or low PaCO2 — failure of oxygenation (fibrosis, pneumonia, PE)<br><strong>Type II:</strong> PaO2 &lt;8kPa AND PaCO2 &gt;6kPa — failure of ventilation (COPD, neuromuscular, severe asthma)'},
+    {q:'Causes of clubbing in a respiratory patient?',a:'Pulmonary fibrosis, bronchiectasis, lung cancer (not SCLC), lung abscess, empyema, mesothelioma.<br><strong>COPD does NOT cause clubbing</strong> â if present, think lung cancer or bronchiectasis.'},
+    {q:'What is type I vs type II respiratory failure?',a:'<strong>Type I:</strong> PaO2 &lt;8kPa, normal or low PaCO2 â failure of oxygenation (fibrosis, pneumonia, PE)<br><strong>Type II:</strong> PaO2 &lt;8kPa AND PaCO2 &gt;6kPa â failure of ventilation (COPD, neuromuscular, severe asthma)'},
   ]},
   {n:'Abdominal', c:'var(--red)', qs:[
     {q:'Spleen vs kidney on examination?',a:'<strong>Spleen:</strong> cannot ballot, cannot get above it, dull, notch, moves inferomedially<br><strong>Kidney:</strong> ballottable, can get above it, resonant anteriorly, no notch, moves inferiorly'},
-    {q:'Child-Pugh — parameters and 1-year survival?',a:'Bilirubin, Albumin, INR, Ascites, Encephalopathy<br>A (5-6): 100% · B (7-9): 81% · C (10-15): 45%'},
+    {q:'Child-Pugh â parameters and 1-year survival?',a:'Bilirubin, Albumin, INR, Ascites, Encephalopathy<br>A (5-6): 100% Â· B (7-9): 81% Â· C (10-15): 45%'},
     {q:'Management of ascites in cirrhosis?',a:'Salt restriction, spironolactone first-line, add furosemide. Aim 1kg/day. LVP + albumin 8g/L. TIPSS for refractory.'},
-    {q:'ADPKD extra-renal manifestations?',a:'Hepatic cysts (75%), Berry aneurysms (10-15% — SAH risk), mitral valve prolapse, pancreatic cysts'},
-    {q:'Haemochromatosis — classic triad and genetics?',a:'Bronze diabetes + cirrhosis + 2nd/3rd MCP arthropathy<br>AR, HFE gene, C282Y. HCC risk 200× — annual AFP + USS.'},
-    {q:'SBP — diagnosis and treatment?',a:'Ascitic neutrophils >250/mm³. IV cefotaxime + albumin. Don\'t wait for culture result.'},
+    {q:'ADPKD extra-renal manifestations?',a:'Hepatic cysts (75%), Berry aneurysms (10-15% â SAH risk), mitral valve prolapse, pancreatic cysts'},
+    {q:'Haemochromatosis â classic triad and genetics?',a:'Bronze diabetes + cirrhosis + 2nd/3rd MCP arthropathy<br>AR, HFE gene, C282Y. HCC risk 200Ã â annual AFP + USS.'},
+    {q:'SBP â diagnosis and treatment?',a:'Ascitic neutrophils >250/mmÂ³. IV cefotaxime + albumin. Don\'t wait for culture result.'},
     {q:'Causes of gynaecomastia?',a:'Physiological (puberty, old age), cirrhosis (impaired oestrogen metabolism), drugs (spironolactone, digoxin, cimetidine, anabolic steroids), Klinefelter\'s, testicular tumour'},
     {q:'What are the autoantibodies in autoimmune liver disease?',a:'<strong>PBC:</strong> antimitochondrial antibody (AMA-M2) in 98%, elevated IgM<br><strong>PSC:</strong> associated with UC; ANA, anti-smooth muscle may be positive<br><strong>AIH:</strong> anti-smooth muscle (type 1), anti-LKM1 (type 2), ANA'},
-    {q:'Massive splenomegaly (>8cm) — UK causes?',a:'Chronic myeloid leukaemia (CML) and myelofibrosis are the commonest UK causes.<br>Also: malaria (chronic), visceral leishmaniasis, Gaucher\'s disease.'},
-    {q:'Post-liver transplant — what signs of immunosuppression do you look for?',a:'<strong>Ciclosporin:</strong> gum hypertrophy, hypertrichosis, hypertension, nephrotoxicity<br><strong>Tacrolimus:</strong> fine tremor, neurotoxicity, diabetes, nephrotoxicity<br><strong>Steroids:</strong> Cushingoid appearance'},
+    {q:'Massive splenomegaly (>8cm) â UK causes?',a:'Chronic myeloid leukaemia (CML) and myelofibrosis are the commonest UK causes.<br>Also: malaria (chronic), visceral leishmaniasis, Gaucher\'s disease.'},
+    {q:'Post-liver transplant â what signs of immunosuppression do you look for?',a:'<strong>Ciclosporin:</strong> gum hypertrophy, hypertrichosis, hypertension, nephrotoxicity<br><strong>Tacrolimus:</strong> fine tremor, neurotoxicity, diabetes, nephrotoxicity<br><strong>Steroids:</strong> Cushingoid appearance'},
     {q:'What is post-transplant lymphoproliferative disease (PTLD)?',a:'EBV-driven B-cell proliferation in immunosuppressed transplant patients.<br>Presents: lymphadenopathy, constitutional symptoms, extranodal disease.<br>Management: reduce immunosuppression, rituximab, chemotherapy.'},
-    {q:'Splenectomy — what precautions are required?',a:'Pre-op vaccinations: pneumococcus, meningococcus (A,C,W,Y), Hib.<br>Lifelong prophylactic penicillin V.<br>Annual flu vaccine. Medic alert bracelet.'},
+    {q:'Splenectomy â what precautions are required?',a:'Pre-op vaccinations: pneumococcus, meningococcus (A,C,W,Y), Hib.<br>Lifelong prophylactic penicillin V.<br>Annual flu vaccine. Medic alert bracelet.'},
   ]},
   {n:'Ethics & Law', c:'var(--pur)', qs:[
-    {q:'Tracey (2014) — what did it establish?',a:'Legal obligation to discuss DNACPR with patients. CPR can still be withheld as futile — but the decision must be discussed. Avoiding the conversation to prevent distress is no longer acceptable.'},
-    {q:'Montgomery (2015) — what changed about consent?',a:'Changed standard from Bolam to: what a reasonable patient would want to know — all material risks, alternatives, and risks of not proceeding.'},
-    {q:'DVLA rules — epilepsy?',a:'2+ seizures: stop immediately. 1 year seizure-free → private licence. 10 years seizure-free off medication → HGV/PSV.'},
-    {q:'Mandatory vs discretionary breach of confidentiality?',a:'<strong>Mandatory:</strong> notifiable diseases, court order, terrorism<br><strong>Discretionary:</strong> unfit to drive, HIV+ refusing to inform partner, impaired colleague — warn patient first.'},
-    {q:'DNACPR — covers vs does NOT cover?',a:'<strong>Covers only:</strong> CPR (compressions, defibrillation, airway)<br><strong>Does NOT cover:</strong> antibiotics, fluids, analgesia, oxygen, specialist review — not "giving up."'},
-    {q:'Brainstem death — what to exclude before testing?',a:'Hypothermia, sedatives (5× half-life), NMBs, metabolic/endocrine. Known irreversible cause required. Two independent consultants, two occasions.'},
-    {q:'Four criteria for capacity (MCA 2005)?',a:'1. Understand · 2. Retain · 3. Weigh · 4. Communicate<br>Capacity is decision-specific and time-specific. An unwise decision ≠ lack of capacity.'},
+    {q:'Tracey (2014) â what did it establish?',a:'Legal obligation to discuss DNACPR with patients. CPR can still be withheld as futile â but the decision must be discussed. Avoiding the conversation to prevent distress is no longer acceptable.'},
+    {q:'Montgomery (2015) â what changed about consent?',a:'Changed standard from Bolam to: what a reasonable patient would want to know â all material risks, alternatives, and risks of not proceeding.'},
+    {q:'DVLA rules â epilepsy?',a:'2+ seizures: stop immediately. 1 year seizure-free â private licence. 10 years seizure-free off medication â HGV/PSV.'},
+    {q:'Mandatory vs discretionary breach of confidentiality?',a:'<strong>Mandatory:</strong> notifiable diseases, court order, terrorism<br><strong>Discretionary:</strong> unfit to drive, HIV+ refusing to inform partner, impaired colleague â warn patient first.'},
+    {q:'DNACPR â covers vs does NOT cover?',a:'<strong>Covers only:</strong> CPR (compressions, defibrillation, airway)<br><strong>Does NOT cover:</strong> antibiotics, fluids, analgesia, oxygen, specialist review â not "giving up."'},
+    {q:'Brainstem death â what to exclude before testing?',a:'Hypothermia, sedatives (5Ã half-life), NMBs, metabolic/endocrine. Known irreversible cause required. Two independent consultants, two occasions.'},
+    {q:'Four criteria for capacity (MCA 2005)?',a:'1. Understand Â· 2. Retain Â· 3. Weigh Â· 4. Communicate<br>Capacity is decision-specific and time-specific. An unwise decision â  lack of capacity.'},
     {q:'What is the Duty of Candour?',a:'Statutory duty (2014): when a patient is harmed, the organisation must acknowledge, apologise, explain what went wrong, and describe what is being done to prevent recurrence.'},
-    {q:'Who can consent for an adult who lacks capacity?',a:'Nobody — the doctor acts in the patient\'s best interests (MCA 2005).<br><strong>Consult:</strong> LPA (health and welfare), Court of Protection, next of kin (views considered but cannot consent), IMCA if no family.'},
+    {q:'Who can consent for an adult who lacks capacity?',a:'Nobody â the doctor acts in the patient\'s best interests (MCA 2005).<br><strong>Consult:</strong> LPA (health and welfare), Court of Protection, next of kin (views considered but cannot consent), IMCA if no family.'},
     {q:'What is a Lasting Power of Attorney (LPA) for health and welfare?',a:'Appointed by the individual while they have capacity. Registered with the Office of the Public Guardian. Can make medical decisions when patient lacks capacity. Different from a financial LPA.'},
     {q:'GMC guidance on a doctor patient with alcohol problems who continues to work?',a:'Try to persuade self-referral to Practitioner Health Programme (confidential). If they refuse and patient safety is at risk: inform the employer/GMC. Write to the patient to confirm. Safety of patients overrides confidentiality.'},
-    {q:'DVLA rules — ACS and stroke?',a:'<strong>ACS (private):</strong> 1 month if stent + normal LV + symptom-free<br><strong>ACS (HGV):</strong> 6 weeks<br><strong>Stroke/TIA (private):</strong> 1 month if no persistent deficit<br><strong>Stroke/TIA (HGV):</strong> 1 year'},
+    {q:'DVLA rules â ACS and stroke?',a:'<strong>ACS (private):</strong> 1 month if stent + normal LV + symptom-free<br><strong>ACS (HGV):</strong> 6 weeks<br><strong>Stroke/TIA (private):</strong> 1 month if no persistent deficit<br><strong>Stroke/TIA (HGV):</strong> 1 year'},
   ]},
 ];
 
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 // INDEXEDDB
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const DB='pacesV3', STORE='kv';
 let db;
 function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open(DB,1);r.onupgradeneeded=e=>e.target.result.createObjectStore(STORE);r.onsuccess=e=>{db=e.target.result;res();};r.onerror=rej;});}
 function dbGet(k){return new Promise((res,rej)=>{const r=db.transaction(STORE,'readonly').objectStore(STORE).get(k);r.onsuccess=e=>res(e.target.result);r.onerror=rej;});}
 function dbSet(k,v){return new Promise((res,rej)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).put(v,k);tx.oncomplete=res;tx.onerror=rej;});}
 
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 // STATE
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 let S={examDate:null,streak:0,lastActiveDay:null,totalSessions:0,stationCounts:{cardio:0,neuro:0,resp:0,abdo:0,comms:0,consult:0},sessionLog:[],vivaScores:{},todayLogged:[],practised:{}};
 let lastAction=null;
 
@@ -890,7 +890,7 @@ function syncToSheet(action, note) {
     fetch(SHEET_URL, {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify({ action: action, note: note, date: new Date().toISOString().slice(0,10) })
     }).catch(function(){});
   } catch(e) {}
@@ -909,9 +909,9 @@ async function saveState(){
   try { localStorage.setItem('pacesV3_state', JSON.stringify(S)); } catch(e) {}
 }
 
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 // SESSION LOGGING
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 async function logSession(id,name,color){
   lastAction={prevState:JSON.parse(JSON.stringify(S))};
   const today=new Date().toDateString();
@@ -920,7 +920,7 @@ async function logSession(id,name,color){
   S.todayLogged=[...(S.todayLogged||[]),id];
   if(S.lastActiveDay!==today){const yd=new Date();yd.setDate(yd.getDate()-1);S.streak=S.lastActiveDay===yd.toDateString()?(S.streak||0)+1:(S.lastActiveDay?1:1);S.lastActiveDay=today;}
   S.sessionLog=[{id,name,ts:Date.now(),color},...(S.sessionLog||[])].slice(0,100);
-  await saveState();syncToSheet('increment', name + ' session');showUndo('+1 '+name);toast('Logged ✓');renderAll();
+  await saveState();syncToSheet('increment', name + ' session');showUndo('+1 '+name);toast('Logged â');renderAll();
 }
 async function removeSession(id,name){
   if((S.stationCounts[id]||0)<=0){toast('Already at 0');return;}
@@ -930,16 +930,16 @@ async function removeSession(id,name){
   // Remove the most recent logged instance of this station from today
   const tl=S.todayLogged||[];const ri=tl.lastIndexOf(id);if(ri!==-1)tl.splice(ri,1);S.todayLogged=tl;
   const idx=(S.sessionLog||[]).findIndex(e=>e.id===id);if(idx!==-1)S.sessionLog.splice(idx,1);
-  await saveState();syncToSheet('decrement', '');showUndo('−1 '+name);toast('Removed');renderAll();
+  await saveState();syncToSheet('decrement', '');showUndo('â1 '+name);toast('Removed');renderAll();
 }
-async function undoLast(){if(!lastAction)return;S=lastAction.prevState;await saveState();lastAction=null;hideUndo();toast('Undone ↩');renderAll();}
+async function undoLast(){if(!lastAction)return;S=lastAction.prevState;await saveState();lastAction=null;hideUndo();toast('Undone â©');renderAll();}
 let undoTimer;
 function showUndo(txt){document.getElementById('undo-txt').textContent=txt;document.getElementById('undo-bar').classList.add('on');clearTimeout(undoTimer);undoTimer=setTimeout(hideUndo,8000);}
 function hideUndo(){document.getElementById('undo-bar').classList.remove('on');}
 
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 // TIMER STATE
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 let timerS=0,timerRunning=false,timerInt=null;
 function toggleTimer(){
   if(timerRunning){clearInterval(timerInt);timerRunning=false;document.getElementById('t-btn').textContent='Resume';}
@@ -947,17 +947,17 @@ function toggleTimer(){
 }
 function resetTimer(){clearInterval(timerInt);timerRunning=false;timerS=0;document.getElementById('t-disp').textContent='00:00';document.getElementById('t-btn').textContent='Start';}
 
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 // CASE CHECKLIST STATE
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 let currentCase=null,currentStationId=null,checkState=[];
 
 function renderAll(){renderToday();renderStations();renderCaseStations();renderTopics();renderStats();updateHdr();}
 
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 // TODAY
-// ═══════════════════════════════════════════════════════════════
-const TL={cardio:{n:'Cardiovascular case',m:'Cases tab → pick any case',t:'~20 min',c:'c1'},neuro:{n:'Neurology case',m:'Cases tab → pick any case',t:'~20 min',c:'c2'},resp:{n:'Respiratory case',m:'Cases tab → pick any case',t:'~15 min',c:'c3'},abdo:{n:'Abdominal case',m:'Cases tab → pick any case',t:'~15 min',c:'c4'},comms:{n:'Communication scenario',m:'Cases tab → scenario structure',t:'~20 min',c:'c5'},consult:{n:'Consultation station',m:'Cases tab → consultation case',t:'~25 min',c:'c6'}};
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+const TL={cardio:{n:'Cardiovascular case',m:'Cases tab â pick any case',t:'~20 min',c:'c1'},neuro:{n:'Neurology case',m:'Cases tab â pick any case',t:'~20 min',c:'c2'},resp:{n:'Respiratory case',m:'Cases tab â pick any case',t:'~15 min',c:'c3'},abdo:{n:'Abdominal case',m:'Cases tab â pick any case',t:'~15 min',c:'c4'},comms:{n:'Communication scenario',m:'Cases tab â scenario structure',t:'~20 min',c:'c5'},consult:{n:'Consultation station',m:'Cases tab â consultation case',t:'~25 min',c:'c6'}};
 const ORDER=[['cardio','neuro','resp','abdo','comms','consult'],['neuro','cardio','abdo','resp','consult','comms'],['resp','abdo','cardio','neuro','comms','consult'],['abdo','cardio','neuro','resp','consult','comms'],['consult','comms','cardio','neuro','resp','abdo'],['comms','consult','neuro','cardio','abdo','resp'],['cardio','abdo','consult','comms','neuro','resp']];
 
 function renderToday(){
@@ -974,7 +974,7 @@ function renderToday(){
     const done=(countToday[id]||0)>shown[id];
     if(done)shown[id]++;
     const d=document.createElement('div');d.className=`tc ${t.c}${done?' dn':''}`;
-    d.innerHTML=`<div class="tck">${done?'✓':''}</div><div class="tb"><div class="tn">${t.n}</div><div class="tm">${t.m}</div></div><div class="tt">${t.t}</div>`;
+    d.innerHTML=`<div class="tck">${done?'â':''}</div><div class="tb"><div class="tn">${t.n}</div><div class="tm">${t.m}</div></div><div class="tt">${t.t}</div>`;
     tl.appendChild(d);
   });
   const n=logged.length;
@@ -983,36 +983,36 @@ function renderToday(){
   document.getElementById('sv1').textContent=S.streak||0;document.getElementById('sv2').textContent=n;document.getElementById('sv3').textContent=S.totalSessions||0;
 }
 
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 // STATIONS TAB
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function renderStations(){
   const g=document.getElementById('sg');g.innerHTML='';
   STATIONS.forEach(s=>{
     const cnt=S.stationCounts[s.id]||0,total=s.cases.length,pct=Math.min(Math.round(cnt/total*100),100);
     const d=document.createElement('div');d.className='sc';d.style.borderTop=`2px solid ${s.c}`;
-    d.innerHTML=`<div class="sc-header"><div class="si" style="background:${s.d}">${s.ic}</div><div class="sm"><div class="sn">${s.n}</div><div class="ss">${s.st} · ${total} cases</div></div><div class="scount" style="background:${s.d};color:${s.c}">${cnt} sessions</div></div>
+    d.innerHTML=`<div class="sc-header"><div class="si" style="background:${s.d}">${s.ic}</div><div class="sm"><div class="sn">${s.n}</div><div class="ss">${s.st} Â· ${total} cases</div></div><div class="scount" style="background:${s.d};color:${s.c}">${cnt} sessions</div></div>
 <div class="chips">${s.cases.slice(0,4).map(c=>`<span class="chip">${c}</span>`).join('')}${s.cases.length>4?`<span class="chip">+${s.cases.length-4} more</span>`:''}</div>
 <div class="mb"><div class="mf" style="width:${pct}%;background:${s.c}"></div></div>
 <div class="stip" style="color:${s.c}">${s.tip}</div>
 <div class="sc-btns">
-  <button class="sc-btn sub" onclick="removeSession('${s.id}','${s.n}')">− Remove one</button>
+  <button class="sc-btn sub" onclick="removeSession('${s.id}','${s.n}')">â Remove one</button>
   <button class="sc-btn add" onclick="logSession('${s.id}','${s.n}','${s.c}')">+ Log session</button>
 </div>`;
     g.appendChild(d);
   });
 }
 
-// ═══════════════════════════════════════════════════════════════
-// CASES TAB — three levels
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// CASES TAB â three levels
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function renderCaseStations(){
   const g=document.getElementById('cases-l0-list');g.innerHTML='';
   CASE_STATIONS.forEach(cs=>{
     const cases=CASE_DATA[cs.id]||[];
     const practisedCount=cases.filter(c=>S.practised[cs.id+'__'+c.name]).length;
     const d=document.createElement('div');d.className='cst-card';d.style.borderLeft=`3px solid ${cs.c}`;
-    d.innerHTML=`<div class="cst-header"><div class="cst-icon" style="background:${cs.d}">${cs.ic}</div><div class="cst-meta"><div class="cst-name">${cs.n}</div><div class="cst-sub">${cs.sub}${practisedCount>0?' · '+practisedCount+' practised':''}</div></div><span class="cst-arrow" style="color:${cs.c}">›</span></div>`;
+    d.innerHTML=`<div class="cst-header"><div class="cst-icon" style="background:${cs.d}">${cs.ic}</div><div class="cst-meta"><div class="cst-name">${cs.n}</div><div class="cst-sub">${cs.sub}${practisedCount>0?' Â· '+practisedCount+' practised':''}</div></div><span class="cst-arrow" style="color:${cs.c}">âº</span></div>`;
     d.onclick=()=>openCaseStation(cs);
     g.appendChild(d);
   });
@@ -1029,7 +1029,7 @@ function openCaseStation(cs){
     const key=cs.id+'__'+c.name;
     const practised=S.practised[key];
     const d=document.createElement('div');d.className='case-card';d.style.borderLeft=`3px solid ${cs.c}`;
-    d.innerHTML=`<div class="case-dot" style="background:${cs.c}"></div><div class="case-meta"><div class="case-name">${c.name}</div><div class="case-done">${practised?'Last practised: '+new Date(practised).toLocaleDateString('en-GB',{day:'numeric',month:'short'}):'Not yet practised'}</div></div>${practised?'<span class="case-tick">✓</span>':''}`;
+    d.innerHTML=`<div class="case-dot" style="background:${cs.c}"></div><div class="case-meta"><div class="case-name">${c.name}</div><div class="case-done">${practised?'Last practised: '+new Date(practised).toLocaleDateString('en-GB',{day:'numeric',month:'short'}):'Not yet practised'}</div></div>${practised?'<span class="case-tick">â</span>':''}`;
     d.onclick=()=>openCaseDetail(cs,c);
     list.appendChild(d);
   });
@@ -1044,14 +1044,14 @@ function openCaseDetail(cs,c){
   document.getElementById('cases-l2').style.display='block';
   document.getElementById('l2-back-label').textContent=cs.n;
   document.getElementById('case-detail-title').textContent=c.name;
-  document.getElementById('case-detail-badge').textContent=cs.sub.split('·')[0].trim();
+  document.getElementById('case-detail-badge').textContent=cs.sub.split('Â·')[0].trim();
   document.getElementById('case-detail-badge').style.cssText=`background:${cs.d};color:${cs.c};font-size:11px;font-weight:700;padding:3px 9px;border-radius:8px`;
   // Practised button state
   const key=cs.id+'__'+c.name;
   const alreadyDone=S.practised[key];
   const pb=document.getElementById('practised-btn');
   pb.className=alreadyDone?'practised-btn done-btn':'practised-btn ready';
-  pb.textContent=alreadyDone?'✓ Practised on '+new Date(alreadyDone).toLocaleDateString('en-GB',{day:'numeric',month:'short'}):'✓ Mark as practised';
+  pb.textContent=alreadyDone?'â Practised on '+new Date(alreadyDone).toLocaleDateString('en-GB',{day:'numeric',month:'short'}):'â Mark as practised';
   renderChecklist();
   renderPresentationSection();
   window.scrollTo(0,0);
@@ -1067,11 +1067,11 @@ function renderChecklist(){
     const d=document.createElement('div');d.className='cl-item';
     d.innerHTML=`<div class="cl-row" onclick="tickStep(${i})" style="${locked?'cursor:not-allowed':'cursor:pointer'}">
       <div class="cl-chk${st.done?' done':locked?' locked':''}">
-        ${st.done?'✓':locked?'':''}
+        ${st.done?'â':locked?'':''}
       </div>
       <div class="cl-label${locked?' locked':''}">${i+1}. ${step.l}</div>
     </div>
-    ${!locked?`<button class="prompt-btn" onclick="togglePrompt(event,${i})">${st.shown?'Hide prompt ↑':'Show prompt ↓'}</button>`:''}
+    ${!locked?`<button class="prompt-btn" onclick="togglePrompt(event,${i})">${st.shown?'Hide prompt â':'Show prompt â'}</button>`:''}
     ${st.shown&&!locked?`<div class="prompt-box">${step.d}</div>`:''}`;
     cl.appendChild(d);
   });
@@ -1093,18 +1093,18 @@ function renderPresentationSection(){
   div.innerHTML=`<div class="rev-card">
     <div class="rev-label">Findings given</div>
     <div class="findings-box"><strong>Findings:</strong> ${c.findings}</div>
-    <button class="rev-btn" onclick="toggleRev('rev-ideal',this)">Reveal ideal presentation ↓</button>
+    <button class="rev-btn" onclick="toggleRev('rev-ideal',this)">Reveal ideal presentation â</button>
     <div class="rev-content" id="rev-ideal">${c.ideal}</div>
   </div>
   <div class="rev-card">
-    <button class="rev-btn" onclick="toggleRev('rev-sev',this)">Reveal severity signs / key teaching ↓</button>
+    <button class="rev-btn" onclick="toggleRev('rev-sev',this)">Reveal severity signs / key teaching â</button>
     <div class="rev-content" id="rev-sev">${c.severity}</div>
   </div>`;
 }
 
 function toggleRev(id,btn){
   const el=document.getElementById(id);el.classList.toggle('on');
-  btn.textContent=el.classList.contains('on')?(btn.textContent.startsWith('Reveal')?btn.textContent.replace('Reveal','Hide').replace(' ↓',' ↑'):btn.textContent):btn.textContent.replace('Hide','Reveal').replace(' ↑',' ↓');
+  btn.textContent=el.classList.contains('on')?(btn.textContent.startsWith('Reveal')?btn.textContent.replace('Reveal','Hide').replace(' â',' â'):btn.textContent):btn.textContent.replace('Hide','Reveal').replace(' â',' â');
 }
 
 async function markPractised(){
@@ -1124,8 +1124,8 @@ async function markPractised(){
   await saveState();
   const pb=document.getElementById('practised-btn');
   pb.className='practised-btn done-btn';
-  pb.textContent='✓ Practised on '+new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short'});
-  toast('Case marked as practised ✓');
+  pb.textContent='â Practised on '+new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+  toast('Case marked as practised â');
   renderCaseStations();
   renderAll();
 }
@@ -1137,7 +1137,7 @@ function casesBack(level){
     document.getElementById('cases-l2').style.display='none';
     clearInterval(timerInt);timerRunning=false;
   } else if(level===1){
-    // Need to re-open the station list — find it
+    // Need to re-open the station list â find it
     document.getElementById('cases-l1').style.display='block';
     document.getElementById('cases-l2').style.display='none';
     clearInterval(timerInt);timerRunning=false;
@@ -1145,9 +1145,9 @@ function casesBack(level){
   window.scrollTo(0,0);
 }
 
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 // HEADER
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function updateHdr(){
   if(!S.examDate)return;
   const ex=new Date(S.examDate),td=new Date();td.setHours(0,0,0,0);
@@ -1159,16 +1159,16 @@ function updateHdr(){
   document.getElementById('cd-wrap').style.display='flex';
 }
 
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 // VIVA
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 let cT=null,cQi=0;
 function renderTopics(){
   const tl=document.getElementById('vtl');tl.innerHTML='';
   VT.forEach(t=>{
     const sc=S.vivaScores[t.n]||{};const g=sc.got||0,tot=g+(sc.missed||0)+(sc.partial||0);const pct=tot>0?Math.round(g/tot*100):null;
     const d=document.createElement('div');d.className='vt';
-    d.innerHTML=`<div class="vdot" style="background:${t.c}"></div><div class="vb2"><div class="vn">${t.n}</div><div class="vdesc">${t.qs.length} questions${pct!==null?' · '+pct+'% correct':' · not started'}</div></div><span style="color:${t.c};font-size:16px">›</span>`;
+    d.innerHTML=`<div class="vdot" style="background:${t.c}"></div><div class="vb2"><div class="vn">${t.n}</div><div class="vdesc">${t.qs.length} questions${pct!==null?' Â· '+pct+'% correct':' Â· not started'}</div></div><span style="color:${t.c};font-size:16px">âº</span>`;
     d.onclick=()=>startT(t);tl.appendChild(d);
   });
 }
@@ -1191,15 +1191,15 @@ async function rQ(sc){
 function nQ(){if(!cT)return;cQi=(cQi+1)%cT.qs.length;renderQ();}
 function pQ(){if(!cT)return;cQi=(cQi-1+cT.qs.length)%cT.qs.length;renderQ();}
 
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 // STATS
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function renderStats(){
   const tg=Object.values(S.vivaScores).reduce((a,v)=>a+(v.got||0),0);
   const tm=Object.values(S.vivaScores).reduce((a,v)=>a+(v.missed||0),0);
   const totalPractised=Object.keys(S.practised||{}).length;
   document.getElementById('stg').innerHTML=`
-<div class="stc"><div class="stv" style="color:var(--amb)">${S.streak||0}</div><div class="stl">Day streak 🔥</div></div>
+<div class="stc"><div class="stv" style="color:var(--amb)">${S.streak||0}</div><div class="stl">Day streak ð¥</div></div>
 <div class="stc"><div class="stv" style="color:var(--blu)">${S.totalSessions||0}</div><div class="stl">Sessions total</div></div>
 <div class="stc"><div class="stv" style="color:var(--grn)">${totalPractised}</div><div class="stl">Cases practised</div></div>
 <div class="stc"><div class="stv" style="color:var(--pur)">${tg}</div><div class="stl">Viva mastered</div></div>`;
@@ -1209,12 +1209,12 @@ function renderStats(){
   .forEach(a=>{const d=document.createElement('div');d.className='wi';const sc=a.pct===null?'var(--dim)':a.pct<50?'var(--red)':a.pct<75?'var(--amb)':'var(--grn)';d.innerHTML=`<div class="wd" style="background:${a.c}"></div><span class="wn">${a.n}</span><span class="ws" style="color:${sc}">${a.pct===null?'Not started':a.pct+'% correct'}</span>`;wl.appendChild(d);});
   const ll=document.getElementById('log-list');ll.innerHTML='';
   if(!S.sessionLog||!S.sessionLog.length){ll.innerHTML='<div class="log-empty">No sessions logged yet.<br>Go to Stations and tap + Log session.</div>';return;}
-  S.sessionLog.slice(0,30).forEach(e=>{const d=document.createElement('div');d.className='log-item';const dt=new Date(e.ts);const time=dt.toLocaleDateString('en-GB',{day:'numeric',month:'short'})+' · '+dt.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});d.innerHTML=`<div class="log-dot" style="background:${e.color}"></div><div class="log-body"><div class="log-n">${e.name}</div><div class="log-t">${time}</div></div>`;ll.appendChild(d);});
+  S.sessionLog.slice(0,30).forEach(e=>{const d=document.createElement('div');d.className='log-item';const dt=new Date(e.ts);const time=dt.toLocaleDateString('en-GB',{day:'numeric',month:'short'})+' Â· '+dt.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});d.innerHTML=`<div class="log-dot" style="background:${e.color}"></div><div class="log-body"><div class="log-n">${e.name}</div><div class="log-t">${time}</div></div>`;ll.appendChild(d);});
 }
 
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 // NAV & MODAL
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function sw(name,btn){
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.ni').forEach(b=>b.classList.remove('on'));
@@ -1229,11 +1229,11 @@ let toastTimer;
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('on'),2200);}
 function showM(){document.getElementById('modal').classList.remove('hid');if(S.examDate)document.getElementById('dinp').value=S.examDate;}
 function closeM(){document.getElementById('modal').classList.add('hid');}
-async function saveD(){const v=document.getElementById('dinp').value;if(v){S.examDate=v;await saveState();updateHdr();toast('Exam date saved ✓');}closeM();}
+async function saveD(){const v=document.getElementById('dinp').value;if(v){S.examDate=v;await saveState();updateHdr();toast('Exam date saved â');}closeM();}
 
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 // BOOT
-// ═══════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 async function boot(){
   try{await openDB();await loadState();}catch(e){console.warn('IndexedDB unavailable:',e);}
   document.getElementById('today-date').textContent=new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
