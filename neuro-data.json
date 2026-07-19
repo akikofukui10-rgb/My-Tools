@@ -202,5 +202,145 @@
     "topic": "General",
     "type": "clinical",
     "text": "<strong>The cerebellar speech triad</strong>: dysarthria (slurred), dysmetria (past pointing), dysdiadochokinesia (impaired rapid alternating movements). DANISH — Dysdiadochokinesia, Ataxia, Nystagmus, Intention tremor, Slurred speech, Hypotonia."
+  },
+  {
+    "topic": "Sleep",
+    "type": "clinical",
+    "text": "<strong>EDS ≠ fatigue.</strong> True excessive daytime sleepiness (unintended lapses into sleep) is rare in chronic insomnia — patients usually describe fatigue, poor concentration or mood symptoms instead. Misreading fatigue as sleepiness leads to unnecessary sleep-disorder workups.",
+    "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
+    "id": 36
+  },
+  {
+    "topic": "Sleep",
+    "type": "clinical",
+    "text": "<strong>Pitfall: not all insomnia is insomnia.</strong> ~30% of OSA presents primarily as insomnia, and RLS/PLMD are frequently mislabelled as insomnia — especially in patients on antidepressants or antihistaminergic drugs. COMISA (comorbid insomnia + sleep apnoea) affects ~40% of insomnia patients — sleep comorbidity is the norm, not the exception.",
+    "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
+    "id": 37
+  },
+  {
+    "topic": "Sleep",
+    "type": "clinical",
+    "text": "Red flags that argue against a simple insomnia diagnosis and favour further sleep testing: true EDS, bed-partner-reported OSA/RLS/PLMD features, no preceding 'sleep reactivity', no sleep-initiation difficulty, and isolated maintenance issues with multiple brief awakenings rather than prolonged wake periods.",
+    "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
+    "id": 38
+  },
+  {
+    "topic": "Sleep",
+    "type": "clinical",
+    "text": "<strong>Pitfall: overlooking circadian rhythm sleep disorders (CRSD).</strong> ~22% of CRSD is misdiagnosed as insomnia. Key clue: when unburdened by work/school demands (weekends, holidays), CRSD patients sleep a normal duration and feel refreshed — true insomniacs don't. Delayed sleep phase disorder is the most common CRSD, especially in adolescents (prevalence 3.3–4%).",
+    "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
+    "id": 39
+  },
+  {
+    "topic": "Sleep",
+    "type": "clinical",
+    "text": "<strong>Melatonin timing is everything.</strong> For phase-advancing a delayed sleep phase disorder, maximal effect comes from a low dose (0.5mg) taken ~10 hours before the calculated mean sleep midpoint (roughly 4 hours before average sleep onset) — not a high hypnotic dose at bedtime, which can shift the clock the wrong way.",
+    "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
+    "id": 40
+  },
+  {
+    "topic": "Sleep",
+    "type": "clinical",
+    "text": "<strong>CBTi is first-line, not medication.</strong> Cognitive behavioural therapy for insomnia is non-inferior to drugs, with 60–80% response rates and 50–60% remission at 6–12 months. Avoid standard CBTi's sleep-restriction component in migraine, epilepsy and CFS/ME, as it can exacerbate these conditions.",
+    "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
+    "id": 41
+  },
+  {
+    "topic": "Sleep",
+    "type": "interview",
+    "text": "<strong>Daridorexant</strong>, a dual orexin receptor antagonist, is NICE-approved (2024) for insomnia disorder after failed/unsuitable CBTi. Low dependence risk, no rebound insomnia, minimal respiratory suppression (safe in COMISA) — but watch for vivid dreams, sleep paralysis and monitor mood in depression. ~70% response rate, works better for maintenance than initiation.",
+    "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
+    "id": 42
+  },
+  {
+    "topic": "Sleep",
+    "type": "clinical",
+    "text": "<strong>Mirtazapine dosing pitfall:</strong> sedating effect is maximal around 15mg — higher doses can paradoxically become more alerting due to increasing noradrenergic/serotonergic activity outweighing antihistaminergic sedation. Amitriptyline, though commonly prescribed, is less evidence-based than mirtazapine and its sleep benefit is more short-lived.",
+    "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
+    "id": 43
+  },
+  {
+    "topic": "Sleep",
+    "type": "clinical",
+    "text": "<strong>Hypersomnolence terminology matters.</strong> EDS = inability to stay awake during major waking episodes. 'Excessive need for sleep' = subjective report not resolved by more sleep. Hypersomnia = objective finding of ≥10h sleep per 24h. 'Pure' neurological hypersomnolence is rare — central disorders (except NT1) are diagnoses of exclusion after ruling out drugs, OSA, PLMD, CRSD and psychiatric causes.",
+    "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
+    "id": 44
+  },
+  {
+    "topic": "Sleep",
+    "type": "clinical",
+    "text": "<strong>NT1 vs NT2 vs idiopathic hypersomnia:</strong> NT1 = EDS + cataplexy (or MSLT mean latency ≤8min with ≥2 SOREMPs, or low CSF orexin <110pg/mL). NT2 = EDS >3 months, no cataplexy, same MSLT criteria, normal/unmeasured CSF orexin. Idiopathic hypersomnia = EDS >3 months, no cataplexy, ≤1 SOREMP, plus either MSLT latency ≤8min or total sleep time >11h over 24h monitoring.",
+    "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
+    "id": 45
+  },
+  {
+    "topic": "Sleep",
+    "type": "clinical",
+    "text": "<strong>Pitfall: over-relying on the MSLT.</strong> Without a preceding polysomnography night to confirm ≥6h sleep, the MSLT is invalid. Even with strict thresholds (<5min latency), up to 30% of 'positive' results don't have narcolepsy — sleep deprivation and CRSD are common false-positive drivers. MSLT is highly reliable for NT1 (93–100% sensitivity) but much less reliable for NT2 and idiopathic hypersomnia, and has poor test-retest reliability.",
+    "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
+    "id": 46
+  },
+  {
+    "topic": "Sleep",
+    "type": "research",
+    "text": "<strong>CSF orexin and HLA testing both have real limits.</strong> ~5% of typical cataplexy patients have normal CSF orexin. HLA DQB1*06:02 is present in 95–99% of NT1 — but also in up to 25% of White Europeans and 38% of Africans without narcolepsy, so a positive result doesn't confirm NT1 and a negative one doesn't exclude NT2.",
+    "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
+    "id": 47
+  },
+  {
+    "topic": "Sleep",
+    "type": "interview",
+    "text": "<strong>Narcolepsy therapeutics are moving fast.</strong> Beyond modafinil/stimulants and anticataplectics (clomipramine, venlafaxine, sodium oxybate), newer agents include pitolisant (H3 inverse agonist, 50–60% response, no dependence) and solriamfetol (NDRI, also helps residual OSA sleepiness but doesn't treat cataplexy). The frontier is OX2 receptor agonists — TAK-994 showed dramatic wakefulness gains but was halted for hepatotoxicity; oveporexton (phase 3) and alixorexton (phase 2) are the current leads.",
+    "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
+    "id": 48
+  },
+  {
+    "topic": "Sleep",
+    "type": "clinical",
+    "text": "<strong>NREM parasomnia vs REM sleep behaviour disorder (RBD):</strong> NREM events (sleepwalking, confusional arousal, sleep-eating) occur in the first third of the night, are infrequent per night, and recall is partial/absent. RBD occurs later in the night, involves violent dream-enactment with full dream recall on waking, and is a red flag for underlying α-synucleinopathy (Parkinson's, DLB) — even a 'typical' RBD history still needs polysomnography to confirm and rule out mimics.",
+    "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
+    "id": 49
+  },
+  {
+    "topic": "Sleep",
+    "type": "clinical",
+    "text": "<strong>Sleep-related hypermotor epilepsy</strong> is an important parasomnia mimic: brief (<2min) stereotyped events (kicking, cycling, tonic posturing) recurring multiple times a night with abrupt cessation, often early in the night. Up to 30% arise from extrafrontal (temporal/insular) foci, not just frontal lobe as classically taught.",
+    "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
+    "id": 50
+  },
+  {
+    "topic": "Sleep",
+    "type": "clinical",
+    "text": "<strong>When to scan for parasomnias:</strong> polysomnography adds little when the history is classically NREM, but is warranted for atypical presentations, suspected RBD, sleep-related hypermotor epilepsy, functional/dissociative events, adult-onset events (NREM parasomnias usually start in childhood), violent/injurious events, or features suggesting OSA/RLS/PLMD (present in ~30% of NREM parasomnia patients and can trigger events).",
+    "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
+    "id": 51
+  },
+  {
+    "topic": "Sleep",
+    "type": "clinical",
+    "text": "Zolpidem is specifically implicated in triggering NREM parasomnias. First-line RBD treatment is clonazepam or melatonin — clonazepam is more effective, but melatonin is better tolerated (less sleepiness, unsteadiness, cognitive impairment).",
+    "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
+    "id": 52
+  },
+  {
+    "topic": "Sleep",
+    "type": "clinical",
+    "text": "<strong>Pitfall: dopamine agonists in RLS cause augmentation.</strong> Ropinirole, pramipexole and rotigotine are no longer AASM first-line for RLS — chronic use causes augmentation (worsening, earlier-onset, spreading symptoms) in 30–70% of patients by 10 years, plus impulse-control disorders. If used, keep doses low (e.g. ropinirole ≤2mg, pramipexole ≤0.5mg).",
+    "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
+    "id": 53
+  },
+  {
+    "topic": "Sleep",
+    "type": "clinical",
+    "text": "<strong>RLS work-up should always include ferritin.</strong> Target serum ferritin >75–100µg/L with transferrin saturation >20–45%, supplementing iron as needed. Current AASM first-line pharmacotherapy for chronic RLS is α2δ ligands (gabapentin, pregabalin) — effective and augmentation-free, especially useful with comorbid anxiety, chronic pain or insomnia.",
+    "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
+    "id": 54
+  },
+  {
+    "topic": "Sleep",
+    "type": "clinical",
+    "text": "Managing established augmentation: taper dopamine agonists gradually over weeks (never abruptly), replete iron stores first, and bridge with gabapentinoids or low-dose opioids (buprenorphine, prolonged-release oxycodone-naloxone) through the transition, then keep patients on non-dopaminergic therapy long-term.",
+    "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
+    "id": 55
   }
 ]
