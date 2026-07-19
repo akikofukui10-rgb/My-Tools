@@ -884,8 +884,30 @@ function dbSet(k,v){return new Promise((res,rej)=>{const tx=db.transaction(STORE
 let S={examDate:null,streak:0,lastActiveDay:null,totalSessions:0,stationCounts:{cardio:0,neuro:0,resp:0,abdo:0,comms:0,consult:0},sessionLog:[],vivaScores:{},todayLogged:[],practised:{}};
 let lastAction=null;
 
-async function loadState(){const saved=await dbGet('state');if(saved){S={...S,...saved};if(S.lastActiveDay!==new Date().toDateString())S.todayLogged=[];}}
-async function saveState(){await dbSet('state',S);}
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzY6N5WrhmhXzw-TPirwKRGHV0y3XxJO6W_F2YA5zOyz5ppCPgqWGHXNE5ley2tBmaL/exec';
+function syncToSheet(action, note) {
+  try {
+    fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: action, note: note, date: new Date().toISOString().slice(0,10) })
+    }).catch(function(){});
+  } catch(e) {}
+}
+
+async function loadState(){
+  let saved = null;
+  try { saved = await dbGet('state'); } catch(e) { console.warn('IndexedDB load failed', e); }
+  if (!saved) {
+    try { var ls = localStorage.getItem('pacesV3_state'); if (ls) saved = JSON.parse(ls); } catch(e) {}
+  }
+  if(saved){S={...S,...saved};if(S.lastActiveDay!==new Date().toDateString())S.todayLogged=[];}
+}
+async function saveState(){
+  try { await dbSet('state',S); } catch(e) { console.warn('IndexedDB save failed', e); }
+  try { localStorage.setItem('pacesV3_state', JSON.stringify(S)); } catch(e) {}
+}
 
 // ═══════════════════════════════════════════════════════════════
 // SESSION LOGGING
@@ -898,7 +920,7 @@ async function logSession(id,name,color){
   S.todayLogged=[...(S.todayLogged||[]),id];
   if(S.lastActiveDay!==today){const yd=new Date();yd.setDate(yd.getDate()-1);S.streak=S.lastActiveDay===yd.toDateString()?(S.streak||0)+1:(S.lastActiveDay?1:1);S.lastActiveDay=today;}
   S.sessionLog=[{id,name,ts:Date.now(),color},...(S.sessionLog||[])].slice(0,100);
-  await saveState();showUndo('+1 '+name);toast('Logged ✓');renderAll();
+  await saveState();syncToSheet('increment', name + ' session');showUndo('+1 '+name);toast('Logged ✓');renderAll();
 }
 async function removeSession(id,name){
   if((S.stationCounts[id]||0)<=0){toast('Already at 0');return;}
@@ -908,7 +930,7 @@ async function removeSession(id,name){
   // Remove the most recent logged instance of this station from today
   const tl=S.todayLogged||[];const ri=tl.lastIndexOf(id);if(ri!==-1)tl.splice(ri,1);S.todayLogged=tl;
   const idx=(S.sessionLog||[]).findIndex(e=>e.id===id);if(idx!==-1)S.sessionLog.splice(idx,1);
-  await saveState();showUndo('−1 '+name);toast('Removed');renderAll();
+  await saveState();syncToSheet('decrement', '');showUndo('−1 '+name);toast('Removed');renderAll();
 }
 async function undoLast(){if(!lastAction)return;S=lastAction.prevState;await saveState();lastAction=null;hideUndo();toast('Undone ↩');renderAll();}
 let undoTimer;
@@ -1087,13 +1109,25 @@ function toggleRev(id,btn){
 
 async function markPractised(){
   const key=currentStationId+'__'+currentCase.name;
+  const alreadyPractised=!!S.practised[key];
   S.practised[key]=Date.now();
+  if(!alreadyPractised){
+    lastAction={prevState:JSON.parse(JSON.stringify(S))};
+    S.stationCounts[currentStationId]=(S.stationCounts[currentStationId]||0)+1;
+    S.totalSessions=(S.totalSessions||0)+1;
+    const today=new Date().toDateString();
+    S.todayLogged=[...(S.todayLogged||[]),currentStationId];
+    if(S.lastActiveDay!==today){const yd=new Date();yd.setDate(yd.getDate()-1);S.streak=S.lastActiveDay===yd.toDateString()?(S.streak||0)+1:(S.lastActiveDay?1:1);S.lastActiveDay=today;}
+    S.sessionLog=[{id:currentStationId,name:currentCase.name,ts:Date.now(),color:'var(--grn)'},...(S.sessionLog||[])].slice(0,100);
+    syncToSheet('increment', currentCase.name);
+  }
   await saveState();
   const pb=document.getElementById('practised-btn');
   pb.className='practised-btn done-btn';
   pb.textContent='✓ Practised on '+new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short'});
   toast('Case marked as practised ✓');
   renderCaseStations();
+  renderAll();
 }
 
 function casesBack(level){
