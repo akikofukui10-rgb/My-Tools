@@ -342,5 +342,105 @@
     "text": "Managing established augmentation: taper dopamine agonists gradually over weeks (never abruptly), replete iron stores first, and bridge with gabapentinoids or low-dose opioids (buprenorphine, prolonged-release oxycodone-naloxone) through the transition, then keep patients on non-dopaminergic therapy long-term.",
     "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
     "id": 55
+  },
+  {
+    "id": 56,
+    "title": "Multiple Sclerosis: ABN 2024 Disease-Modifying Therapy Strategy",
+    "category": "Neuroimmunology",
+    "subtopic": "Multiple Sclerosis",
+    "source": "ABN Acute Neuro Bootcamp 2025",
+    "tags": [
+      "MS",
+      "DMT",
+      "ABN",
+      "Neuroimmunology",
+      "Disease Modifying Therapy",
+      "High Efficacy Therapy"
+    ],
+    "clinicalPearls": [
+      {
+        "title": "Think beyond RRMS/SPMS/PPMS",
+        "pearl": "Traditional MS subtypes are less useful for treatment decisions. Modern practice focuses on the degree of ongoing inflammatory disease activity rather than simply the disease label.",
+        "importance": "high"
+      },
+      {
+        "title": "Treat early",
+        "pearl": "Disease-modifying therapy should be started as early as possible after diagnosis of active MS to reduce irreversible neurological injury.",
+        "importance": "high"
+      },
+      {
+        "title": "High-efficacy therapy is increasingly first-line",
+        "pearl": "ABN 2024 recommends considering high-efficacy DMT as an initial treatment option in eligible patients rather than automatically using an escalation approach.",
+        "importance": "high"
+      },
+      {
+        "title": "Evidence favours early inflammatory suppression",
+        "pearl": "Observational studies suggest starting high-efficacy therapy within the first two years of disease onset is associated with improved long-term disability outcomes, although definitive RCTs are still awaited.",
+        "importance": "high"
+      },
+      {
+        "title": "Shared decision-making is essential",
+        "pearl": "Choice of DMT should balance efficacy, safety, pregnancy plans, comorbidities, infection risk, monitoring burden and patient preferences.",
+        "importance": "high"
+      },
+      {
+        "title": "Poor prognostic features favour early intensive therapy",
+        "pearl": "Frequent relapses, high MRI lesion burden, spinal cord lesions, pyramidal tract involvement and early disability predict worse long-term outcomes.",
+        "importance": "high"
+      }
+    ],
+    "highYieldFacts": [
+      {
+        "fact": "Early inflammatory damage contributes disproportionately to future disability."
+      },
+      {
+        "fact": "Escalation therapy is no longer the default strategy for all newly diagnosed patients."
+      },
+      {
+        "fact": "Treatment decisions should be individualised and discussed within the MS MDT."
+      },
+      {
+        "fact": "Disease activity on MRI may precede clinical deterioration."
+      }
+    ],
+    "poorPrognosticMarkers": [
+      "Frequent relapses",
+      "High MRI lesion burden",
+      "New MRI activity",
+      "Spinal cord involvement",
+      "Pyramidal tract involvement",
+      "Early accumulation of disability"
+    ],
+    "moderateEfficacyDMTs": [
+      "Interferon beta",
+      "Glatiramer acetate",
+      "Teriflunomide",
+      "Dimethyl fumarate"
+    ],
+    "highEfficacyDMTs": [
+      "Ocrelizumab",
+      "Ofatumumab",
+      "Natalizumab",
+      "Alemtuzumab",
+      "Cladribine"
+    ],
+    "clinicalDecisionFramework": {
+      "question": "New diagnosis of active MS",
+      "approach": [
+        "Assess inflammatory disease activity",
+        "Assess prognostic factors",
+        "Discuss risks and benefits",
+        "Consider high-efficacy DMT first if appropriate",
+        "Review within MS MDT",
+        "Use shared decision-making"
+      ]
+    },
+    "examPearls": [
+      "ABN guidance has shifted away from routine escalation therapy.",
+      "High-efficacy DMT should be considered early in patients with active disease.",
+      "Treatment decisions should not rely solely on RRMS/SPMS/PPMS classification.",
+      "MRI activity is an important marker of ongoing disease even without clinical relapse."
+    ],
+    "takeHomeMessage": "Modern MS management aims to suppress inflammatory disease early. Eligible patients should be offered discussion of high-efficacy therapy soon after diagnosis, with treatment individualised through shared decision-making."
   }
 ]
