@@ -355,18 +355,5 @@
       "Management includes appropriate biomarkers, symptomatic treatment and caregiver education."
     ],
     "id": 58
-  },
-  {
-    "title": "IgG4-Related Disease",
-    "category": "Neuroimmunology",
-    "source": "New, complicated and evolving: IgG4-related disease",
-    "clinicalPearls": [
-      "IgG4-related disease is a systemic fibro-inflammatory disorder that can affect almost any organ.",
-      "Diagnosis integrates clinical features, imaging and histopathology.",
-      "Histology is often the diagnostic gold standard.",
-      "Glucocorticoids remain first-line therapy.",
-      "Long-term immunosuppression may be required to prevent relapse."
-    ],
-    "id": 59
   }
 ]
