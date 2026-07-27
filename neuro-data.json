@@ -342,5 +342,26 @@
     "text": "Managing established augmentation: taper dopamine agonists gradually over weeks (never abruptly), replete iron stores first, and bridge with gabapentinoids or low-dose opioids (buprenorphine, prolonged-release oxycodone-naloxone) through the transition, then keep patients on non-dopaminergic therapy long-term.",
     "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
     "id": 55
+  },
+  {
+    "topic": "Dementia",
+    "type": "clinical",
+    "text": "<strong>Pareidolia — seeing meaningful images in meaningless visual stimuli</strong> — occurs in DLB but is not specific alone. Assess alongside core features: parkinsonism on gait examination, word-finding difficulties, and fluctuating cognition. Antipsychotics are dangerous in DLB.",
+    "source": "A face in the hedge: Dementia with Lewy bodies",
+    "id": 56
+  },
+  {
+    "topic": "Dementia",
+    "type": "clinical",
+    "text": "<strong>DLB management requires biomarkers, symptomatic treatment, and caregiver education.</strong> Fluctuating cognition, visual hallucinations, and parkinsonism are the core triad. Never prescribe haloperidol — antipsychotic sensitivity can cause severe, irreversible NMS-like reactions.",
+    "source": "A face in the hedge: Dementia with Lewy bodies",
+    "id": 57
+  },
+  {
+    "topic": "General",
+    "type": "clinical",
+    "text": "<strong>IgG4-related disease is a systemic fibro-inflammatory disorder</strong> that can affect almost any organ including the nervous system. Diagnosis integrates clinical features, imaging, and histopathology — histology is often the gold standard. Glucocorticoids are first-line; long-term immunosuppression may be needed to prevent relapse.",
+    "source": "New, complicated and evolving: IgG4-related disease",
+    "id": 58
   }
 ]
