@@ -354,5 +354,31 @@
       "Steroid treatment remains a core component of the management strategy for this evolving disease [2]."
     ],
     "id": 57
+  },
+  {
+    "title": "Dementia with Lewy Bodies (DLB)",
+    "category": "Neurodegeneration",
+    "source": "A face in the hedge: Dementia with Lewy bodies",
+    "clinicalPearls": [
+      "Pareidolia is the phenomenon of seeing meaningful images in meaningless visual stimuli, such as seeing animal shapes in clouds.",
+      "Although pareidolia occurs in DLB, it is not specific and must be interpreted alongside other core clinical features.",
+      "Assess gait carefully during the examination, as parkinsonism is common.",
+      "Look for word-finding difficulties and fluctuating cognition.",
+      "Management includes appropriate biomarkers, symptomatic treatment and caregiver education."
+    ],
+    "id": 58
+  },
+  {
+    "title": "IgG4-Related Disease",
+    "category": "Neuroimmunology",
+    "source": "New, complicated and evolving: IgG4-related disease",
+    "clinicalPearls": [
+      "IgG4-related disease is a systemic fibro-inflammatory disorder that can affect almost any organ.",
+      "Diagnosis integrates clinical features, imaging and histopathology.",
+      "Histology is often the diagnostic gold standard.",
+      "Glucocorticoids remain first-line therapy.",
+      "Long-term immunosuppression may be required to prevent relapse."
+    ],
+    "id": 59
   }
 ]
