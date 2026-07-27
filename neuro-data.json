@@ -342,5 +342,29 @@
     "text": "Managing established augmentation: taper dopamine agonists gradually over weeks (never abruptly), replete iron stores first, and bridge with gabapentinoids or low-dose opioids (buprenorphine, prolonged-release oxycodone-naloxone) through the transition, then keep patients on non-dopaminergic therapy long-term.",
     "source": "Adenan 2026, Pract Neurol — Sleep neurology: pearls and pitfalls",
     "id": 55
+  },
+  {
+    "topic": "Dementia with Lewy Bodies (DLB)",
+    "source_title": "A face in the hedge: Dementia with Lewy bodies",
+    "pearls": [
+      "Pareidolia is the phenomenon of seeing meaningful images in meaningless visual stimuli, such as seeing animal shapes in clouds [1].",
+      "While pareidolia is a symptom of DLB, it is considered 'tricky' because it is not exclusive to this specific type of dementia [1].",
+      "To narrow down a DLB diagnosis, clinicians must evaluate symptoms like pareidolia within the context of other presenting features, or 'the company it keeps' [1].",
+      "The initial clinical examination for DLB should emphasize assessing the patient's gait and identifying difficulties in word retrieval [1].",
+      "Comprehensive management of DLB involves the use of biomarkers, identifying helpful medications, and providing necessary advice to both patients and their caregivers [1]."
+    ],
+    "id": 56
+  },
+  {
+    "topic": "IgG4-Related Disease",
+    "source_title": "New, complicated and evolving: IgG4-related disease",
+    "pearls": [
+      "IgG4-related disease is a systemic neuroinflammatory disorder that has the potential to impact virtually any organ in the body [2].",
+      "Management of the disease is complex, often requiring a specific treatment algorithm to address its various challenges [2].",
+      "Clinical presentation and disease background are critical factors in the initial evaluation of a patient [2].",
+      "Diagnosis often relies on specific findings within the histology of affected tissues [2].",
+      "Steroid treatment remains a core component of the management strategy for this evolving disease [2]."
+    ],
+    "id": 57
   }
 ]
